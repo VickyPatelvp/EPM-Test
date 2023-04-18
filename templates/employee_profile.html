@@ -1,0 +1,1316 @@
+{% extends "base.html" %}
+{% block title %}Employee profile{% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+{% block content %}
+
+
+<div class="container-fluid" style="background-color: #FFFFFF;">
+    <div class="row mt-2">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <ol class="breadcrumb mb-0">
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <h5 style="color: black"><b>Employees</b></h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <h5 style="color: black"><b>|</b></h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <h5><b>{{ data["personal_data"]["employeeName"] }}</b></h5>
+                    </a>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <nav aria-label="breadcrumb" class="bg-white">
+                <ul class="nav justify-content-end">
+                    <li class="nav-item me-2">
+                        <div class="">
+                            <a href="/employeeprofileedit/{{ data['personal_data']['userID'] }}">
+                                <button class="btn btn-secondary border-1 " type="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Edit
+                                </button>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item me-2">
+                        <div class="">
+                            <a href="/employeelist">
+                                <button class="btn btn-secondary border-1 " type="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Back
+                                </button>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" style="background-color: #E7E7E7;">
+    <div class="wrapper">
+        <div class="main">
+            <main class="content">
+                <div class="container-fluid p-3">
+                    {% if leave %}
+                    <div class="pt-3">
+                        <p class="p-2  error">Leave application <b>Sep 24, 2021</b> to <b>Sep 26, 2021</b> <a href="#">Click</a>
+                        </p>
+                        <p class="p-2  error">Bond/Contract Renewal Date is <b>Sep 24, 2021</b></p>
+                    </div>
+
+                    {% endif %}
+
+                    <div class="row">
+
+                        <div class="col-6">
+                            <section style="background-color: #E7E7E7;;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card mb-4">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <div class="card-body text-start">
+                                                        <img src="{{data['Photo']}}"
+                                                             alt="avatar" class="rounded-circle img-fluid"
+                                                             style="width: 150px;">
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Basic Information -->
+
+                                                <div class="col-10">
+                                                    <div class="row mt-3">
+                                                        <div class="col-12">
+                                                            <h3>{{ data["personal_data"]["employeeName"] }}</h3>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="col-3">User ID</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["userID"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Department</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["department"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Work Email</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["email"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">CTC</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["ctc"] }}</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-6">
+
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="col-3">Job Position</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["jobPosition"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Manager</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["manager"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Date of Joining
+                                                                    </th>
+                                                                    <td class="col-3">{{ data["personal_data"]["doj"] }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Current Experience
+                                                                    </th>
+                                                                    <td class="col-3">{{ data["personal_data"]["currentExperience"] }}</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+
+                                        <div class="card mb-3">
+
+                                            <!-- Nav Bar -->
+
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#home" type="button" role="tab"
+                                                            aria-controls="home"
+                                                            aria-selected="true">
+                                                        <h5> Personal Information</h5>
+                                                    </button>
+                                                </li>
+
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#profile" type="button" role="tab"
+                                                            aria-controls="profile"
+                                                            aria-selected="false">
+                                                        <h5>
+                                                            Payslip Information</h5>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#contact" type="button" role="tab"
+                                                            aria-controls="contact"
+                                                            aria-selected="false">
+                                                        <h5>TDS Data</h5>
+                                                    </button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="myTabContent">
+
+
+                                                <!--Personal Information-->
+
+                                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                     aria-labelledby="home-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="container">
+
+                                                                        <!-- Personal Details -->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Personal Details</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Date of Birth
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["dob"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <div class="col-6">
+
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Gender
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["gender"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Contact Details -->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Contact Details</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Email
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["email"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <div class="col-6">
+
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Mobile No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["phoneNo"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Bank Details -->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Bank Details</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Bank Name
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["bankName"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Account Holder
+                                                                                            Name
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["accountHolderName"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <div class="col-6">
+
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Account Number
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["accountNumber"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Identity Details -->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Identity Information</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Aadhar Card No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["aadharCardNo"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Passport No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["passportNo"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <div class="col-6">
+
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">PAN Card
+                                                                                            No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["panCardNo"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Other Details -->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Other Details</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">PF Account No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["pfAccountNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">ESIC No.</th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["esicNo"] }}</td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <div class="col-6">
+
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">UAN No.</th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["uanNo"] }}</td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--Payslip Mgmt-->
+
+                                                <div class="tab-pane fade" id="profile" role="tabpanel"
+                                                     aria-labelledby="profile-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card p-3">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="row mt-3">
+                                                                        <div class="col-12">
+                                                                            <table class="table">
+                                                                                <thead class="table-secondary">
+
+                                                                                <tr class="bg-dark">
+                                                                                    <th scope="col">Reference</th>
+                                                                                    <th scope="col">Month</th>
+                                                                                    <th scope="col">Year</th>
+                                                                                    <th scope="col">Net Salary</th>
+                                                                                    <th scope="col">Action</th>
+                                                                                </tr>
+
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  {% for i in data["salary_data"] %}
+
+                                                                                                <tr class="table-light">
+
+                                                                                                    <td scope="col">
+                                                                                                        {{i}}
+                                                                                                        </td>
+                                                                                                    <td scope="col">
+                                                                                                        {{data["salary_data"][i]['month']}}</td>
+                                                                                                    <td scope="col">
+                                                                                                        {{data["salary_data"][i]['year']}}</td>
+                                                                                                        <td scope="col">
+                                                                                                            {{data["salary_data"][i]['netPayable']}}</td>
+                                                                                                    <td scope="col"><i
+                                                                                            class="fa fa-download"></i>
+                                                                                                </td>
+                                                                                                </tr>
+                                                                                                {% endfor%}
+
+<!--                                                                                {% for i in range(5)%}-->
+<!--                                                                                <tr class="table-light">-->
+<!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
+<!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
+<!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
+<!--                                                                                    <td scope="col">{{ data["salary_data"]["netSalary"] }}</td>-->
+<!--                                                                                    <td scope="col"><i-->
+<!--                                                                                            class="fa fa-download"></i>-->
+<!--                                                                                    </td>-->
+<!--                                                                                </tr>-->
+<!--                                                                                {% endfor%}-->
+
+                                                                                <tbody>
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--TDS Data-->
+
+                                                <div class="tab-pane fade" id="contact" role="tabpanel"
+                                                     aria-labelledby="contact-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="container">
+
+                                                                        <!--Principle on Home Loan -->
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Principal on Home loan</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Application
+                                                                                            No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Principal on Home loan"]["applicationNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Loan Amount</th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Principal on Home loan"]["loanAmount"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of Home Loan
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Principal on Home loan"]["PeriodofHomeLoan"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of Person
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Principal on Home loan"]["nameofPerson"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual
+                                                                                            Interest
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Principal on Home loan"]["annualInterest"] }}
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Premium on Insurance-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Premium on Insurance</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Insurance No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Premium on Insurance"]["insuranceNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount of
+                                                                                            Policy
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Premium on Insurance"]["annualAmountofpolicy"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of Insured
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Premium on Insurance"]["nameofInsured"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Health Insurance (Self)-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Health Insurance (Self)</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Insurance No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Self)"]["insuranceNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount of
+                                                                                            Policy
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Self)"]["annualAmountofpolicy"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of
+                                                                                            Insured
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Self)"]["nameofInsured"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of
+                                                                                            Insurance
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Self)"]["periodofInsurance"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Health Insurance (Spouse)-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Health Insurance (Spouse)</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Insurance No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Spouse)"]["insuranceNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount of
+                                                                                            Policy
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Spouse)"]["annualAmountofpolicy"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of
+                                                                                            Insured
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Spouse)"]["nameofInsured"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of
+                                                                                            Insurance
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Spouse)"]["periodofInsurance"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Health Insurance (Father)-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Health Insurance (Father)</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Insurance No.
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Father)"]["insuranceNo"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount of
+                                                                                            Policy
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Father)"]["annualAmountofpolicy"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of Insured
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Father)"]["nameofInsured"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of Insurance
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Health Insurance (Father)"]["periodofInsurance"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Interest on Home Loan-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Interest on Home Loan</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Interest Payable/Paid
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Interest on Home Loan"]["annualInterestPayable/Paid"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">PAN of Lender
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Interest on Home Loan"]["panofLender"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of Person
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Interest on Home Loan"]["nameofPerson"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Annual House Rent-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Annual House Rent</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Current Month Rent
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Annual House Rent"]["currentMonthRent"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Landloard PAN
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Annual House Rent"]["lenderPAN"] }}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of Date
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Annual House Rent"]["periodofDate"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Name of Landloard
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Annual House Rent"]["nameofLandloard"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Landloard Address
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Annual House Rent"]["landloardAddress"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--ELSS(SIP)-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>ELSS(SIP)</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["ELSS(SIP)"]["annualAmount"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of
+                                                                                            Date
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["ELSS(SIP)"]["periodofDate"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!--Tution Fee-->
+
+                                                                        <div class="row mt-3">
+                                                                            <div class="col-12">
+                                                                                <h3>Tution Fee</h3>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Annual Amount
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Tution Fee"]["annualAmount"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th class="col-3">Period of
+                                                                                            Date
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["tds_data"]["Tution Fee"]["periodofDate"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Leave Mgmt -->
+
+                         <div class="col-6">
+                            <section style="background-color: #E7E7E7;; height: 100%">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card mb-3">
+                                            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="leave-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#leave" type="button" role="tab"
+                                                        aria-controls="leave" aria-selected="false">
+                                                        <h5>
+                                                            Leave Information</h5>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent2">
+                                                <div class="tab-pane fade show active" id="leave" role="tabpanel"
+                                                    aria-labelledby="leave-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">
+                                                            <div class="row p-4">
+                                                                <div class="col-sm-4">
+                                                                    <div class="card"
+                                                                        style="background-color:rgb(221, 217, 255) ;">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col mt-0">
+                                                                                    <h5 class="card-title">CL (Casual
+                                                                                        Leave)</h5>
+                                                                                </div>
+
+                                                                                <div class="col-3">
+                                                                                    <div class="stat text-primary rounded-circle"
+                                                                                        style="background-color:rgb(160, 150, 255); padding: 15px;">
+                                                                                        <img src="/static/assets/calendar-regular.svg"
+                                                                                            alt="calender">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="mb-0">
+                                                                                <span
+                                                                                    class="text-muted">Available</span>
+                                                                                <span class="text-danger"> <i
+                                                                                        class="mdi mdi-arrow-bottom-right"></i>
+                                                                                    {{total_leave['CL']}} </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+
+                                                                    <div class="card"
+                                                                        style="background-color: rgb(222, 255, 222);">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col mt-0">
+                                                                                    <h5 class="card-title">PL (Privilege
+                                                                                        Leave)</h5>
+                                                                                </div>
+
+                                                                                <div class="col-3">
+                                                                                    <div class="stat text-primary  rounded-circle"
+                                                                                        style="background-color: rgb(159, 255, 159); padding: 15px;">
+                                                                                        <img src="/static/assets/list-check-solid.svg"
+                                                                                            alt="list-check">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-0">
+                                                                                <span
+                                                                                    class="text-muted">Available</span>
+                                                                                <span class="text-success"> <i
+                                                                                        class="mdi mdi-arrow-bottom-right"></i>{{total_leave['PL']}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card"
+                                                                        style="background-color: rgb(255, 222, 222);">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col mt-0">
+                                                                                    <h5 class="card-title">SL (Sick
+                                                                                        Leave)</h5>
+                                                                                </div>
+
+                                                                                <div class="col-3">
+                                                                                    <div class="stat text-primary  rounded-circle"
+                                                                                        style="background-color: rgb(255, 160, 160); padding: 15px;">
+                                                                                        <img src="/static/assets/stethoscope-solid.svg"
+                                                                                            alt="stethoscope">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-0">
+                                                                                <span
+                                                                                    class="text-muted">Available</span>
+                                                                                <span class="text-success"> <i
+                                                                                        class="mdi mdi-arrow-bottom-right"></i>
+                                                                                    {{ total_leave['SL'] }} </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class=" mb-4">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="row mt-3">
+                                                                                    <div class="col-12">
+                                                                                        <!-- Button trigger modal -->
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal "
+                                                                                            id="staticBackdrop"
+                                                                                            data-bs-backdrop="static"
+                                                                                            data-bs-keyboard="false"
+                                                                                            tabindex="-1"
+                                                                                            aria-labelledby="staticBackdropLabel"
+                                                                                            aria-hidden="true">
+                                                                                            <div
+                                                                                                class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
+                                                                                                <div
+                                                                                                    class="modal-content vh-100  ">
+                                                                                                    <div
+                                                                                                        class="modal-header">
+                                                                                                        <h5 class="modal-title"
+                                                                                                            id="staticBackdropLabel">
+                                                                                                            Employee
+                                                                                                            Leave</h5>
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            class="btn-close"
+                                                                                                            data-bs-dismiss="modal"
+                                                                                                            aria-label="Close"></button>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="modal-body">
+                                                                                                        <div
+                                                                                                            class="container">
+                                                                                                            <div
+                                                                                                                class="row">
+                                                                                                                <div
+                                                                                                                    class="col-md-12">
+                                                                                                                    <form action="{{url_for('employee_profile',id=data['personal_data']['userID'])}}" method="POST">
+
+                                                                                                                        <div
+                                                                                                                            class="form-group row mt-2">
+                                                                                                                            <label
+
+                                                                                                                                class=" me-5 col-sm-4 col-form-label">Leave Type</label>
+                                                                                                                            <div
+                                                                                                                                class=" me-5 col-sm-4">
+                                                                                                                                <select name="type"
+                                                                                                                                    class="ms-5 form-select"
+                                                                                                                                    aria-label="Default select example">
+                                                                                                                                    <option
+                                                                                                                                        selected>
+                                                                                                                                        Type
+                                                                                                                                    </option>
+                                                                                                                                    <option
+                                                                                                                                        value="SL">
+                                                                                                                                        Sick
+                                                                                                                                        Leave
+                                                                                                                                    </option>
+                                                                                                                                    <option
+                                                                                                                                        value="PL">
+                                                                                                                                        Privilege
+                                                                                                                                        leave
+                                                                                                                                    </option>
+                                                                                                                                    <option
+                                                                                                                                        value="CL">
+                                                                                                                                        Casual
+                                                                                                                                        Leave
+                                                                                                                                    </option>
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div
+                                                                                                                            class="form-group row mt-2">
+                                                                                                                            <label
+
+                                                                                                                                class=" me-5 col-sm-4 col-form-label">Number of Days</label>
+                                                                                                                            <div
+                                                                                                                                class=" me-5 col-sm-4">
+                                                                                                                                <input
+                                                                                                                                    name="days"
+                                                                                                                                    type="text"
+                                                                                                                                    id="days"
+                                                                                                                                    class=" ms-5 col-sm-4 form-control"
+                                                                                                                                    placeholder="0">
+                                                                                                                            </div>
+                                                                                                                        </div>
+
+
+                                                                                                                        <div
+                                                                                                                            class="form-group row mt-2">
+                                                                                                                            <label
+
+                                                                                                                                class="me-5 col-sm-4 col-form-label">apply Date For leave</label>
+                                                                                                                            <div
+                                                                                                                                class="col-sm-4">
+                                                                                                                                <input
+                                                                                                                                    name="applydate"
+                                                                                                                                    type="date"
+                                                                                                                                    class="ms-5 form-control"
+
+                                                                                                                                    placeholder="date">
+
+
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div
+                                                                                                                            class="form-group row mt-2">
+                                                                                                                            <label
+
+                                                                                                                                class="me-5 col-sm-4 col-form-label">from Date</label>
+                                                                                                                            <div
+                                                                                                                                class="col-sm-4">
+                                                                                                                                <input
+                                                                                                                                    name="fromdate"
+                                                                                                                                    type="date"
+                                                                                                                                    class="ms-5 form-control"
+
+                                                                                                                                    placeholder="date">
+
+
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div
+                                                                                                                            class="form-group row mt-2">
+                                                                                                                            <label
+
+                                                                                                                                class="me-5 col-sm-4 col-form-label">To Date</label>
+                                                                                                                            <div
+                                                                                                                                class="col-sm-4">
+                                                                                                                                <input
+                                                                                                                                    name="todate"
+                                                                                                                                    type="date"
+                                                                                                                                    class="ms-5 form-control"
+                                                                                                                                    id="strat-date"
+                                                                                                                                    placeholder="date">
+
+
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="from-group text-center p-4">
+                                                                                                                            <button type="submit"
+                                                                                                                            class="btn" style=" color: #fff !important  ;
+                                                                                                                            background-color: #2f3990 !important;
+                                                                                                                            border-color: #2f3990 !important;">
+                                                                                                                        Save
+                                                                                                                    </button>
+                                                                                                                        </div>
+                                                                                                                    </form>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="modal-footer">
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            class="btn btn-secondary"
+                                                                                                            data-bs-dismiss="modal">
+                                                                                                            Close
+                                                                                                        </button>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <table class="table">
+                                                                                            <thead
+                                                                                                class="table-secondary">
+                                                                                                <tr class="bg-dark">
+
+                                                                                                    <th scope="col">
+                                                                                                        Leave Type</th>
+                                                                                                    <th scope="col">
+                                                                                                        Number of days
+                                                                                                    </th>
+                                                                                                    <th scope="col">Apply date For Leave
+                                                                                                    </th>
+                                                                                                    <th scope="col">From Date
+                                                                                                    </th>
+                                                                                                    <th scope="col">To Date
+                                                                                                    </th>
+                                                                                                    <td scope="col"><a
+                                                                                                        type="btn"
+                                                                                                        class="btn"
+                                                                                                        data-bs-toggle="modal"
+                                                                                                        data-bs-target="#staticBackdrop">
+                                                                                                        <i
+                                                                                                            class="fas fa-plus fa-shake " ></i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+
+
+
+                                                                                                {% for i in leave_list %}
+                                                                                               {% if i!= 'total_leaves'%}
+                                                                                                <tr class="table-light">
+
+                                                                                                    <td scope="col">
+                                                                                                        {{leave_list[i]['type']}}
+                                                                                                        </td>
+                                                                                                    <td scope="col">
+                                                                                                        {{leave_list[i]['days']}}</td>
+                                                                                                    <td scope="col">
+                                                                                                        {{leave_list[i]['applydate']}}</td>
+                                                                                                        <td scope="col">
+                                                                                                            {{leave_list[i]['fromdate']}}</td>
+                                                                                                            <td scope="col">
+                                                                                                                {{leave_list[i]['todate']}}</td>
+                                                                                                    <td></td>
+
+                                                                                                </tr>
+                                                                                                {% endif %}
+                                                                                                {% endfor%}
+
+
+                                                                                            <tbody>
+                                                                                        </table>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </section>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %} Department {% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="background-color: #ffffff;">
+    <div class="container-fluid p-1">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 mt-2">
+                <ul class="nav justify-content-start">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <h5><b>
+                                    Department
+                                </b>
+                            </h5>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <ul class="nav justify-content-end mt-2">
+
+                    <li class="nav-item me-2">
+                        <div class="dropdown">
+                            <a type="btn" class="btn border-1 btn-secondary" aria-haspopup="true" aria-expanded="false"
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i class="fas fa-edit"></i> Add new Department
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color: #E7E7E7;">
+    <div class="wrapper">
+        <div class="main">
+            <main class="content">
+                <div class="container-fluid p-3">
+
+                    <!-- CREATE DEPARTMENT MODAL -->
+
+                    <div class="modal " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div
+                            class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
+                            <div class="modal-content vh-100">
+                                <!-- MODAL HEADER -->
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add of Department</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+
+                                <!-- MODAL BODY -->
+
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <form action="{{url_for('department')}}" method="post">
+                                                    <table class="justify-content-between">
+                                                        <thead>
+                                                            <tr>
+                                                                <td class="p-2">
+                                                                    <h6><b> Department Name </b></h6>
+                                                                </td>
+                                                                <td class="p-2"><input type="text" id="deptname"
+                                                                        class="form-control-sm" name="deptname"></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <td class="pt-2">
+                                                                    <h6><b> position </b></h6>
+                                                                </td>
+                                                                <td class="p-2">
+                                                                    <h6><b> salary </b></h6>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id='input-cont1' class="p-1" id="pos0">
+                                                                    <input type="text" class="form-control-sm" name="pos0">
+                                                                </td>
+                                                                <td id='input-cont2' class="p-1">
+                                                                    <input type="text" class="form-control-sm" id="sal0" name="sal0">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td colspan="2"><button type="submit">Submit</button></td>
+                                                            </tr>
+                                            </thead>
+                                            </table>
+
+                                            </form>
+                                            <button onclick='addInput()'>+Add input</button>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MODAL FOOTER -->
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <table class="table">
+                    <thead style="background-color:#DFE1E6;">
+                        <tr>
+                            <th scope="col">Department Name</th>
+                            <th scope="col">Postition</th>
+                            <th scope="col">Salary</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: #ffffff;">
+
+                        {% for i in data%}
+
+                        {% for j in data[i] %}
+                        <tr>
+                            <td scope="col" >{{i}}</td>
+
+                            <td scope="col">{{ j }}</td>
+                            <td scope="col">{{data[i][j]}}</td>
+
+                            <td scope="col">
+                                <a type="btn" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor%}
+
+                    </tbody>
+                </table>
+        </div>
+        </main>
+    </div>
+</div>
+</div>
+
+
+
+<script>
+    const container1 = document.getElementById('input-cont1');
+    const container2 = document.getElementById('input-cont2');
+    var maxInputAllowed = 5;
+    var inputCount = 0;
+
+    // Call addInput() function on button click
+
+    // Call addInput() function on button click
+    function addInput() {
+        inputCount++; // Increment input count by one
+        if (inputCount > 5) {
+            alert('You can add maximum 5 input fields.');
+            return;
+        }
+
+        let input = document.createElement('input');
+        // input.placeholder = 'Type something';
+        input.className = 'form-control-sm mt-2'
+        input.id =  'pos' + inputCount
+        input.name='pos'+inputCount
+
+        let salinput = document.createElement('input');
+        // salinput.placeholder = 'Type something';
+        salinput.className = 'form-control-sm mt-2 '
+        salinput.id = 'sal' + inputCount
+        salinput.name='sal'+inputCount
+
+
+        container1.appendChild(input);
+
+        container2.appendChild(salinput);
+
+    }
+</script>
+
+
+{% endblock %}

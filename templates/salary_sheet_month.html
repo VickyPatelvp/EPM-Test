@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Employees{% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="background-color: #ffffff;">
+    <div class="wrapper">
+        <div class="main">
+            <main class="content">
+                <div class="container-fluid p-1">
+                    <div class="row">
+    <div class="col-lg-6 col-sm-12 mt-2">
+        <ul class="nav justify-content-start">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">
+                    <h5><b>Salary Sheet</b></h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color: #F4F5F7;">
+<div class="container-fluid p-3">
+
+    <div class="row justify-content-between">
+        <div class='col d-flex mt-3'>
+            <span class="nav-item me-4 mt-2"><b>Salary Sheet</b></span>
+            <div class="form-outline  text-start ">
+                <input type="text" class="form-control" id="forminput" placeholder="year"/>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <table class="table mt-4">
+        <thead class="table-secondary" style="background-color:#DFE1E6;">
+
+        <tr class="bg-dark">
+            <th scope="col">Month</th>
+            <th scope="col">Gross Salary</th>
+            <th scope="col">Total PF</th>
+            <th scope="col">Total PT</th>
+            <th scope="col">Total TDS</th>
+            <th scope="col">Net Salary</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+
+        </thead>
+        <tbody style="background-color:#ffffff;">
+        <tr class="table-light">
+            <td scope="col">Month</td>
+            <td scope="col">GS</td>
+            <td scope="col">PF</td>
+            <td scope="col">PT</td>
+            <td scope="col">TDS</td>
+            <td scope="col">NS</td>
+            <td scope="col " class="text-start pending"><p>STS</p></td>
+            <td scope="col d-flex">
+                <ul class="nav ">
+                    <li class="nav-item d-inline"><a class="nav-link" href="#">
+                        <i class="fa fa-download"></i>
+                    </a>
+                    </li>
+                    <li class="nav-item  d-inline"><a class="nav-link" href="/salarysheetview">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    </li>
+                    <li class="nav-item d-inline"><a class="nav-link" href="/salarysheetedit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    </li>
+                    <li class="nav-item d-inline"><a class="nav-link" href="#">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    </li>
+                </ul>
+
+            </td>
+        </tr>
+        <tbody>
+    </table>
+
+</div>
+</div>
+
+
+{% endblock %}
