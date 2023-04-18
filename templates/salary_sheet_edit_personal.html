@@ -2,7 +2,6 @@
 {% block title %}Employees{% endblock %}
 {% block head %}
 {{ super() }}
-
 {% endblock %}
 {% block content %}
 <div class="container-fluid" style="background-color: #ffffff;">
@@ -36,8 +35,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="container-fluid" style="background-color: #F4F5F7;">
     <div class="container-fluid p-3">
 
@@ -62,7 +59,7 @@
                     </li>
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="/salarysheetview">
+                            <a href="{{url_for('salary_sheet_view',salid=id)}}">
                                 <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                         aria-expanded="false">
                                     Back
@@ -77,12 +74,12 @@
 
         <table class="table table-bordered" style="border: 2px solid black !important;">
             <thead class="text-center center align-baseline">
-            <tr class="border-bottom" scope="row" style="border: 2px solid !important;">
+            <tr class="border-bottom" scope="col" style="border: 2px solid !important;">
                 <th scope="col" rowspan="2" class="align-middle" style="background-color: #DFE1E6;">Employee Name</th>
                 <th scope="col rwo-2" rowspan="2" class="align-middle" style="background-color: #DFE1E6;"> Leave Taken
                     For LWP
                 </th>
-                <th scope="row" colspan="8" class="align-middle" style="background-color: #DCFDD9;">Earning</th>
+                <th scope="col" colspan="8" class="align-middle" style="background-color: #DCFDD9;">Earning</th>
                 <th scope="row col" rowspan="2" class="align-middle" style="background-color: #DFE1E6;">Gross Salary
                 </th>
                 <th scope="col-6" colspan="6" class="align-middle" style="background-color: #FDD9DB;">Deduction</th>
@@ -109,35 +106,34 @@
             </thead>
             <tbody style="background-color: #ffffff;">
             <tr class="ttr text-center">
-                <th scope="row">{{ data["personal_data"]["employeeName"] }}</th>
-                <td>{{ data["salary_data"]["lwp"] }}</td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["basic"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["hra"] }}'></td>
-                <th scope="row"><input type="text" class="form-control text-center  " placeholder='{{ data["salary_data"]["da"] }}'>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["otherAllowance"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["incentive"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["arrears"] }}'></td>
-                <th scope="row"><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["outstandingAdjustment"] }}'>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["statutoryBonus"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["grossSalary"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["epfo"] }}'></td>
-                <th scope="row"><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["pt"] }}'></th>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["tds"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["leaveDeduction"] }}'></td>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["otherDeduction"] }}'></td>
-                <th scope="row"><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["outstandingAdjustments"] }}'></th>
-                <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["netSalary"] }}'></td>
-
+            <form action="{{url_for('salary_sheet_edit_',empid=data[id]["userID"],salid=id )}}" method="POST">
+                <label name="" ></label>
+                <th scope="col">{{ data[id]["employeeName"] }}</th>
+                <td scope="col"><input type="text" class="form-control text-center" value="{{ data[id]["lwp"] }}" name="lwp" id="lwp"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["basic"] }}' name="basic"value="2500" id="basic"></td>
+                <td scope="col"><input type="text" class="form-control text-center"  name="hra" id="hra" value='{{ data[id]["hra"] }}' ></td>
+                <th scope="col"><input type="text" class="form-control text-center  " value='{{ data[id]["da"] }}' name="da" id="da"  readonly></th>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["otherAllowance"] }}' id="otherAllowance" name="otherAllowance"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["incentive"] }}' id="incentive" name="incentive"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["arrears"] }}' id="arrears" name="arrears"></td>
+                <th scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["grsOutstandingAdjustment"] }}' id="grsOutstandingAdjustment" name="grsOutstandingAdjustment">
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["statutoryBonus"] }}' id="statutoryBonus" name="statutoryBonus"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["grossSalary"] }}' id="grossSalary" name="grossSalary" readonly></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["epfo"] }}' id="epfo" name="epfo"></td>
+                <th scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["pt"] }}' id="pt" name="pt"></th>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["tds"] }}' id="tds" name="tds"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["leaveDeduction"] }}' id="leaveDeduction" name="leaveDeduction"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["otherDeduction"] }}' id="otherDeduction" name="otherDeduction"></td>
+                <th scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["dedOutstandingAdjustment"] }}' id="dedOutstandingAdjustment" name="dedOutstandingAdjustment"></th>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["netSalary"] }}' id="netSalary" name="netSalary"  readonly></td>
                 <td>
-                    <a href="/salarysheetview">
-                        <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"
+                        <button class="btn border-1 btn-secondary"aria-haspopup="true" type="submit"
                                 aria-expanded="false"
                                 style="color:#2F3990; border-color:#2F3990; background-color: #FFFFFF">
                             Update
                         </button>
-                    </a>
-
                 </td>
+            </form>
             </tr>
             </tbody>
         </table>
@@ -145,14 +141,47 @@
     </div>
 </div>
 
+    <script>
+        // Do all your JavaScript in a separate JavaScript section
+    var basic = document.getElementById("basic");
+    var hra = document.getElementById("hra");
+    var lwp = document.getElementById("lwp");
+    var da = document.getElementById("da");
+    var otherAllowance = document.getElementById("otherAllowance");
+    var incentive = document.getElementById("incentive");
+    var arrears = document.getElementById("arrears");
+    var grsOutstandingAdjustment = document.getElementById("grsOutstandingAdjustment");
+    var statutoryBonus = document.getElementById("statutoryBonus");
+    var grossSalary = document.getElementById("grossSalary");
+    var epfo = document.getElementById("epfo");
+    var pt = document.getElementById("pt");
+    var tds = document.getElementById("tds");
+    var leaveDeduction = document.getElementById("leaveDeduction");
+    var otherDeduction = document.getElementById("otherDeduction");
+    var dedOutstandingAdjustment = document.getElementById("dedOutstandingAdjustment");
+    var netSalary = document.getElementById("netSalary");
 
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
+
+
+    var inputs = Array.prototype.slice.call(document.querySelectorAll("td > input"));
+
+    inputs.forEach(function(input){
+
+      input.addEventListener("keyup", function(){
+        // Always supply the second argument to parseInt() (the radix) so you
+        // dont' get non-base 10 answers.
+        console.log(basic.value)
+        hra.value = parseInt(basic.value, 10)*0.5;
+        da.value = parseInt(basic.value, 10)*0.4;
+        grossSalary.value = parseInt(basic.value, 10) + parseInt(basic.value, 10)+ parseInt(hra.value, 10)+ parseInt(da.value, 10)+ parseInt(otherAllowance.value, 10)
+        + parseInt(incentive.value, 10)+ parseInt(arrears.value, 10)+parseInt(grsOutstandingAdjustment.value, 10) +parseInt(statutoryBonus.value, 10)      ;
+        leaveDeduction.value=parseInt(lwp.value, 10)*2000;
+        netSalary.value = parseInt(grossSalary.value, 10) - parseInt(epfo.value, 10) - parseInt(pt.value, 10) - parseInt(tds.value, 10) - parseInt(leaveDeduction.value, 10)
+        - parseInt(otherDeduction.value, 10)- parseInt(dedOutstandingAdjustment.value, 10);
+
+      });
     });
-    document.getElementById("datetimepicker1").datetimepicker();
-
-
+    </script>
 </script>
 
 {% endblock %}

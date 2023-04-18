@@ -34,21 +34,21 @@ def result():
         # ADD LEAVE DATA
 
         leave_data = {
-            'date': {'num_of_day': '', 'sdate': '', 'type': ''},
-            'total_leaves': {'CL': '', 'PL': '', 'SL': ''}
+            # 'date': {'days': '', 'applydate': '', 'type': '','fromdate':'','todate':''},
+            'total_leaves': {'CL': 10, 'PL': 10, 'SL': 10,'LWP':0}
         }
-        db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("leaveMST").document("date").set(leave_data["date"])
+        # db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("leaveMST").document("date").set(leave_data["date"])
         db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("leaveMST").document("total_leaves").set(leave_data["total_leaves"])
 
         # ADD SALARY DATA
 
-        salary_slip_data = {
-            'slip_id': '', 'lwp': "", 'basic': "", 'da': "", 'hra': "", 'otherAllowance': "",
-            'incentive': "", 'outstandingAdjustment': "", 'arrears': "", 'statutoryBonus': '',
-            'grossSalary': "", 'epfo': "", 'outstandingAdjustments': "", 'pt': "",
-            'tds': "", 'otherDeduction': "", 'leaveDeduction': "",'totalDeduction': "", 'netSalary': ""
-        }
-        db.collection(u'alian_software').document('employee').collection('employee').document(new_id).collection('salaryslips').document("slipid").set(salary_slip_data)
+        # salary_slip_data = {
+        #     'employeeName': request.form.get('name'), 'userID': new_id,'slip_id': '', 'lwp': "", 'basic': "", 'da': "", 'hra': "", 'otherAllowance': "",
+        #     'incentive': "", 'grsOutstandingAdjustment': "", 'arrears': "", 'statutoryBonus': '',
+        #     'grossSalary': "", 'epfo': "", 'dedOutstandingAdjustment': "", 'pt': "",
+        #     'tds': "", 'otherDeduction': "", 'leaveDeduction': "",'totalDeduction': "", 'netSalary': "",'month':'','year':''
+        # }
+        # db.collection(u'alian_software').document('employee').collection('employee').document(new_id).collection('salaryslips').document("slipid").set(salary_slip_data)
 
         # ADD TDS DATA
 

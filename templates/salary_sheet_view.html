@@ -90,37 +90,40 @@
             </tr>
             </thead>
             <tbody style="background-color:#ffffff;" class="text-center">
-            {% for id in data %}
-            <tr class="ttr">
-                <th scope="row">{{ id }}</th>
-                <td>lwp</td>
-                <td>{{ data[id]["basic"] }}</td>
-                <td>{{ data[id]["hra"] }}</td>
-                <th scope="row">{{ data[id]["da"] }}</th>
-                <td>{{ data[id]["otherAllowance"] }}</td>
-                <td>{{ data[id]["incentive"] }}</td>
-                <td>{{ data[id]["arrears"] }}</td>
-                <th scope="row">{{ data[id]["outstandingAdjustment"] }}</th>
-                <td>{{ data[id]["statutoryBonus"] }}</td>
-                <td>{{ data[id]["grossSalary"] }}</td>
-                <th scope="col">{{ data[id]["epfo"] }}</th>
-                <td>{{ data[id]["pt"] }}</td>
-                <td>{{ data[id]["tds"] }}</td>
-                <td>{{ data[id]["leaveDeduction"] }}</td>
-                <td>{{ data[id]["otherDeduction"] }}</td>
-                <td>{{ data[id]["outstandingAdjustments"] }}</td>
-                <td>{{ data[id]["netSalary"] }}</td>
-                <td>
-                    <a href="/salarysheetedit/{{ id }}">
+                {% for i in data%}
+
+                <tr>
+                    <td scope="col" >{{data[i]['employeeName']}}</td>
+                    <td scope="col">{{ data[i]['lwp'] }}</td>
+                    <td scope="col">{{data[i]['basic']}}</td>
+                    <td scope="col">{{data[i]['hra']}}</td>
+                    <td scope="col">{{data[i]['da']}}</td>
+                    <td scope="col">{{data[i]['otherAllowance']}}</td>
+                    <td scope="col">{{data[i]['incentive']}}</td>
+                    <td scope="col">{{data[i]['arrears']}}</td>
+                    <td scope="col">{{data[i]['grsOutstandingAdjustment']}}</td>
+                    <td scope="col">{{data[i]['statutoryBonus']}}</td>
+                    <td scope="col">{{data[i]['grossSalary']}}</td>
+                    <td scope="col">{{data[i]['epfo']}}</td>
+                    <td scope="col">{{data[i]['pt']}}</td>
+                    <td scope="col">{{data[i]['tds']}}</td>
+                    <td scope="col">{{data[i]['leaveDeduction']}}</td>
+                    <td scope="col">{{data[i]['otherDeduction']}}</td>
+                    <td scope="col">{{data[i]['dedOutstandingAdjustment']}}</td>
+                    <td scope="col">{{data[i]['netSalary']}}</td>
+                    <td scope="col">
+                         <a href="{{url_for('salary_sheet_edit_',empid=data[i]['userID'],salid=salid)}}">
                         <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"
                                 aria-expanded="false"
                                 style="color:#2F3990; border-color:#2F3990; background-color: #FFFFFF">
                             Edit
                         </button>
                     </a>
-                </td>
-            </tr>
-            {% endfor%}
+                    </td>
+                </tr>
+                
+
+                {% endfor%}
             </tbody>
         </table>
 
@@ -128,13 +131,5 @@
 </div>
 
 
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
-    document.getElementById("datetimepicker1").datetimepicker();
-
-
-</script>
 
 {% endblock %}
