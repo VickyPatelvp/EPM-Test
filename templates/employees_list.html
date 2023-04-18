@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Employees{% endblock %}
+{% block title %}Employees list{% endblock %}
 {% block head %}
 {{ super() }}
 <style type="text/css">
@@ -497,6 +497,7 @@ element.style {
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
                                                                                                                         <br>
+                                                                                                                        
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label ">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
                                                                                                                                    for="department"><b>Department</b></label>
@@ -510,10 +511,12 @@ element.style {
                                                                                                                                     {% for i in department%}
                                                                                                                                     <option>{{ i }}</option>
                                                                                                                                     {% endfor %}
+                                                                                                                                    
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
+                                                                                                                        
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
@@ -526,12 +529,17 @@ element.style {
                                                                                                                                     <option>
                                                                                                                                         Select
                                                                                                                                     </option>
-                                                                                                                                    <option> Senior </option>
-                                                                                                                                    <option> Junior </option>
+                                                                                                                                    {% for key,value in department.items()%}
+                                                                                                                                    {%for i,j in value.items()%}
+                                                                                                                                    <option> {{ i }}
+                                                                                                                                    </option>
+                                                                                                                                    {% endfor %}
+                                                                                                                                    {%endfor%}
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
+                                                                                                                        
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"

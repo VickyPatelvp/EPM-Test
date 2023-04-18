@@ -5,6 +5,7 @@ from firebase_admin import firestore
 from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
+# from tds_data import TDSData
 
 # FLASK APP
 app = Flask(__name__)
@@ -19,6 +20,8 @@ cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-
 db = firestore.client()
 
 leavobj = Leavemanage(db)
+
+# tds = TDSData(db)
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -51,7 +54,8 @@ def employee_list():
     employee_list = {}
     for doc in docs:
         employee_list.update({doc.id: doc.to_dict()})
-    return render_template('employees_list.html', data=employee_list)
+    department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+    return render_template('employees_list.html', data=employee_list, department=department)
 
 
 
@@ -109,7 +113,7 @@ def employee_profile_edit(id):
 @app.route('/department', methods=['GET', 'POST'])
 def department():
     ''' DISPLAY DEPARTMENT '''
-    department_data = Profile.department_data(self=db)
+    department_data = (db.collection(u'alian_software').document(u'department').get()).to_dict()
     return render_template('department.html', data=department_data)
 
 @app.route('/salary', methods=['GET', 'POST'])
@@ -145,7 +149,16 @@ def salary_sheet_edit_(id):
     return render_template('salary_sheet_edit_personal.html', data=employee_data)
 
 
+@app.route('/tds/<id>', methods=['GET', 'POST'])
+def tds(id):
+    ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
+    profile = Profile(id)
+    employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
+    return render_template('tds_test.html', data=employee_tds_data)
+
+# tds.deduction('EMP001')
+
 if __name__ == '__main__':
-    app.run(debug=True, port=3005)
+    app.run(debug=True, port=3015)
 
 # app.run(debug=True, host="192.168.0.53", port=3005)

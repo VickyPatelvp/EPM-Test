@@ -34,8 +34,7 @@ footer a {
 }
 </style>
     {% endblock %}
-</head>
-<body>
+
 {% block header %}
 <nav class="navbar navbar-expand-md">
     <div class="container-fluid text-dark">
@@ -71,32 +70,10 @@ footer a {
                     <li class="nav-item">
                         <a class="nav-link disabled">Company</a>
                     </li>
-                   
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Support
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-
-
-                        </ul>
-                    </li>
                     <li class="nav-item">
-                        <a class="navbar-brand" href="#"><img src="/static/assets/notification-bell.png" alt=""></a>
-                    </li>
-                    <li class="nav-item">
-
                         <a class="navbar-brand" href="#"> Jade powers
                             <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
                     </li>
-
                 </ul>
             </form>
         </div>
@@ -105,6 +82,8 @@ footer a {
 
 
 {% endblock%}
+</head>
+<body>
 <div id="content">{% block content %}{% endblock %}</div>
 
 <div id="footer">
