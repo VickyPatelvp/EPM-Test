@@ -8,6 +8,7 @@ from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
 import re
+# from tds_data import TDSData
 
 # FLASK APP
 app = Flask(__name__)
@@ -69,7 +70,8 @@ def employee_list():
     employee_list = {}
     for doc in docs:
         employee_list.update({doc.id: doc.to_dict()})
-    return render_template('employees_list.html', data=employee_list)
+    department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+    return render_template('employees_list.html', data=employee_list, department=department)
 
 
 
@@ -201,6 +203,15 @@ def salary_sheet_edit_(empid,salid):
     employee_salary_data = Salarymanage(db).get_salary_data(empid,salid)
     return render_template('salary_sheet_edit_personal.html',data=employee_salary_data ,id=salid)
 
+
+@app.route('/tds/<id>', methods=['GET', 'POST'])
+def tds(id):
+    ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
+    profile = Profile(id)
+    employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
+    return render_template('tds_test.html', data=employee_tds_data)
+
+# tds.deduction('EMP001')
 
 if __name__ == '__main__':
     app.run(debug=True, port=300)
