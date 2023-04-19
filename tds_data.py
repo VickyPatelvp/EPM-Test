@@ -100,6 +100,8 @@ class TDSData():
 
             current_month = int(datetime.date.today().month)
 
+            # current_month = 7
+
             if current_month <= 3:
                 no_of_remaining_month = 12 - 9 - current_month + 1
                 tds_deducted_till_now = (int((users_ref.collection('salaryslips').document('sal001').get().to_dict())["tds"]) * (current_month - 1 + 9))
