@@ -55,14 +55,16 @@
         </tr>
 
         </thead>
-        <tbody style="background-color:#ffffff;">
         <tr class="table-light">
-            <td scope="col">Month</td>
-            <td scope="col">GS</td>
-            <td scope="col">PF</td>
-            <td scope="col">PT</td>
-            <td scope="col">TDS</td>
-            <td scope="col">NS</td>
+        <tbody style="background-color:#ffffff;">
+        {% for i in data %}
+
+            <td scope="col">{{ i }}</td>
+            <td scope="col">{{ data[i]['grossSalary'] }}</td>
+            <td scope="col">{{ data[i]['epfo'] }}</td>
+            <td scope="col">{{ data[i]['pt'] }}</td>
+            <td scope="col">{{ data[i]['tds'] }}</td>
+            <td scope="col">{{ data[i]['netSalary'] }}</td>
             <td scope="col " class="text-start pending"><p>STS</p></td>
             <td scope="col d-flex">
                 <ul class="nav ">
@@ -70,7 +72,7 @@
                         <i class="fa fa-download"></i>
                     </a>
                     </li>
-                    <li class="nav-item  d-inline"><a class="nav-link" href="/salarysheetview">
+                    <li class="nav-item  d-inline"><a class="nav-link" href="{{url_for('salary_sheet_view',salid=i)}}">
                         <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>
                     </li>
@@ -86,6 +88,9 @@
 
             </td>
         </tr>
+
+        {% endfor %}
+
         <tbody>
     </table>
 

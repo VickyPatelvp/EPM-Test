@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
 from firebase_admin import credentials
@@ -5,6 +7,7 @@ from firebase_admin import firestore
 from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
+import re
 # from tds_data import TDSData
 
 # FLASK APP
@@ -21,7 +24,19 @@ db = firestore.client()
 
 leavobj = Leavemanage(db)
 
-# tds = TDSData(db)
+if datetime.date.today().day==1:
+     pass
+#     Code
+
+# Leave reset
+if datetime.date.today().day==1 or datetime.date.month==1:
+    leavobj.leave_add()
+
+
+
+
+
+
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -59,12 +74,12 @@ def employee_list():
 
 
 
-# @app.route('/result', methods=['POST', 'GET'])
-# def add():
-#     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
-#     result()
-#     # session["j"] = True
-#     # return redirect(url_for('employee_list', session=session["j"]))
+@app.route('/result', methods=['POST', 'GET'])
+def add():
+    ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
+    result()
+    # session["j"] = True
+    return redirect(url_for('employee_list'))
 
 
 @app.route('/employeeprofile/<id>', methods=['GET', 'POST'])
@@ -113,20 +128,51 @@ def employee_profile_edit(id):
 @app.route('/department', methods=['GET', 'POST'])
 def department():
     ''' DISPLAY DEPARTMENT '''
-    department_data = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+    doc_ref = db.collection(u'alian_software').document(u'department')
+    if request.method == 'POST':
+        result = request.form
+        pos = []
+        sal = []
+        data = {}
+        deptnm = ''
+        for key, value in result.items():
+            if key == 'deptname':
+                deptnm = value
+            elif re.findall("^pos", key):
+                pos.append(value)
+            elif re.findall("^sal", key):
+                sal.append(value)
+        for i in range(len(pos)):
+            data.update({pos[i]: sal[i]})
+        doc_ref.update({deptnm: data})
+        # return render_template('department.html')
+
+    data = doc_ref.get().to_dict()
+
+    return render_template('department.html', data=data)
+
+
+
+
+
+
+
+
+    department_data = Profile.department_data(self=db)
     return render_template('department.html', data=department_data)
 
 @app.route('/salary', methods=['GET', 'POST'])
 def salary():
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
-    return render_template('salary_sheet_month.html')
+    salary_list = Salarymanage(db).get_all_month_salary_data()
+    return render_template('salary_sheet_month.html',data=salary_list)
 
 
-@app.route('/salarysheetview', methods=['GET', 'POST'])
-def salary_sheet_view():
+@app.route('/salarysheetview/<salid>', methods=['GET', 'POST'])
+def salary_sheet_view(salid):
     ''' DISPLAY SALARY DETAILS OF EMPLOYEES IN MONTH '''
-    salary_list= Salarymanage(db).get_all_emp_salary_data()
-    return render_template('salary_sheet_view.html', data=salary_list)
+    salary_list= Salarymanage(db).get_all_emp_salary_data(salid)
+    return render_template('salary_sheet_view.html', data=salary_list,salid=salid)
 
 
 @app.route('/salarysheetedit', methods=['GET', 'POST'])
@@ -140,13 +186,18 @@ def salary_sheet_edit():
     return render_template('salary_sheet_edit_all.html', data=employee_list)
 
 
-@app.route('/salarysheetedit/<id>', methods=['GET', 'POST'])
-def salary_sheet_edit_(id):
+@app.route('/salarysheetedit/<empid> <salid>', methods=['GET', 'POST'])
+def salary_sheet_edit_(empid,salid):
+    if request.method=='POST':
+        result = request.form
+        Salarymanage(db).salary_update(empid, salid,data=result)
+        return redirect(url_for('salary_sheet_view',salid=salid))
+
+
 
     ''' EDIT SALARY DETAILS OF PARTICULAR EMPLOYEES IN MONTH '''
-    profile = Profile(id)
-    employee_data = {'personal_data': profile.personal_data(), 'salary_data': profile.salary_data()}
-    return render_template('salary_sheet_edit_personal.html', data=employee_data)
+    employee_salary_data = Salarymanage(db).get_salary_data(empid,salid)
+    return render_template('salary_sheet_edit_personal.html',data=employee_salary_data ,id=salid)
 
 
 @app.route('/tds/<id>', methods=['GET', 'POST'])
@@ -159,6 +210,6 @@ def tds(id):
 # tds.deduction('EMP001')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3015)
+    app.run(debug=True, port=300)
 
 # app.run(debug=True, host="192.168.0.53", port=3005)

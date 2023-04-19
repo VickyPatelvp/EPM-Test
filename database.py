@@ -58,7 +58,7 @@ def result():
         # ADD SALARY DATA
 
         salary_slip_data = {
-            'slip_id': 'sal001', 'lwp': 0, 'basic': 26500, 'da': 17225, 'hra': 2650, 'otherAllowance': 0,
+            'employeeName': name, 'userID': new_id,'slip_id': 'sal001', 'lwp': 0, 'basic': 26500, 'da': 17225, 'hra': 2650, 'otherAllowance': 0,
             'incentive': 0, 'grsOutstandingAdjustment': 0, 'arrears': 0, 'statutoryBonus': 0,
             'grossSalary': 46375, 'epfo': 3180, 'dedOutstandingAdjustment': 0, 'pt': 200,
             'tds': 2650, 'otherDeduction': 0, 'leaveDeduction': 3533.33,'totalDeduction': 9563.33, 'netSalary': 36811.67 , 'month': 'January',
@@ -66,7 +66,7 @@ def result():
         }
         db.collection(u'alian_software').document('employee').collection('employee').document(new_id).collection('salaryslips').document("sal001").set(salary_slip_data)
         salary_slip_data_two = {
-            'slip_id': 'sal002', 'lwp': 0, 'basic': 26500, 'da': 17225, 'hra': 2650, 'otherAllowance': 0,
+            'employeeName': name, 'userID': new_id,'slip_id': 'sal002', 'lwp': 0, 'basic': 26500, 'da': 17225, 'hra': 2650, 'otherAllowance': 0,
             'incentive': 0, 'grsOutstandingAdjustment': 0, 'arrears': 0, 'statutoryBonus': 0,
             'grossSalary': 46375, 'epfo': 3180, 'dedOutstandingAdjustment': 0, 'pt': 200,
             'tds': 2650, 'otherDeduction': 0, 'leaveDeduction': 3533.33,'totalDeduction': 9563.33, 'netSalary': 36811.67, 'month': 'Feb',  'year': 2023
