@@ -5,6 +5,8 @@
 
 {% endblock %}
 {% block content %}
+
+<!-- Header -->
 <div class="container-fluid" style="background-color: #ffffff;">
     <div class="wrapper">
         <div class="main">
@@ -27,7 +29,7 @@
     </div>
 </div>
 
-
+<!-- Buttons  -->
 <div class="container-fluid" style="background-color: #F4F5F7;">
     <div class="container-fluid p-3">
 
@@ -61,7 +63,11 @@
 
         </div>
 
+        <!-- Employees Salary Data -->
+
         <table class="table table-bordered" style="border: 2px solid black !important;">
+
+            <!-- Table Header  -->
             <thead class="text-center center align-baseline">
             <tr class="border-bottom" scope="row" style="border: 2px solid !important;">
                 <th scope="col" rowspan="2" class="align-middle" style="background-color: #DFE1E6;">Employee Name</th>
@@ -89,6 +95,8 @@
                 <th scope="col" class="align-middle" style="background-color: #FDD9DB;">Outstanding Adjustment</th>
             </tr>
             </thead>
+
+            <!-- Salary data  -->
             <tbody style="background-color:#ffffff;" class="text-center">
                 {% for i in data%}
 
@@ -112,6 +120,8 @@
                     <td scope="col">{{data[i]['dedOutstandingAdjustment']}}</td>
                     <td scope="col">{{data[i]['netSalary']}}</td>
                     <td scope="col">
+
+                        <!-- Edit Button  -->
                          <a href="{{url_for('salary_sheet_edit_',empid=data[i]['userID'],salid=salid)}}">
                         <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"
                                 aria-expanded="false"

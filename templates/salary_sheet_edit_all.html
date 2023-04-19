@@ -5,6 +5,7 @@
 
 {% endblock %}
 {% block content %}
+<!-- Header  -->
 <div class="container-fluid" style="background-color: #ffffff;">
     <div class="wrapper">
         <div class="main">
@@ -37,7 +38,7 @@
     </div>
 </div>
 
-
+<!-- Salary Data of Employees -->
 <div class="container-fluid" style="background-color: #F4F5F7;">
     <div class="container-fluid p-3">
 
@@ -75,6 +76,7 @@
             </div>
         </div>
 
+        <!-- Table Headings  -->
         <table class="table table-bordered" style="border: 2px solid black !important;">
             <thead class="text-center center align-baseline">
             <tr class="border-bottom" scope="row" style="border: 2px solid !important;">
@@ -107,6 +109,8 @@
                 <th scope="col" class="align-middle" style="background-color: #FDD9DB;">Outstanding Adjustment</th>
             </tr>
             </thead>
+
+            <!-- Employee Data -->
             {% for data in data %}
             <tbody style="background-color: #ffffff;">
             <tr class="ttr text-center">
@@ -129,6 +133,7 @@
                 <th scope="row"><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["outstandingAdjustments"] }}'></th>
                 <td><input type="text" class="form-control text-center" placeholder='{{ data["salary_data"]["netSalary"] }}'></td>
 
+                <!-- Update Button -->
                 <td>
                     <a href="/salarysheetview">
                         <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"

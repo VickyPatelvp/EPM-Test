@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 
-
+<!-- Header Section  -->
 <div class="container-fluid" style="background-color: #FFFFFF;">
     <div class="row mt-2">
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -60,12 +60,14 @@
     </div>
 </div>
 
+<!-- Display Data  -->
 
 <div class="container-fluid" style="background-color: #E7E7E7;">
     <div class="wrapper">
         <div class="main">
             <main class="content">
                 <div class="container-fluid p-3">
+                    <!-- Display Leave  -->
                     {% if leave %}
                     <div class="pt-3">
                         <p class="p-2  error">Leave application <b>Sep 24, 2021</b> to <b>Sep 26, 2021</b> <a href="#">Click</a>
@@ -318,6 +320,12 @@
                                                                                         <th class="col-3">Account Number
                                                                                         </th>
                                                                                         <td class="col-3">{{ data["personal_data"]["accountNumber"] }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th class="col-3">IFSC Code
+                                                                                        </th>
+                                                                                        <td class="col-3">{{ data["personal_data"]["ifscCode"] }}
                                                                                         </td>
                                                                                     </tr>
                                                                                     </thead>
