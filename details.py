@@ -25,7 +25,6 @@ class Profile:
     def tds_data(self):
         user_ref = db.collection(u'alian_software').document(u'employee').collection('employee').document(
             str(self.id)).collection('tdsmst').document('tds').get()
-        print(user_ref.to_dict())
         return user_ref.to_dict()
 
     # LEAVE DATA
@@ -51,7 +50,6 @@ class Profile:
         data_dict = {}
         for doc in docs:
             data_dict.update({doc.id: doc.to_dict()})
-        print(data_dict)
         return data_dict
 
 

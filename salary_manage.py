@@ -7,7 +7,6 @@ class Salarymanage():
 
     def salary_create(self,empid,salid,data=None):
         data_dict = {}
-        print('hello')
         for key, value in data.items():
             data_dict.update({key: value})
         id='sal00' + str(datetime.date.today().month)
@@ -26,6 +25,8 @@ class Salarymanage():
     def get_all_month_salary_data(self):
         docs = self.db.collection(u'alian_software').document(u'employee').collection('employee').stream()
         employee_salary = {}
+
+
         for emp in docs:
             salary_list = {}
             salary_data=self.db.collection(u'alian_software').document(u'employee').collection('employee').document(str(emp.id)).collection('salaryslips').stream()
@@ -46,7 +47,6 @@ class Salarymanage():
                         'pt': 0,
                         'tds': 0,
                     }})
-                print(employee_salary[i][j]["netSalary"],j,i)
                 if j != "salid":
                     salary_data.update({j: {
                         'netSalary': salary_data[j]['netSalary'] + int(employee_salary[i][j]["netSalary"]),
@@ -64,13 +64,9 @@ class Salarymanage():
         employee_salary = {}
         for emp in docs:
             salary_list = {}
-            print(month)
             salary_data=self.db.collection(u'alian_software').document(u'employee').collection('employee').document(str(emp.id)).collection('salaryslips').document(month).get().to_dict()
-
             if salary_data != None:
-                print({emp.id:salary_data})
                 employee_salary.update({emp.id:salary_data})
-                print(employee_salary)
         return employee_salary
 
     def get_salary_data(self,empid,salid):
