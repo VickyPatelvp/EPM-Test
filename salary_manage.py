@@ -5,15 +5,18 @@ class Salarymanage():
     def __init__(self,db):
         self.db=db
 
-    def salary_create(self,empid,salid,data=None):
-        data_dict = {}
-        for key, value in data.items():
-            data_dict.update({key: value})
-        id='sal00' + str(datetime.date.today().month)
-        a = self.db.collection(u'alian_software').document('employee').collection('employee').document(
-            empid).collection(
-            'salaryslips').document(salid).update(data_dict)
-        # ref_obj.document()
+    # def salary_create(self,empid,salid,data=None):
+    #     all_employees=self.db.collection(u'alian_software').document('employee').collection('employee').stream()
+    #     for empi in all_employees:
+    #
+    #      data_dict = {}
+    #     for key, value in data.items():
+    #         data_dict.update({key: value})
+    #     id='sal00' + str(datetime.date.today().month)
+    #     a = self.db.collection(u'alian_software').document('employee').collection('employee').document(
+    #         empid).collection(
+    #         'salaryslips').document(salid).update(data_dict)
+    #     # ref_obj.document()
 
     def salary_update(self,empid,salid,data=None):
         data_dict = {}

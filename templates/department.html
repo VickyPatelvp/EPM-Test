@@ -132,7 +132,7 @@
                         <tr>
                             <th scope="col">Department Name</th>
                             <th scope="col">Postition</th>
-                            <th scope="col">Salary</th>
+                            <th scope="col">Basic Salary</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -148,10 +148,17 @@
                             <td scope="col">{{data[i][j]}}</td>
 
                             <td scope="col">
-                                <a type="btn" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    <i class="fas fa-edit"></i>
+<!--                                <a type="btn" class="btn"data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="{{[i,j,data[i][j]]}}" id="{{i+j+data[i][j]}}" >-->
+<!--                                    <i class="fas fa-edit"></i>-->
+<!--                                </a>-->
+                                 <a type="btn" class="btn"  href="edit_department/{{i,j,data[i][j]}}" onclick=""value="{{[i,j,data[i][j]]}}">
+                                     <i class="fas fa-edit"></i>
+                                </a>
+                                <a type="btn" class="btn"  href="delete_department/{{i,j}}" onclick=""value="{{[i,j]}}">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
+
                         </tr>
                         {% endfor %}
                         {% endfor%}
@@ -200,6 +207,8 @@
         container2.appendChild(salinput);
 
     }
+
+  
 </script>
 
 

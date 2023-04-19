@@ -7,6 +7,9 @@ from firebase_admin import firestore
 from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
+from department import Department
+from update_employee import Upate_information
+
 import re
 # from tds_data import TDSData
 
@@ -23,6 +26,8 @@ cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-
 db = firestore.client()
 
 leavobj = Leavemanage(db)
+dept=Department(db)
+update_obj=Upate_information(db)
 
 if datetime.date.today().day==1:
      pass
@@ -31,12 +36,6 @@ if datetime.date.today().day==1:
 # Leave reset
 if datetime.date.today().day==1 or datetime.date.month==1:
     leavobj.leave_add()
-
-
-
-
-
-
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -128,42 +127,69 @@ def employee_profile_edit(id):
     return render_template('employee_profile_edit.html', data=data,total_leave=total_leave,leave_list=leave_list)
 
 
+''' UPDATE EMPLOYEE PERSONAL DETAILS '''
+@app.route('/personal_data_update/<id>')
+def personal_data_update(id):
+    form=request.form
+    update_obj.update_personal_info(form,id)
+    return redirect({{url_for('employee_profile_edit',id=id)}})
 
+
+
+''' UPDATE EMPLOYEE TDS DETAILS '''
+@app.route('/tds_data_update/<id>')
+def tds_data_update(id):
+    form=request.form
+    update_obj.update_tds_info(form,id)
+    return redirect({{url_for('employee_profile_edit',id=id)}})
+
+
+
+''' DISPLAY DEPARTMENT '''
 @app.route('/department', methods=['GET', 'POST'])
 def department():
     ''' DISPLAY DEPARTMENT '''
-    doc_ref = db.collection(u'alian_software').document(u'department')
     if request.method == 'POST':
-        result = request.form
-        pos = []
-        sal = []
-        data = {}
-        deptnm = ''
-        for key, value in result.items():
-            if key == 'deptname':
-                deptnm = value
-            elif re.findall("^pos", key):
-                pos.append(value)
-            elif re.findall("^sal", key):
-                sal.append(value)
-        for i in range(len(pos)):
-            data.update({pos[i]: sal[i]})
-        doc_ref.update({deptnm: data})
-        # return render_template('department.html')
+        ''' Add New DEPARTMENT '''
+        result=request.form
+        dept.add_deaprtment(result)
 
+    doc_ref = db.collection(u'alian_software').document(u'department')
     data = doc_ref.get().to_dict()
-
-    return render_template('department.html', data=data)
-
+    return render_template('department.html', data=data, obj=dept)
 
 
+@app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
+def delete_department(dep,pos):
+    a=dep,pos
+    print(a)
+    pattern = r'[^a-zA-Z\d\s]'
+    # Use the re.sub() function to replace all occurrences of the pattern with an empty string
+    dep = re.sub(pattern, '', dep)
+    pos=re.sub(pattern,'',pos)
+    print(dep,pos)
+    dept.delete_deaprtment(dep,pos)
+    return redirect(url_for('department'))
+
+@app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
+def edit_department(dep,pos):
+    a=dep,pos
+    print(a)
+    pattern = r'[^a-zA-Z\d\s]'
+    # Use the re.sub() function to replace all occurrences of the pattern with an empty string
+    dep = re.sub(pattern, '', dep)
+    pos=re.sub(pattern,'',pos)
+    print(dep,pos)
+    dept.delete_deaprtment(dep,pos)
+    return redirect(url_for('department'))
 
 
 
+@app.route('/my-route')
+def my_route():
+    return dept
 
 
-    department_data = Profile.department_data(self=db)
-    return render_template('department.html', data=department_data)
 
 @app.route('/salary', methods=['GET', 'POST'])
 def salary():
