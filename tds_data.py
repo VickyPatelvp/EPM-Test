@@ -19,7 +19,7 @@ class TDSData():
 
         ''' Calculate TDS '''
 
-        if datetime.date.today().day == 18:
+        if datetime.date.today().day == 19:
 
             users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id)
 
@@ -98,9 +98,9 @@ class TDSData():
             else:
                 new_total_6 = 0
 
-            current_month = int(datetime.date.today().month)
+            # current_month = int(datetime.date.today().month)
 
-            # current_month = 7
+            current_month = 7
 
             if current_month <= 3:
                 no_of_remaining_month = 12 - 9 - current_month + 1
