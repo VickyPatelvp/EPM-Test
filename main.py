@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
 from firebase_admin import credentials
@@ -20,6 +22,20 @@ cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-
 db = firestore.client()
 
 leavobj = Leavemanage(db)
+
+if datetime.date.today().day==1:
+     pass
+#     Code
+
+# Leave reset
+if datetime.date.today().day==1 or datetime.date.month==1:
+    leavobj.leave_add()
+
+
+
+
+
+
 
 @app.route('/', methods=["POST", "GET"])
 def login():
