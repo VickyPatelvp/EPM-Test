@@ -107,7 +107,7 @@ def result():
                 'periodofInsurance': '2023 to 2024'
             },
             'Interest on Home Loan': {
-                'annualInterestPayable/Paid': 2000,
+                'annualInterestPayable': 2000,
                 'panofLender': 'NHADN5655D',
                 'nameofPerson': name
             },

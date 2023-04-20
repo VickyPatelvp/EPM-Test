@@ -23,9 +23,11 @@ class Leavemanage():
             data_dict={}
             leaves=ref_obj.document('total_leaves').get().to_dict()
             for key,value in data.items():
-                data_dict.update({key:value})
-
-            if leaves[data_dict['type']] - int(data_dict['days'])>0:
+                    data_dict.update({key:value})
+            print(data_dict)
+            print(leaves[data_dict['type']])
+            print(type(leaves[data_dict['type']]))
+            if int(leaves[data_dict['type']]) - int(data_dict['days'])>0:
                 ref_obj.document('total_leaves').update({
                     data_dict['type']: (leaves[data_dict['type']] - int(data_dict['days']))
                 })
@@ -35,9 +37,26 @@ class Leavemanage():
                 })
             data = ref_obj.document(data_dict['applydate']).set(data_dict)
 
-
-        pass
-
+    def take_leave_edit(self, ref_obj, data=None):
+        # doc_ref = users_ref.document(str(datetime.date.today().month))
+        # doc_ref.set(data)
+        if data == None:
+            print('Error')
+        else:
+            data_dict = data
+            leaves = ref_obj.document('total_leaves').get().to_dict()
+            print(data_dict)
+            print(leaves[data_dict['type']])
+            print(type(leaves[data_dict['type']]))
+            if int(leaves[data_dict['type']]) - int(data_dict['days']) > 0:
+                ref_obj.document('total_leaves').update({
+                    data_dict['type']: (leaves[data_dict['type']] - int(data_dict['days']))
+                })
+            else:
+                ref_obj.document('total_leaves').update({
+                    'LWP': (leaves['LWP'] + int(data_dict['days']))
+                })
+            data = ref_obj.document(data_dict['applydate']).set(data_dict)
 
     def get_total_leave(self,ref_obj):
         data=ref_obj.document('total_leaves').get().to_dict()

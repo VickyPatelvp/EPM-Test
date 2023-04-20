@@ -105,17 +105,14 @@ def employee_profile(id):
 
 @app.route('/employeeprofileedit/<id>', methods=['GET', 'POST'])
 def employee_profile_edit(id):
-    # if request.method=='post':
-    #     result()
-
     ''' DISPLAY EMPLOYEE DETAILS '''
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
         'leaveMST')
     if request.method == 'POST':
         ''' Store leave Data '''
-        result = request.form
-        leavobj.take_leave(users_ref, data=result)
-
+        result = request.get_json()
+        print(result)
+        leavobj.take_leave_edit(users_ref, data=result)
     ''' GET LEAVE DATA '''
     total_leave = leavobj.get_total_leave(users_ref)
     leave_list = leavobj.leave_list(users_ref)
@@ -128,21 +125,53 @@ def employee_profile_edit(id):
 
 
 ''' UPDATE EMPLOYEE PERSONAL DETAILS '''
-@app.route('/personal_data_update/<id>')
+@app.route('/personal_data_update/<id>', methods=['GET', 'POST'])
 def personal_data_update(id):
-    form=request.form
-    update_obj.update_personal_info(form,id)
-    return redirect({{url_for('employee_profile_edit',id=id)}})
+    if request.method=='POST':
+        form = request.get_json()
+        print(form)
+        update_obj.update_personal_info(form,id)
+    ''' GET LEAVE DATA '''
+    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
+        'leaveMST')
+    total_leave = leavobj.get_total_leave(users_ref)
+    leave_list = leavobj.leave_list(users_ref)
 
+    ''' EDIT EMPLOYEE DETAILS '''
+
+    profile = Profile(id)
+    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
+            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
+    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
 
 
 ''' UPDATE EMPLOYEE TDS DETAILS '''
-@app.route('/tds_data_update/<id>')
+@app.route('/tds_data_update/<id>', methods=['GET', 'POST'])
 def tds_data_update(id):
-    form=request.form
-    update_obj.update_tds_info(form,id)
-    return redirect({{url_for('employee_profile_edit',id=id)}})
+    if request.method=='POST':
+        form=request.get_json()
+        form1 = request.form.get()
+        data_dict={}
+        for key, value in form1.items():
+            if value != '':
+                data_dict.update({key: value})
+        print(form)
+        print(form1)
+        print(data_dict)
+        update_obj.update_tds_info(form, id)
 
+    ''' GET LEAVE DATA '''
+    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
+        'leaveMST')
+    total_leave = leavobj.get_total_leave(users_ref)
+    leave_list = leavobj.leave_list(users_ref)
+
+    ''' EDIT EMPLOYEE DETAILS '''
+
+    profile = Profile(id)
+    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
+            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
+    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
 
 
 ''' DISPLAY DEPARTMENT '''
