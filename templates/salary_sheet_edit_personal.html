@@ -4,6 +4,7 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
+<!-- Header -->
 <div class="container-fluid" style="background-color: #ffffff;">
     <div class="wrapper">
         <div class="main">
@@ -64,6 +65,8 @@
         </div>
 
         <table class="table table-bordered" style="border: 2px solid black !important;">
+
+            <!-- Table Heading  -->
             <thead class="text-center center align-baseline">
             <tr class="border-bottom" scope="col" style="border: 2px solid !important;">
                 <th scope="col" rowspan="2" class="align-middle" style="background-color: #DFE1E6;">Employee Name</th>
@@ -95,6 +98,8 @@
                 <th scope="col" class="align-middle" style="background-color: #FDD9DB;">Outstanding Adjustment</th>
             </tr>
             </thead>
+
+            
             <tbody style="background-color: #ffffff;">
             <tr class="ttr text-center">
             <form action="{{url_for('salary_sheet_edit_',empid=data[id]["userID"],salid=id )}}" method="POST">

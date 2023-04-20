@@ -11,7 +11,8 @@ from department import Department
 from update_employee import Upate_information
 
 import re
-# from tds_data import TDSData
+from tds_data import TDSData
+from excel_sheet import SalaryData
 
 # FLASK APP
 app = Flask(__name__)
@@ -266,7 +267,17 @@ def tds(id):
     employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
     return render_template('tds_test.html', data=employee_tds_data)
 
-# tds.deduction('EMP001')
+
+if datetime.date.today().day==20:
+    # TDS Data
+
+    TDSData(db).deduction("EMP002")
+
+
+    # Create Excel-sheet for Bank
+
+    SalaryData(db).add_data("EMP002")
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=300)

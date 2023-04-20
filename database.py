@@ -31,7 +31,8 @@ def result():
             'currentExperience':'3 year', 'dob': '1999-02-04', 'gender': 'male',
             'phoneNo': 35464531456,
             'bankName': 'BOB', 'accountHolderName': name,
-            'accountNumber': 3561654653416541341,
+            'accountNumber': '3561654653416541341',
+            'ifscCode': 'BANKIFSC12',
             'aadharCardNo': 6546541654464, 'panCardNo': 'BNDJC4544D',
             'passportNo': 57847857878,
             'pfAccountNo': 'MABAN00000640000000125', 'uanNo': 100904319456, 'esicNo': 31001234560000001

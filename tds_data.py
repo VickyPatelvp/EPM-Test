@@ -1,11 +1,11 @@
-from firebase_admin import firestore
-import firebase_admin
+# from firebase_admin import firestore
+# import firebase_admin
 
-from firebase_admin import credentials
-cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
-firebase_app = firebase_admin.initialize_app(cred)
+# from firebase_admin import credentials
+# cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+# firebase_app = firebase_admin.initialize_app(cred)
 
-db = firestore.client()
+# db = firestore.client()
 
 import datetime
 
@@ -19,17 +19,23 @@ class TDSData():
 
         ''' Calculate TDS '''
 
-        if datetime.date.today().day == 19:
+        if datetime.date.today().day == 20:
 
-            users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id)
+            users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(id)
 
             tds_data = users_ref.collection('tdsmst').document('tds').get().to_dict()
 
             # print(tds_data)
 
-            total_salary = (users_ref.get().to_dict()["ctc"] * 12)
+            # current_month = int(datetime.date.today().month)
 
-            # 80C (1,50,000 Limit)
+            current_month = 2
+
+            # Annual Salary of Employee
+
+            total_salary = int(users_ref.get().to_dict()["ctc"] * 12)
+
+            # TDS Data from Database
 
             principle_home_loan = int(tds_data["Principal on Home loan"]["loanAmount"])
 
@@ -37,9 +43,18 @@ class TDSData():
 
             elss = int(tds_data["ELSS(SIP)"]["annualAmount"])
 
-            annual_pf = float((users_ref.collection('salaryslips').document('sal001').get().to_dict())["epfo"]) * 12
-
             tution_fee = int(tds_data["Tution Fee"]["annualAmount"])
+
+            # EPFO Data from previous Salaryslip
+
+            if current_month == 1:
+                annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{12-current_month}').get().to_dict())["epfo"]) * 12
+            elif current_month == 2:
+                annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{13-current_month}').get().to_dict())["epfo"]) * 12
+            else:
+                annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{current_month-2}').get().to_dict())["epfo"]) * 12
+
+            # 80C (1,50,000 Limit)
 
             total = principle_home_loan + primium_on_insurance + elss + annual_pf + tution_fee
 
@@ -48,6 +63,8 @@ class TDSData():
 
             else:
                 new_total_1 = 150000
+
+            # TDS Health Insurance 
 
             health_insurance = int(tds_data["Health Insurance (Self)"]["annualAmountofpolicy"]) + \
                                int(tds_data["Health Insurance (Spouse)"]["annualAmountofpolicy"]) + \
@@ -59,13 +76,21 @@ class TDSData():
             else:
                 new_total_2 = health_insurance
 
+<<<<<<< HEAD
             interest_on_home_loan = int(tds_data["Interest on Home Loan"]["annualInterestPayable"])
+=======
+            # TDS Interest on Home loan
+
+            interest_on_home_loan = int(tds_data["Interest on Home Loan"]["annualInterestPayable/Paid"])
+>>>>>>> 873fe2c66ef49259736b593cdef6d6a67767afcc
 
             if interest_on_home_loan >= 200000:
                 new_total_3 = 200000
 
             else:
                 new_total_3 = interest_on_home_loan
+
+            # TDS House rent
 
             annual_house_rent = int(tds_data["Annual House Rent"]["currentMonthRent"]) * 12
 
@@ -98,24 +123,40 @@ class TDSData():
             else:
                 new_total_6 = 0
 
-            # current_month = int(datetime.date.today().month)
+            # Previous Month TDS and remaining Months
 
-            current_month = 7
-
-            if current_month <= 3:
-                no_of_remaining_month = 12 - 9 - current_month + 1
-                tds_deducted_till_now = (int((users_ref.collection('salaryslips').document('sal001').get().to_dict())["tds"]) * (current_month - 1 + 9))
+            if current_month <= 4:
+                no_of_remaining_month = (12 - 9 - current_month) + 2
+                if current_month <= 2: 
+                    tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(10 + current_month)}').get().to_dict())["tds"])) * (no_of_remaining_month)
+                else:
+                    tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (no_of_remaining_month))
+            elif current_month == 5:
+                no_of_remaining_month = 12
+                tds_deducted_till_now = 0
             else:
-                no_of_remaining_month = 12 - 3 - current_month + 1
-                tds_deducted_till_now = (int((users_ref.collection('salaryslips').document('sal001').get().to_dict())["tds"]) * (current_month - 1 - 3))
+                no_of_remaining_month = (12 - current_month) + 5
+                tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (no_of_remaining_month))
+
+            # TDS Calculate 
 
             if no_of_remaining_month == 0:
-                tds = new_total_6
+                tds = abs(new_total_6)
             else:
-                tds = (new_total_6 - tds_deducted_till_now) / no_of_remaining_month
+                tds = abs((new_total_6 - tds_deducted_till_now) / no_of_remaining_month)
 
-            print(int(tds))
+            # print(tds)
+
+            # Store TDS deduction to database
+                
+            if current_month == 1:
+                users_ref.collection('salaryslips').document(f'sal00{str(13 - current_month)}').update({"tds":tds})
+            else:
+                users_ref.collection('salaryslips').document(f'sal00{str(current_month - 1)}').update({"tds":tds})
 
 
-TDSData.deduction(TDSData.deduction, id="EMP001")
+
+
+
+# TDSData.deduction(TDSData.deduction, id="EMP002")
 
