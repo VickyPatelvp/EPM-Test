@@ -1,11 +1,11 @@
-from firebase_admin import firestore
-import firebase_admin
+# from firebase_admin import firestore
+# import firebase_admin
 
-from firebase_admin import credentials
-cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
-firebase_app = firebase_admin.initialize_app(cred)
+# from firebase_admin import credentials
+# cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+# firebase_app = firebase_admin.initialize_app(cred)
 
-db = firestore.client()
+# db = firestore.client()
 
 import datetime
 
@@ -19,9 +19,9 @@ class TDSData():
 
         ''' Calculate TDS '''
 
-        if datetime.date.today().day == 19:
+        if datetime.date.today().day == 20:
 
-            users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id)
+            users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(id)
 
             tds_data = users_ref.collection('tdsmst').document('tds').get().to_dict()
 
@@ -29,7 +29,7 @@ class TDSData():
 
             # current_month = int(datetime.date.today().month)
 
-            current_month = 7
+            current_month = 2
 
             # Annual Salary of Employee
 
@@ -141,6 +141,8 @@ class TDSData():
             else:
                 tds = abs((new_total_6 - tds_deducted_till_now) / no_of_remaining_month)
 
+            # print(tds)
+
             # Store TDS deduction to database
                 
             if current_month == 1:
@@ -149,5 +151,8 @@ class TDSData():
                 users_ref.collection('salaryslips').document(f'sal00{str(current_month - 1)}').update({"tds":tds})
 
 
-TDSData.deduction(TDSData.deduction, id="EMP002")
+
+
+
+# TDSData.deduction(TDSData.deduction, id="EMP002")
 
