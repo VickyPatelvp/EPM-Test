@@ -31,10 +31,10 @@ class Profile:
     def leave_data(self):
         data = []
         user_ref = db.collection(u'alian_software').document(u'employee').collection('employee').document(
-            str(self.id)).collection('leaveMST').document('date').get()
+            str(self.id)).collection('leaveMST').document('total_leaves').get()
         data.append(user_ref.to_dict())
         user_ref = db.collection(u'alian_software').document(u'employee').collection('employee').document(
-            str(self.id)).collection('leaveMST').document('total_leaves').get()
+            str(self.id)).collection('leaveMST').document('date').get()
         data.append(user_ref.to_dict())
         return data
 
