@@ -8,7 +8,6 @@ class Leavemanage():
             users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(
                 'empid').collection('leaveMST')
             leaves=users_ref.document('total_leaves').get().to_dict()
-            print(leaves)
             users_ref.document('total_leaves').set({
                 'SL': (leaves['SL']+0.5),
                 'PL': (leaves['PL']+1),
@@ -23,10 +22,8 @@ class Leavemanage():
         else:
             data_dict={}
             leaves=ref_obj.document('total_leaves').get().to_dict()
-            print(leaves)
             for key,value in data.items():
                 data_dict.update({key:value})
-            print(data_dict)
 
             if leaves[data_dict['type']] - int(data_dict['days'])>0:
                 ref_obj.document('total_leaves').update({
@@ -36,7 +33,6 @@ class Leavemanage():
                 ref_obj.document('total_leaves').update({
                     'LWP': (leaves['LWP'] + int(data_dict['days']))
                 })
-            print(data_dict)
             data = ref_obj.document(data_dict['applydate']).set(data_dict)
 
 

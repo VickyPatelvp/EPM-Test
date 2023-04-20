@@ -64,6 +64,7 @@ def dashboard():
 
 @app.route('/employeelist', methods=['GET', 'POST'])
 def employee_list():
+
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
     docs = db.collection(u'alian_software').document(u'employee').collection('employee').stream()
     employee_list = {}
@@ -105,6 +106,9 @@ def employee_profile(id):
 
 @app.route('/employeeprofileedit/<id>', methods=['GET', 'POST'])
 def employee_profile_edit(id):
+    # if request.method=='post':
+    #     result()
+
     ''' DISPLAY EMPLOYEE DETAILS '''
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
         'leaveMST')
