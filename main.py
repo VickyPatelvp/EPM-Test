@@ -9,7 +9,7 @@ from create_new_employee import result
 from salary_manage import Salarymanage
 from department import Department
 from update_employee import Upate_information
-
+from dashboard import Dashboard
 import re
 from tds_data import TDSData
 from excel_sheet import SalaryData
@@ -29,6 +29,7 @@ db = firestore.client()
 leavobj = Leavemanage(db)
 dept=Department(db)
 update_obj=Upate_information(db)
+dashboard_obj=Dashboard(db)
 
 if datetime.date.today().day==1:
      pass
@@ -58,8 +59,13 @@ def register():
 def dashboard():
 
     ''' DISPLAY DASHBOARD '''
+    employee_on_leave= dashboard_obj.employee_on_lerave()
+    total_leaves=dashboard_obj.total_lerave()
 
-    return render_template('dashboard.html')
+
+
+
+    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves)
 
 
 @app.route('/employeelist', methods=['GET', 'POST'])

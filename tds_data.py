@@ -76,13 +76,13 @@ class TDSData():
             else:
                 new_total_2 = health_insurance
 
-<<<<<<< HEAD
+# HEAD
             interest_on_home_loan = int(tds_data["Interest on Home Loan"]["annualInterestPayable"])
-=======
+
             # TDS Interest on Home loan
 
-            interest_on_home_loan = int(tds_data["Interest on Home Loan"]["annualInterestPayable/Paid"])
->>>>>>> 873fe2c66ef49259736b593cdef6d6a67767afcc
+            interest_on_home_loan = int(tds_data["Interest on Home Loan"]["annualInterestPayable"])
+# 873fe2c66ef49259736b593cdef6d6a67767afcc
 
             if interest_on_home_loan >= 200000:
                 new_total_3 = 200000

@@ -92,7 +92,7 @@ def result():
                 'periodofInsurance': request.form.get('hifperiod')
             },
             'Interest on Home Loan': {
-                'annualInterestPayable/Paid': request.form.get('ihlannual'),
+                'annualInterestPayable': request.form.get('ihlannual'),
                 'panofLender': request.form.get('ihlpanlender'),
                 'nameofPerson': request.form.get("ihlname")
             },

@@ -261,15 +261,15 @@
                                     <thead style="background-color: #DFE1E6">
                                     <tr>
                                         <th>Name</th>
-                                        <th class="d-none d-xl-table-cell">Leave Type</th>
+                                        <th class="d-none d-xl-table-cell">Leave Date</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for i in range(5)%}
+                                    {% for name,sdate in employee_on_leave.items() %}
                                     <tr>
-                                        <td>Project Apollo <br>Department</td>
-                                        <td class="d-none d-xl-table-cell align-middle">Full day</td>
+                                        <td>{{name}}</td>
+                                        <td class="d-none d-xl-table-cell align-middle"> {{sdate}}</td>
                                     </tr>
                                     {% endfor %}
                                     </tbody>
@@ -293,12 +293,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for i in range(5)%}
+                                    {% for  name,days in total_leaves.items() %}
                                     <tr>
-                                        <td>Project Apollo <br>Department</td>
+                                        <td>{{ name }}</td>
                                         <td class="d-none d-xl-table-cell align-middle">Full day</td>
                                     </tr>
-                                    {% endfor %}
+                                    {% days %}
                                     </tbody>
                                 </table>
                                 </div>
