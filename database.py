@@ -67,56 +67,38 @@ def result():
         # ADD TDS DATA
 
         tds_detail = {
-            'Principal on Home loan': {
-                'applicationNo': 6548656,
-                'loanAmount': 20000,
-                'PeriodofHomeLoan': '2 years',
-                'nameofPerson': name,
-                'annualInterest': '5%'
-            },
-            'Premium on Insurance': {
-                'insuranceNo': 545154565,
-                'nameofInsured': name,
-                'annualAmountofpolicy': 3545
-            },
-            'Health Insurance (Self)': {
-                'insuranceNo': 6566624,
-                'nameofInsured': name,
-                'annualAmountofpolicy': 3544,
-                'periodofInsurance': '2023 to 2024'
-            },
-            'Health Insurance (Spouse)': {
-                'insuranceNo': 3416565,
-                'nameofInsured': 'Xyz',
-                'annualAmountofpolicy': 2126,
-                'periodofInsurance': '2023 to 2024'
-            },
-            'Health Insurance (Father)': {
-                'insuranceNo': 6574846,
-                'nameofInsured': 'P',
-                'annualAmountofpolicy': 2120,
-                'periodofInsurance': '2023 to 2024'
-            },
-            'Interest on Home Loan': {
-                'annualInterestPayable': 2000,
-                'panofLender': 'NHADN5655D',
-                'nameofPerson': name
-            },
-            'Annual House Rent': {
-                'currentMonthRent': 2000,
-                'lenderPAN': 'AFAFF55554D',
-                'periodofDate': '2023 to 2024',
-                'nameofLandloard': 'Ankit',
-                'landloardAddress': 'Nadiad'
-            },
-            'ELSS(SIP)': {
-                'annualAmount': 500,
-                'periodofDate': '2023 to 2024'
-            },
-            'Tution Fee': {
-                'annualAmount': 1000,
-                'periodofDate': '2023 to 2024'
-            }
+            'hlapplicationno': 6548656,
+            'hlamount': 20000,
+            'hlperiod': '2 year',
+            'hlname': name,
+            'hlannual': '5%',
+            'pino': 5454464,
+            'piname': name,
+            'piannual': 3545,
+            'hipno': 466545,
+            'hipname': name,
+            'hipannual': 4545,
+            'hipperiod': '2023 to 2024',
+            'hisno': 6563,
+            'hisname': 'XYZ',
+            'hisannual': 2126,
+            'hisperiod': '2023 to 2024',
+            'hifno': 446556,
+            'hifname': 'Father',
+            'hifannual': 5464,
+            'hifperiod': '2023 to 2024',
+            'ihlannual': 2000,
+            'ihlpanlender': 'JHHD56556',
+            'ihlname': name,
+            'ahrmonth': 2000,
+            'ahrlandpann': 'NJHVJ6556S',
+            'ahrperiod': '2023 to 2024',
+            'ahrlandname': 'Ankit',
+            'ahrlandaddress': 'Nadiad',
+            'elssannual': 500,
+            'elssperiod': '2023 to 2024',
+            'tfannual': 1000,
+            'tfperiod': '2023 to 2024'
         }
 
 
