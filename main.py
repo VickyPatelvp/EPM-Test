@@ -1,5 +1,7 @@
 import datetime
 
+import time
+
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
 from firebase_admin import credentials
@@ -39,6 +41,7 @@ if datetime.date.today().day==1:
 if datetime.date.today().day==1 or datetime.date.month==1:
     leavobj.leave_add()
 
+
 @app.route('/', methods=["POST", "GET"])
 def login():
 
@@ -62,9 +65,6 @@ def dashboard():
     employee_on_leave= dashboard_obj.employee_on_lerave()
     total_leaves=dashboard_obj.total_lerave()
 
-
-
-
     return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves)
 
 
@@ -78,7 +78,6 @@ def employee_list():
         employee_list.update({doc.id: doc.to_dict()})
     department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
     return render_template('employees_list.html', data=employee_list, department=department)
-
 
 
 @app.route('/result', methods=['POST', 'GET'])
@@ -109,22 +108,27 @@ def employee_profile(id):
     return render_template('employee_profile.html', leave=leave_status, data=data,total_leave=total_leave,leave_list=leave_list)
 
 
-
 @app.route('/employeeprofileedit/<id>', methods=['GET', 'POST'])
 def employee_profile_edit(id):
     ''' DISPLAY EMPLOYEE DETAILS '''
+    a = time.time()
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
         'leaveMST')
+
+    b = time.time()
     if request.method == 'POST':
         ''' Store leave Data '''
         result = request.get_json()
         print(result)
         leavobj.take_leave_edit(users_ref, data=result)
+
     ''' GET LEAVE DATA '''
+    c = time.time()
     total_leave = leavobj.get_total_leave(users_ref)
     leave_list = leavobj.leave_list(users_ref)
 
     ''' EDIT EMPLOYEE DETAILS '''
+    d = time.time()
     profile = Profile(id)
     data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
             'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
@@ -136,7 +140,6 @@ def employee_profile_edit(id):
 def personal_data_update(id):
     if request.method=='POST':
         form = request.get_json()
-        print(form)
         update_obj.update_personal_info(form,id)
     ''' GET LEAVE DATA '''
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
@@ -149,7 +152,7 @@ def personal_data_update(id):
     profile = Profile(id)
     data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
             'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
-    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
+    return redirect(url_for('employee_profile_edit', id=id))
 
 
 ''' UPDATE EMPLOYEE TDS DETAILS '''
@@ -157,14 +160,6 @@ def personal_data_update(id):
 def tds_data_update(id):
     if request.method=='POST':
         form=request.get_json()
-        form1 = request.form.get()
-        data_dict={}
-        for key, value in form1.items():
-            if value != '':
-                data_dict.update({key: value})
-        print(form)
-        print(form1)
-        print(data_dict)
         update_obj.update_tds_info(form, id)
 
     ''' GET LEAVE DATA '''
@@ -178,7 +173,7 @@ def tds_data_update(id):
     profile = Profile(id)
     data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
             'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
-    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
+    return redirect(url_for('employee_profile_edit', id=id))
 
 
 ''' DISPLAY DEPARTMENT '''
@@ -198,24 +193,20 @@ def department():
 @app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
 def delete_department(dep,pos):
     a=dep,pos
-    print(a)
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
     pos=re.sub(pattern,'',pos)
-    print(dep,pos)
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 
 @app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
-def edit_department(dep,pos):
+def edit_department(dep, pos):
     a=dep,pos
-    print(a)
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
     pos=re.sub(pattern,'',pos)
-    print(dep,pos)
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 

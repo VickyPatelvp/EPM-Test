@@ -61,55 +61,37 @@ def result():
         # ADD TDS DATA
 
         tds_detail = {
-            'Principal on Home loan': {
-                'applicationNo': request.form.get('hlapplicationno'),
-                'loanAmount': request.form.get('hlamount'),
-                'PeriodofHomeLoan': request.form.get('hlperiod'),
-                'nameofPerson': request.form.get('hlname'),
-                'annualInterest': request.form.get('hlannual')
-            },
-            'Premium on Insurance': {
-                'insuranceNo': request.form.get('pino'),
-                'nameofInsured': request.form.get('piname'),
-                'annualAmountofpolicy': request.form.get('piannual')
-            },
-            'Health Insurance (Self)': {
-                'insuranceNo': request.form.get('hipno'),
-                'nameofInsured': request.form.get('hipname'),
-                'annualAmountofpolicy': request.form.get('hipannual'),
-                'periodofInsurance': request.form.get('hipperiod')
-            },
-            'Health Insurance (Spouse)': {
-                'insuranceNo': request.form.get('hisno'),
-                'nameofInsured': request.form.get('hisname'),
-                'annualAmountofpolicy': request.form.get('hisannual'),
-                'periodofInsurance': request.form.get('hisperiod')
-            },
-            'Health Insurance (Father)': {
-                'insuranceNo': request.form.get('hifno'),
-                'nameofInsured': request.form.get('hifname'),
-                'annualAmountofpolicy': request.form.get('hifannual'),
-                'periodofInsurance': request.form.get('hifperiod')
-            },
-            'Interest on Home Loan': {
-                'annualInterestPayable': request.form.get('ihlannual'),
-                'panofLender': request.form.get('ihlpanlender'),
-                'nameofPerson': request.form.get("ihlname")
-            },
-            'Annual House Rent': {
-                'currentMonthRent': request.form.get("ahrmonth"),
-                'lenderPAN': request.form.get("ahrlandpann"),
-                'periodofDate': request.form.get("ahrperiod"),
-                'nameofLandloard': request.form.get("ahrlandname"),
-                'landloardAddress': request.form.get("ahrlandaddress")
-            },
-            'ELSS(SIP)': {
-                'annualAmount': request.form.get("elssannual"),
-                'periodofDate': request.form.get("elssperiod")
-            },
-            'Tution Fee': {
-                'annualAmount': request.form.get("tfannual"),
-                'periodofDate': request.form.get("tfperiod")
-            }
+                'hlapplicationno': request.form.get('hlapplicationno'),
+                'hlamount': request.form.get('hlamount'),
+                'hlperiod': request.form.get('hlperiod'),
+                'hlname': request.form.get('hlname'),
+                'hlannual': request.form.get('hlannual'),
+                'pino': request.form.get('pino'),
+                'piname': request.form.get('piname'),
+                'piannual': request.form.get('piannual'),
+                'hipno': request.form.get('hipno'),
+                'hipname': request.form.get('hipname'),
+                'hipannual': request.form.get('hipannual'),
+                'hipperiod': request.form.get('hipperiod'),
+                'hisno': request.form.get('hisno'),
+                'hisname': request.form.get('hisname'),
+                'hisannual': request.form.get('hisannual'),
+                'hisperiod': request.form.get('hisperiod'),
+                'hifno': request.form.get('hifno'),
+                'hifname': request.form.get('hifname'),
+                'hifannual': request.form.get('hifannual'),
+                'hifperiod': request.form.get('hifperiod'),
+                'ihlannual': request.form.get('ihlannual'),
+                'ihlpanlender': request.form.get('ihlpanlender'),
+                'ihlname': request.form.get("ihlname"),
+                'ahrmonth': request.form.get("ahrmonth"),
+                'ahrlandpann': request.form.get("ahrlandpann"),
+                'ahrperiod': request.form.get("ahrperiod"),
+                'ahrlandname': request.form.get("ahrlandname"),
+                'ahrlandaddress': request.form.get("ahrlandaddress"),
+                'elssannual': request.form.get("elssannual"),
+                'elssperiod': request.form.get("elssperiod"),
+                'tfannual': request.form.get("tfannual"),
+                'tfperiod': request.form.get("tfperiod")
         }
         db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("tdsmst").document("tds").set(tds_detail)

@@ -24,9 +24,6 @@ class Leavemanage():
             leaves=ref_obj.document('total_leaves').get().to_dict()
             for key,value in data.items():
                     data_dict.update({key:value})
-            print(data_dict)
-            print(leaves[data_dict['type']])
-            print(type(leaves[data_dict['type']]))
             if int(leaves[data_dict['type']]) - int(data_dict['days'])>0:
                 ref_obj.document('total_leaves').update({
                     data_dict['type']: (leaves[data_dict['type']] - int(data_dict['days']))
@@ -45,9 +42,6 @@ class Leavemanage():
         else:
             data_dict = data
             leaves = ref_obj.document('total_leaves').get().to_dict()
-            print(data_dict)
-            print(leaves[data_dict['type']])
-            print(type(leaves[data_dict['type']]))
             if int(leaves[data_dict['type']]) - int(data_dict['days']) > 0:
                 ref_obj.document('total_leaves').update({
                     data_dict['type']: (leaves[data_dict['type']] - int(data_dict['days']))
@@ -66,7 +60,6 @@ class Leavemanage():
         docs = ref_obj.stream()
         data_dict={}
         for doc in docs:
-            # print(f'{doc.id} => {doc.to_dict()}')
             data_dict.update({doc.id:doc.to_dict()})
         return  data_dict
 

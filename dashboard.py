@@ -5,8 +5,7 @@ dt2 = datetime.today().date()
 dt2_str = '2022-03-01'
 dt1 = datetime.strptime(dt2_str, '%Y-%m-%d')
 diff = (dt2.year - dt1.year) * 12 + (dt2.month - dt1.month)
-
-print(diff) # Output: 14
+# Output: 14
 class Dashboard():
     def __init__(self,db):
         self.db=db
@@ -22,7 +21,7 @@ class Dashboard():
                     diff = (dt2.year - dt1.year) * 12 + (dt2.month - dt1.month)
                     if diff<2:
                         total_leaves.update({users_ref.document(emp_doc.id).get().to_dict()['employeeName']:leaves.document(leave.id).get().to_dict()['fromdate']})
-                        print(total_leaves)
+           
         return total_leaves
 
     def total_lerave(self):
@@ -35,6 +34,6 @@ class Dashboard():
             for leave in leaves.stream():
                 if leave.id != 'total_leaves':
                     total_leaves.update({name: total_leaves[name]+ int(leaves.document(leave.id).get().to_dict()['days'])})
-                    print(total_leaves)
+             
         return total_leaves
 

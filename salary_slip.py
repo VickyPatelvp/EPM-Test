@@ -45,12 +45,6 @@ class SalarySlip():
 
         leave_data = profile.leave_data()[0]
 
-        # print(personal_data)
-        # print("\n")
-        # print("\n")
-        # print(salary_data)
-        # print("\n")
-        # print(leave_data)
 
         filename = 'SalarySlip.pdf'
         documentTitle = "SalarySlip!"
@@ -99,14 +93,6 @@ class SalarySlip():
                         "Other Deduction": salary_data["otherDeduction"],
                         "Outstanding Adjustment": salary_data["dedOutstandingAdjustment"],
                         }
-        
-        print(textLines)
-        print("\n")
-        print(textLines_two)
-        print("\n")
-        print(textLines_three)
-        print("\n")
-        print(textLines_four)
 
 
         pdf = canvas.Canvas(filename=filename)
@@ -145,7 +131,6 @@ class SalarySlip():
         pdf.setFont("Times-Roman", 12)
         text.setFillColor(colors.black)
         for key, value in textLines.items():
-            # print(value)
             text.textLines(str(value))
         pdf.drawText(text)
 
