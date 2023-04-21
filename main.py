@@ -1,4 +1,5 @@
 import datetime
+import threading
 
 import time
 
@@ -111,24 +112,19 @@ def employee_profile(id):
 @app.route('/employeeprofileedit/<id>', methods=['GET', 'POST'])
 def employee_profile_edit(id):
     ''' DISPLAY EMPLOYEE DETAILS '''
-    a = time.time()
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
         'leaveMST')
 
-    b = time.time()
     if request.method == 'POST':
         ''' Store leave Data '''
         result = request.get_json()
-        print(result)
         leavobj.take_leave_edit(users_ref, data=result)
 
     ''' GET LEAVE DATA '''
-    c = time.time()
     total_leave = leavobj.get_total_leave(users_ref)
     leave_list = leavobj.leave_list(users_ref)
 
     ''' EDIT EMPLOYEE DETAILS '''
-    d = time.time()
     profile = Profile(id)
     data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
             'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
@@ -141,17 +137,6 @@ def personal_data_update(id):
     if request.method=='POST':
         form = request.get_json()
         update_obj.update_personal_info(form,id)
-    ''' GET LEAVE DATA '''
-    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
-        'leaveMST')
-    total_leave = leavobj.get_total_leave(users_ref)
-    leave_list = leavobj.leave_list(users_ref)
-
-    ''' EDIT EMPLOYEE DETAILS '''
-
-    profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
-            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
     return redirect(url_for('employee_profile_edit', id=id))
 
 
@@ -161,18 +146,6 @@ def tds_data_update(id):
     if request.method=='POST':
         form=request.get_json()
         update_obj.update_tds_info(form, id)
-
-    ''' GET LEAVE DATA '''
-    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
-        'leaveMST')
-    total_leave = leavobj.get_total_leave(users_ref)
-    leave_list = leavobj.leave_list(users_ref)
-
-    ''' EDIT EMPLOYEE DETAILS '''
-
-    profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
-            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
     return redirect(url_for('employee_profile_edit', id=id))
 
 
@@ -200,6 +173,7 @@ def delete_department(dep,pos):
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 
+
 @app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
 def edit_department(dep, pos):
     a=dep,pos
@@ -211,11 +185,9 @@ def edit_department(dep, pos):
     return redirect(url_for('department'))
 
 
-
 @app.route('/my-route')
 def my_route():
     return dept
-
 
 
 @app.route('/salary', methods=['GET', 'POST'])
@@ -250,8 +222,6 @@ def salary_sheet_edit_(empid,salid):
         Salarymanage(db).salary_update(empid, salid,data=result)
         return redirect(url_for('salary_sheet_view',salid=salid))
 
-
-
     ''' EDIT SALARY DETAILS OF PARTICULAR EMPLOYEES IN MONTH '''
     employee_salary_data = Salarymanage(db).get_salary_data(empid,salid)
     return render_template('salary_sheet_edit_personal.html',data=employee_salary_data ,id=salid)
@@ -274,6 +244,9 @@ if datetime.date.today().day==20:
     # Create Excel-sheet for Bank
 
     SalaryData(db).add_data("EMP002")
+
+
+
 
 
 if __name__ == '__main__':
