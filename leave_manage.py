@@ -45,9 +45,6 @@ class Leavemanage():
         else:
             data_dict = data
             leaves = ref_obj.document('total_leaves').get().to_dict()
-            print(data_dict)
-            print(leaves[data_dict['type']])
-            print(type(leaves[data_dict['type']]))
             if int(leaves[data_dict['type']]) - int(data_dict['days']) > 0:
                 ref_obj.document('total_leaves').update({
                     data_dict['type']: (leaves[data_dict['type']] - int(data_dict['days']))

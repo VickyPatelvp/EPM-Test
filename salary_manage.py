@@ -26,13 +26,11 @@ class Salarymanage():
             'salaryslips').document(salid).update(data_dict)
 
     def get_all_month_salary_data(self):
-        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee').stream()
+        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee')
         employee_salary = {}
-
-
-        for emp in docs:
+        for emp in docs.stream():
             salary_list = {}
-            salary_data=self.db.collection(u'alian_software').document(u'employee').collection('employee').document(str(emp.id)).collection('salaryslips').stream()
+            salary_data=docs.document(str(emp.id)).collection('salaryslips').stream()
             for doc in salary_data:
                 salary_list.update({doc.id: doc.to_dict()})
             employee_salary.update({emp.id:salary_list})

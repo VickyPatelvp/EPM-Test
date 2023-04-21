@@ -1,7 +1,7 @@
 import re
 from firebase_admin import credentials
 from firebase_admin import firestore
-
+import concurrent.futures
 
 cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
 
@@ -9,41 +9,38 @@ db = firestore.client()
 
 
 class Department:
-    def __init__(self,db):
-        self.db=db
-    def add_deaprtment(self,result):
-        doc_ref =self.db.collection(u'alian_software').document(u'department')
-        pos = []
-        sal = []
-        data = {}
-        deptnm = ''
-        for key, value in result.items():
-            if key == 'deptname':
-                deptnm = value
-            elif re.findall("^pos", key):
-                pos.append(value)
-            elif re.findall("^sal", key):
-                sal.append(value)
-        for i in range(len(pos)):
-            data.update({pos[i]: sal[i]})
-        doc_ref.update({deptnm: data})
+    def __init__(self, db):
+        self.db = db
 
-    def delete_deaprtment(self,dept,pos):
+    def _process_department(self, data):
         doc_ref = self.db.collection(u'alian_software').document(u'department')
-        position=dept+'.'+pos
-        doc_ref.update({
-            position: firestore.DELETE_FIELD
-        })
+        is_available = False
+        for key, value in doc_ref.get().to_dict().items():
+            if key == data['deptname'] and value != {}:
+                is_available = True
+        if is_available == True and len(data.items()) == 1:
+            doc_ref.update({f'{data["deptname"]}.{data["pos0"]}': data['sal0']})
+        else:
+            pos = []
+            sal = []
+            deptnm = ''
+            for key, value in data.items():
+                if key == 'deptname':
+                    deptnm = value
+                elif re.findall("^pos", key):
+                    pos.append(value)
+                elif re.findall("^sal", key):
+                    sal.append(value)
+            data = {p: s for p, s in zip(pos, sal)}
+            doc_ref.update({deptnm: data})
 
-    def edit_department(self,dept,pos,sal ):
+    def add_department(self, result):
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            executor.submit(self._process_department, result)
+
+    def delete_department(self, dept, pos):
         doc_ref = self.db.collection(u'alian_software').document(u'department')
-
-        doc_ref.update({
-            'my_map_field.my_subfield': 'new_value'
-        })
-
-# fields_to_delete = {
-#     'field1': firestore.DELETE_FIELD,
-#     'field2': firestore.DELETE_FIELD,
-#     # add more fields here if needed
-# }
+        position = dept + '.' + pos
+        doc_ref.update({position: firestore.DELETE_FIELD})
+        if doc_ref.get().to_dict()[dept] == {}:
+            doc_ref.update({dept: firestore.DELETE_FIELD})

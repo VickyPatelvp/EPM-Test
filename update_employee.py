@@ -3,6 +3,11 @@ class Upate_information():
        self.db=db
     def update_personal_info(self,data,id):
         data_dict ={}
+
+        # for key, value in data.items():
+        #     if value != '':
+        #         data_dict.update({key: value})
+        # a = self.db.collection(u'alian_software').document('employee').collection('employee').document(id).update(data_dict)
         for key, value in data.items():
             if value != '':
                 data_dict.update({key: value})

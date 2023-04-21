@@ -1456,7 +1456,7 @@
                                                                                                                         <div
                                                                                                                             class="from-group text-center p-4">
                                                                                                                             <button
-                                                                                                                                type="button"
+                                                                                                                                type="submit"
                                                                                                                                 onclick="submitForm('form3')"
                                                                                                                                 class="btn"
                                                                                                                                 style=" color: #fff !important  ;
@@ -1587,36 +1587,36 @@
 
 <script>
 
-// Take action on perticular form submit 
-function submitForm(formId) {
-    const form = document.getElementById(`${formId}`);
-        console.log(formId)
-        let id = {{ data["personal_data"]["userID"] }}
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // prevent form submission
-            const formData = new FormData(form);
-            const data = {};
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            console.log(data); // do something with the form data
-            var url = document.getElementById(formId).action;
-            var xhr = new XMLHttpRequest();
-            console.log(url)
-            var fData = JSON.stringify(data)
-            console.log(fData);
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.addEventListener('readystatechange', function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    window.location.href = `http://127.0.0.1:300/employeeprofileedit/${id}`;
-                } else if (xhr.readyState === 4 && xhr.status !== 200) {
-                    console.error(xhr.responseText); // Handle error response
+    // Take action on perticular form submit 
+    function submitForm(formId) {
+        const form = document.getElementById(`${formId}`);
+            console.log(formId)
+            let id = '{{ data["personal_data"]["userID"] }}'
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // prevent form submission
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
                 }
-            });
-            xhr.send(fData);
-      })
-    }
-</script>
-
+                console.log(data); // do something with the form data
+                var url = document.getElementById(formId).action;
+                var xhr = new XMLHttpRequest();
+                console.log(url)
+                // var fData = JSON.stringify(data)
+                var fData = JSON.stringify({...data, id: `${id}`});
+                console.log(fData);
+                xhr.open('POST', url);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.addEventListener('readystatechange', function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        window.location.href = `http://127.0.0.1:300/employeeprofileedit/${id}`;
+                    } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                        console.error(xhr.responseText); // Handle error response
+                    }
+                });
+                xhr.send(fData);
+          })
+        }
+    </script>
 {% endblock %}

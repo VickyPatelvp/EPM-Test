@@ -1,5 +1,4 @@
 import datetime
-
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
 from firebase_admin import credentials
@@ -13,6 +12,7 @@ from dashboard import Dashboard
 import re
 from tds_data import TDSData
 from excel_sheet import SalaryData
+import concurrent.futures
 
 # FLASK APP
 app = Flask(__name__)
@@ -23,7 +23,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 # USE A SERVICE ACCOUNT
 
 cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
-
 db = firestore.client()
 
 leavobj = Leavemanage(db)
@@ -59,24 +58,40 @@ def register():
 def dashboard():
 
     ''' DISPLAY DASHBOARD '''
-    employee_on_leave= dashboard_obj.employee_on_lerave()
-    total_leaves=dashboard_obj.total_lerave()
+    print(datetime.datetime.now())
+    employee_on_leave,total_leaves,employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data()
+    print(datetime.datetime.now())
+    # total_leaves=dashboard_obj.total_lerave()
+    # employee_birthday, employee_anniversary=dashboard_obj.birthdays()
+    # print(total_leaves,employee_anniversary)
 
-
-
-
-    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves)
+    for emp in employee_anniversary:
+        print(emp)
+    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
 
 
 @app.route('/employeelist', methods=['GET', 'POST'])
 def employee_list():
 
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
-    docs = db.collection(u'alian_software').document(u'employee').collection('employee').stream()
-    employee_list = {}
-    for doc in docs:
-        employee_list.update({doc.id: doc.to_dict()})
-    department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+
+    def get_employee_data():
+        docs = db.collection(u'alian_software').document(u'employee').collection('employee').stream()
+        employee_list = {}
+        for doc in docs:
+            employee_list.update({doc.id: doc.to_dict()})
+        return employee_list
+
+    def get_department_data():
+        department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+        return department
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        employee_data = executor.submit(get_employee_data)
+        department_data = executor.submit(get_department_data)
+
+    employee_list = employee_data.result()
+    department = department_data.result()
     return render_template('employees_list.html', data=employee_list, department=department)
 
 
@@ -118,7 +133,7 @@ def employee_profile_edit(id):
     if request.method == 'POST':
         ''' Store leave Data '''
         result = request.get_json()
-        print(result)
+        # print(result)
         leavobj.take_leave_edit(users_ref, data=result)
     ''' GET LEAVE DATA '''
     total_leave = leavobj.get_total_leave(users_ref)
@@ -126,8 +141,7 @@ def employee_profile_edit(id):
 
     ''' EDIT EMPLOYEE DETAILS '''
     profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
-            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
+    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(), 'salary_data': profile.salary_data()}
     return render_template('employee_profile_edit.html', data=data,total_leave=total_leave,leave_list=leave_list)
 
 
@@ -138,18 +152,7 @@ def personal_data_update(id):
         form = request.get_json()
         print(form)
         update_obj.update_personal_info(form,id)
-    ''' GET LEAVE DATA '''
-    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
-        'leaveMST')
-    total_leave = leavobj.get_total_leave(users_ref)
-    leave_list = leavobj.leave_list(users_ref)
-
-    ''' EDIT EMPLOYEE DETAILS '''
-
-    profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
-            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
-    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
+    return redirect(url_for('employee_profile_edit',id=id))
 
 
 ''' UPDATE EMPLOYEE TDS DETAILS '''
@@ -162,23 +165,9 @@ def tds_data_update(id):
         for key, value in form1.items():
             if value != '':
                 data_dict.update({key: value})
-        print(form)
-        print(form1)
-        print(data_dict)
         update_obj.update_tds_info(form, id)
 
-    ''' GET LEAVE DATA '''
-    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
-        'leaveMST')
-    total_leave = leavobj.get_total_leave(users_ref)
-    leave_list = leavobj.leave_list(users_ref)
-
-    ''' EDIT EMPLOYEE DETAILS '''
-
-    profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),
-            'leave_data': profile.leave_data(), 'salary_data': profile.salary_data()}
-    return render_template('employee_profile_edit.html', data=data, total_leave=total_leave, leave_list=leave_list)
+    return redirect(url_for('employee_profile_edit', id=id))
 
 
 ''' DISPLAY DEPARTMENT '''
@@ -207,19 +196,21 @@ def delete_department(dep,pos):
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 
-@app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
+@app.route('/edit_department/<dep> <pos>', methods=['GET', 'POST'])
 def edit_department(dep,pos):
-    a=dep,pos
-    print(a)
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
-    pos=re.sub(pattern,'',pos)
-    print(dep,pos)
-    dept.delete_deaprtment(dep,pos)
-    return redirect(url_for('department'))
-
-
+    sal=re.sub(pattern,'',pos)
+    dep,pos=dep.split()
+    data={
+        'dep':dep,
+        'sal':sal,
+        'pos':pos,
+        'modal':'open'
+    }
+    print(data)
+    return redirect(url_for('department',data=data))
 
 @app.route('/my-route')
 def my_route():
