@@ -1,4 +1,8 @@
 import datetime
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
+
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
 from firebase_admin import credentials
@@ -7,7 +11,7 @@ from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
 from department import Department
-from update_employee import Upate_information
+from update_employee import Update_information
 from dashboard import Dashboard
 import re
 from tds_data import TDSData
@@ -27,7 +31,7 @@ db = firestore.client()
 
 leavobj = Leavemanage(db)
 dept=Department(db)
-update_obj=Upate_information(db)
+update_obj=Update_information(db)
 dashboard_obj=Dashboard(db)
 
 if datetime.date.today().day==1:
@@ -37,6 +41,7 @@ if datetime.date.today().day==1:
 # Leave reset
 if datetime.date.today().day==1 or datetime.date.month==1:
     leavobj.leave_add()
+
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -65,9 +70,13 @@ def dashboard():
     # employee_birthday, employee_anniversary=dashboard_obj.birthdays()
     # print(total_leaves,employee_anniversary)
 
+
     for emp in employee_anniversary:
         print(emp)
     return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
+
+    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves)
+
 
 
 @app.route('/employeelist', methods=['GET', 'POST'])
@@ -95,7 +104,6 @@ def employee_list():
     return render_template('employees_list.html', data=employee_list, department=department)
 
 
-
 @app.route('/result', methods=['POST', 'GET'])
 def add():
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
@@ -107,22 +115,34 @@ def add():
 @app.route('/employeeprofile/<id>', methods=['GET', 'POST'])
 def employee_profile(id):
     ''' DISPLAY EMPLOYEE DETAILS '''
-    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection('leaveMST')
-    if request.method=='POST':
+    users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
+        'leaveMST')
+    if request.method == 'POST':
         ''' Store leave Data '''
-        result=request.form
-        leavobj.take_leave(users_ref,data= result)
+        result = request.form
+
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(leavobj.take_leave, users_ref, data=result)
 
     ''' GET LEAVE DATA '''
-    total_leave = leavobj.get_total_leave(users_ref)
-    leave_list = leavobj.leave_list(users_ref)
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        total_leave_future = executor.submit(leavobj.get_total_leave, users_ref)
+        leave_list_future = executor.submit(leavobj.leave_list, users_ref)
+
+    total_leave = total_leave_future.result()
+    leave_list = leave_list_future.result()
 
     ''' GET EMPLOYEE DATA '''
-    profile = Profile(id)
-    data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(),'salary_data': profile.salary_data()}
-    leave_status = True
-    return render_template('employee_profile.html', leave=leave_status, data=data,total_leave=total_leave,leave_list=leave_list)
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        personal_data_future = executor.submit(Profile(id).personal_data)
+        tds_data_future = executor.submit(Profile(id).tds_data)
+        salary_data_future = executor.submit(Profile(id).salary_data)
 
+    data = {'personal_data': personal_data_future.result(), 'tds_data': tds_data_future.result(),
+            'salary_data': salary_data_future.result()}
+    leave_status = True
+    return render_template('employee_profile.html', leave=leave_status, data=data, total_leave=total_leave,
+                           leave_list=leave_list)
 
 
 @app.route('/employeeprofileedit/<id>', methods=['GET', 'POST'])
@@ -130,11 +150,15 @@ def employee_profile_edit(id):
     ''' DISPLAY EMPLOYEE DETAILS '''
     users_ref = db.collection(u'alian_software').document('employee').collection('employee').document(id).collection(
         'leaveMST')
+
     if request.method == 'POST':
         ''' Store leave Data '''
         result = request.get_json()
+
         # print(result)
+
         leavobj.take_leave_edit(users_ref, data=result)
+
     ''' GET LEAVE DATA '''
     total_leave = leavobj.get_total_leave(users_ref)
     leave_list = leavobj.leave_list(users_ref)
@@ -149,24 +173,27 @@ def employee_profile_edit(id):
 @app.route('/personal_data_update/<id>', methods=['GET', 'POST'])
 def personal_data_update(id):
     if request.method=='POST':
+        print('hello1')
         form = request.get_json()
-        print(form)
         update_obj.update_personal_info(form,id)
+        print('hello1')
+
     return redirect(url_for('employee_profile_edit',id=id))
+
+
+
 
 
 ''' UPDATE EMPLOYEE TDS DETAILS '''
 @app.route('/tds_data_update/<id>', methods=['GET', 'POST'])
 def tds_data_update(id):
     if request.method=='POST':
+        print('hello1')
         form=request.get_json()
-        form1 = request.form.get()
-        data_dict={}
-        for key, value in form1.items():
-            if value != '':
-                data_dict.update({key: value})
+
         update_obj.update_tds_info(form, id)
 
+        print('hello1')
     return redirect(url_for('employee_profile_edit', id=id))
 
 
@@ -187,35 +214,31 @@ def department():
 @app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
 def delete_department(dep,pos):
     a=dep,pos
-    print(a)
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
     pos=re.sub(pattern,'',pos)
-    print(dep,pos)
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 
-@app.route('/edit_department/<dep> <pos>', methods=['GET', 'POST'])
-def edit_department(dep,pos):
+
+
+
+@app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
+def edit_department(dep, pos):
+    a=dep,pos
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
-    sal=re.sub(pattern,'',pos)
-    dep,pos=dep.split()
-    data={
-        'dep':dep,
-        'sal':sal,
-        'pos':pos,
-        'modal':'open'
-    }
-    print(data)
-    return redirect(url_for('department',data=data))
+    pos=re.sub(pattern,'',pos)
+    dept.delete_deaprtment(dep,pos)
+    return redirect(url_for('department'))
+
+
 
 @app.route('/my-route')
 def my_route():
     return dept
-
 
 
 @app.route('/salary', methods=['GET', 'POST'])
@@ -250,8 +273,6 @@ def salary_sheet_edit_(empid,salid):
         Salarymanage(db).salary_update(empid, salid,data=result)
         return redirect(url_for('salary_sheet_view',salid=salid))
 
-
-
     ''' EDIT SALARY DETAILS OF PARTICULAR EMPLOYEES IN MONTH '''
     employee_salary_data = Salarymanage(db).get_salary_data(empid,salid)
     return render_template('salary_sheet_edit_personal.html',data=employee_salary_data ,id=salid)
@@ -274,6 +295,9 @@ if datetime.date.today().day==20:
     # Create Excel-sheet for Bank
 
     SalaryData(db).add_data("EMP002")
+
+
+
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 import datetime
 
 
@@ -5,36 +7,24 @@ class Salarymanage():
     def __init__(self,db):
         self.db=db
 
-    # def salary_create(self,empid,salid,data=None):
-    #     all_employees=self.db.collection(u'alian_software').document('employee').collection('employee').stream()
-    #     for empi in all_employees:
-    #
-    #      data_dict = {}
-    #     for key, value in data.items():
-    #         data_dict.update({key: value})
-    #     id='sal00' + str(datetime.date.today().month)
-    #     a = self.db.collection(u'alian_software').document('employee').collection('employee').document(
-    #         empid).collection(
-    #         'salaryslips').document(salid).update(data_dict)
-    #     # ref_obj.document()
-
-    def salary_update(self,empid,salid,data=None):
+    def salary_update(self, empid, salid, data=None):
         data_dict = {}
         for key, value in data.items():
             data_dict.update({key: value})
-        a=self.db.collection(u'alian_software').document('employee').collection('employee').document(empid).collection(
+        self.db.collection(u'alian_software').document('employee').collection('employee').document(empid).collection(
             'salaryslips').document(salid).update(data_dict)
 
-    def get_all_month_salary_data(self):
-        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee')
-        employee_salary = {}
-        for emp in docs.stream():
-            salary_list = {}
-            salary_data=docs.document(str(emp.id)).collection('salaryslips').stream()
-            for doc in salary_data:
-                salary_list.update({doc.id: doc.to_dict()})
-            employee_salary.update({emp.id:salary_list})
+    from concurrent.futures import ThreadPoolExecutor
 
+    def process_employee(self,emp):
+        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee')
+        salary_list = {}
+        salary_data = docs.document(str(emp.id)).collection('salaryslips').stream()
+        for doc in salary_data:
+            salary_list.update({doc.id: doc.to_dict()})
+        return {emp.id: salary_list}
+
+    def calculate_salary_data(self, employee_salary):
         salary_data = {}
         for i in employee_salary:
             for j in employee_salary[i]:
@@ -51,27 +41,43 @@ class Salarymanage():
                 if j != "salid":
                     salary_data.update({j: {
                         'netSalary': salary_data[j]['netSalary'] + int(employee_salary[i][j]["netSalary"]),
-                        'grossSalary': salary_data[j]['grossSalary'] +int (employee_salary[i][j]["grossSalary"]),
+                        'grossSalary': salary_data[j]['grossSalary'] + int(employee_salary[i][j]["grossSalary"]),
                         'epfo': salary_data[j]['epfo'] + int(employee_salary[i][j]["epfo"]),
                         'pt': salary_data[j]['pt'] + int(employee_salary[i][j]["pt"]),
                         'tds': salary_data[j]['tds'] + int(employee_salary[i][j]["tds"]),
                     }})
-
         return salary_data
 
+    def get_all_month_salary_data(self):
+        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee')
+        employee_salary = {}
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(self.process_employee, emp) for emp in docs.stream()]
+            for future in futures:
+                employee_salary.update(future.result())
+
+        salary_data = self.calculate_salary_data(employee_salary)
+        return salary_data
 
     def get_all_emp_salary_data(self,month):
-        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee').stream()
         employee_salary = {}
-        for emp in docs:
-            salary_list = {}
-            salary_data=self.db.collection(u'alian_software').document(u'employee').collection('employee').document(str(emp.id)).collection('salaryslips').document(month).get().to_dict()
-            if salary_data != None:
-                employee_salary.update({emp.id:salary_data})
+        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee').stream()
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = [executor.submit(self.get_employee_salary_data, emp.id, month) for emp in docs]
+            for future in concurrent.futures.as_completed(results):
+                emp_id, salary_data = future.result()
+                if salary_data is not None:
+                    employee_salary.update({emp_id: salary_data})
         return employee_salary
 
+    def get_employee_salary_data(self, emp_id, month):
+        salary_data = self.db.collection(u'alian_software').document(u'employee').collection('employee').document(str(emp_id)).collection('salaryslips').document(month).get().to_dict()
+        return emp_id, salary_data
+
     def get_salary_data(self,empid,salid):
-        doc = users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid).collection('salaryslips').document(salid).get()
+        doc = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid).collection('salaryslips').document(salid).get()
         data_dict = {}
         data_dict.update({doc.id: doc.to_dict()})
         return data_dict
+
+
