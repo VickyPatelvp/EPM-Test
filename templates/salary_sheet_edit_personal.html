@@ -43,7 +43,10 @@
             <div class='col d-flex mt-3'>
                 <span class="me-4 mt-2"><b>Salary Sheet</b></span>
                 <div class="form-outline  text-start ">
-                    <input type="text" class="form-control" id="forminput" placeholder="month"/>
+                     {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April',
+                    '005': 'May', '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
+                    '0011': 'November', '0012': 'December'} %}
+                    <input type="text" class="form-control" id="forminput" placeholder="{{ month_dict[id[3:]] }}"/>
                 </div>
             </div>
             <div class="col end-0 mt-3">
@@ -102,10 +105,10 @@
             
             <tbody style="background-color: #ffffff;">
             <tr class="ttr text-center">
-            <form action="{{url_for('salary_sheet_edit_',empid=data[id]["userID"],salid=id )}}" method="POST">
+            <form action="{{url_for('salary_sheet_edit_',empid=data[id]['userID'],salid=id )}}" method="POST">
                 <label name="" ></label>
                 <th scope="col">{{ data[id]["employeeName"] }}</th>
-                <td scope="col"><input type="text" class="form-control text-center" value="{{ data[id]["lwp"] }}" name="lwp" id="lwp"></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["lwp"] }}' name="lwp" id="lwp"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["basic"] }}' name="basic"value="2500" id="basic"></td>
                 <td scope="col"><input type="text" class="form-control text-center"  name="hra" id="hra" value='{{ data[id]["hra"] }}' ></td>
                 <th scope="col"><input type="text" class="form-control text-center  " value='{{ data[id]["da"] }}' name="da" id="da"  readonly></th>

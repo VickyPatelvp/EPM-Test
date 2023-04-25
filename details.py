@@ -51,5 +51,3 @@ class Profile:
         for doc in docs:
             data_dict.update({doc.id: doc.to_dict()})
         return data_dict
-
-
