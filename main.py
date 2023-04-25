@@ -1,23 +1,24 @@
 import datetime
-import threading
-import time
-from concurrent.futures import ThreadPoolExecutor
+import re
 
+
+from concurrent.futures import ThreadPoolExecutor
+import concurrent.futures
 from flask import Flask, render_template, request, redirect, url_for
-from leave_manage import Leavemanage
 from firebase_admin import credentials
 from firebase_admin import firestore
+
+from leave_manage import Leavemanage
 from details import Profile
 from create_new_employee import result
 from salary_manage import Salarymanage
 from department import Department
 from update_employee import Update_information
 from dashboard import Dashboard
-import re
 from tds_data import TDSData
 from excel_sheet import SalaryData
-import concurrent.futures
-
+from register import Register
+from login import Login
 # FLASK APP
 app = Flask(__name__)
 app.secret_key = 'tO$&!|0wkamvVia0?n$NqIRVWOG'
@@ -33,6 +34,8 @@ leavobj = Leavemanage(db)
 dept=Department(db)
 update_obj=Update_information(db)
 dashboard_obj=Dashboard(db)
+register_obj=Register(db)
+login_obj=Login(db)
 
 if datetime.date.today().day==1:
      pass
@@ -43,39 +46,39 @@ if datetime.date.today().day==1 or datetime.date.month==1:
     leavobj.leave_add()
 
 
-@app.route('/', methods=["POST", "GET"])
+@app.route('/login', methods=["POST", "GET"])
 def login():
-
+    responce=''
+    if request.method == 'POST':
+        data = request.form
+        responce = login_obj.login(data)
+        if responce==True:
+            return redirect(url_for('dashboard'))
     ''' LOGIN PAGE '''
+    return render_template('login.html',responce=responce)
 
-    return render_template('login.html')
 
-
-@app.route('/register')
+@app.route('/register',methods=["POST", "GET"] )
 def register():
 
+    responce=''
+    if request.method=='POST':
+        data=request.form
+        responce=register_obj.register(data)
+        if responce==True:
+            return redirect(url_for('login'))
+
     ''' REGISTER PAGE '''
+    return render_template('register.html',responce=responce)
 
-    return render_template('register.html')
-
-
-@app.route('/dashboard')
+@app.route('/')
 def dashboard():
 
     ''' DISPLAY DASHBOARD '''
-    print(datetime.datetime.now())
+
     employee_on_leave,total_leaves,employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data()
-    print(datetime.datetime.now())
-    # total_leaves=dashboard_obj.total_lerave()
-    # employee_birthday, employee_anniversary=dashboard_obj.birthdays()
-    # print(total_leaves,employee_anniversary)
-
-
-    for emp in employee_anniversary:
-        print(emp)
     return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
 
-    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves)
 
 
 
@@ -181,9 +184,6 @@ def personal_data_update(id):
     return redirect(url_for('employee_profile_edit',id=id))
 
 
-
-
-
 ''' UPDATE EMPLOYEE TDS DETAILS '''
 @app.route('/tds_data_update/<id>', methods=['GET', 'POST'])
 def tds_data_update(id):
@@ -221,9 +221,6 @@ def delete_department(dep,pos):
     dept.delete_deaprtment(dep,pos)
     return redirect(url_for('department'))
 
-
-
-
 @app.route('/delete_department/<dep> <pos>', methods=['GET', 'POST'])
 def edit_department(dep, pos):
     a=dep,pos
@@ -247,13 +244,11 @@ def salary():
     salary_list = Salarymanage(db).get_all_month_salary_data()
     return render_template('salary_sheet_month.html',data=salary_list)
 
-
 @app.route('/salarysheetview/<salid>', methods=['GET', 'POST'])
 def salary_sheet_view(salid):
     ''' DISPLAY SALARY DETAILS OF EMPLOYEES IN MONTH '''
     salary_list= Salarymanage(db).get_all_emp_salary_data(salid)
     return render_template('salary_sheet_view.html', data=salary_list,salid=salid)
-
 
 @app.route('/salarysheetedit', methods=['GET', 'POST'])
 def salary_sheet_edit():
@@ -264,7 +259,6 @@ def salary_sheet_edit():
     for doc in docs:
         employee_list.update({doc.id: doc.to_dict()})
     return render_template('salary_sheet_edit_all.html', data=employee_list)
-
 
 @app.route('/salarysheetedit/<empid> <salid>', methods=['GET', 'POST'])
 def salary_sheet_edit_(empid,salid):
@@ -277,14 +271,12 @@ def salary_sheet_edit_(empid,salid):
     employee_salary_data = Salarymanage(db).get_salary_data(empid,salid)
     return render_template('salary_sheet_edit_personal.html',data=employee_salary_data ,id=salid)
 
-
 @app.route('/tds/<id>', methods=['GET', 'POST'])
 def tds(id):
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
     profile = Profile(id)
     employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
     return render_template('tds_test.html', data=employee_tds_data)
-
 
 if datetime.date.today().day==20:
     # TDS Data
@@ -295,10 +287,6 @@ if datetime.date.today().day==20:
     # Create Excel-sheet for Bank
 
     SalaryData(db).add_data("EMP002")
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=300)
