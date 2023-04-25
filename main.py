@@ -46,12 +46,12 @@ if datetime.date.today().day==1 or datetime.date.month==1:
     leavobj.leave_add()
 
 
-@app.route('/login', methods=["POST", "GET"])
-def login():
+@app.route('/login/<comapyname>/', methods=["POST", "GET"])
+def login(comapyname):
     responce=''
     if request.method == 'POST':
         data = request.form
-        responce = login_obj.login(data)
+        responce = login_obj.login(data,comapyname)
         if responce==True:
             return redirect(url_for('dashboard'))
     ''' LOGIN PAGE '''
@@ -157,9 +157,7 @@ def employee_profile_edit(id):
     if request.method == 'POST':
         ''' Store leave Data '''
         result = request.get_json()
-
         # print(result)
-
         leavobj.take_leave_edit(users_ref, data=result)
 
     ''' GET LEAVE DATA '''
@@ -289,6 +287,5 @@ if datetime.date.today().day==20:
     SalaryData(db).add_data("EMP002")
 
 if __name__ == '__main__':
-    app.run(debug=True, port=300)
-
-# app.run(debug=True, host="192.168.0.53", port=3005)
+    # app.run(debug=True, port=300)
+    app.run(debug=True, host="192.168.0.150", port=3005)
