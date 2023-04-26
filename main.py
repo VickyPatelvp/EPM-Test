@@ -49,7 +49,6 @@ if datetime.date.today().day==1 or datetime.date.month==1:
 
 @app.route('/<comapyname>/login', methods=["POST", "GET"])
 def login(comapyname):
-    print(comapyname)
     responce=''
     if request.method == 'POST':
         data = request.form
@@ -58,21 +57,11 @@ def login(comapyname):
             return redirect(url_for('dashboard'))
     ''' LOGIN PAGE '''
     url=f'/{comapyname}/login'
-
     return render_template('login.html',responce=responce,url=url)
 
 @app.route('/success', methods=["POST", "GET"])
 def success():
     return render_template('success.html')
-
-@app.route('/login', methods=["POST", "GET"])
-def login():
-
-    ''' LOGIN PAGE '''
-
-    return render_template('login.html')
-
-
 
 @app.route('/register')
 def register():
