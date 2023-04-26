@@ -2,6 +2,7 @@ import openpyxl
 import calendar
 from salary_manage import Salarymanage
 import os
+import concurrent.futures
 
 
 class SalaryData():
@@ -45,30 +46,43 @@ class SalaryData():
         workbook.save(excel_file)
 
         salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid)
-        for i in salary_list:
 
-            empid = salary_list[i]["userID"]
+        def get_employee_data():
 
-            user_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid)
+            for i in salary_list:
 
-            data = user_ref.get().to_dict()
+                empid = salary_list[i]["userID"]
 
-            salary_data = user_ref.collection("salaryslips").document(f"{salid}").get().to_dict()
+                user_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid)
 
-            name = data["accountHolderName"]
+                data = user_ref.get().to_dict()
 
-            bank_name = data["bankName"]
+                salary_data = user_ref.collection("salaryslips").document(f"{salid}").get().to_dict()
 
-            account_number = data["accountNumber"]
+                name = data["accountHolderName"]
 
-            ifsc_code = data["ifscCode"]
+                bank_name = data["bankName"]
 
-            total_salary = salary_data["netSalary"]
+                account_number = data["accountNumber"]
 
-            employee_data = [name, bank_name, account_number, ifsc_code, total_salary]
-            
-            worksheet.append(employee_data)
+                ifsc_code = data["ifscCode"]
 
-            # Save the workbook
-            workbook.save(excel_file)
+                total_salary = salary_data["netSalary"]
+
+                employee_details = [name, bank_name, account_number, ifsc_code, total_salary]
+
+                return employee_details
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+
+            employee_data_future = executor.submit(get_employee_data)
+
+        employee_data = employee_data_future.result()
+
+        print(employee_data)
+
+        worksheet.append(employee_data)
+
+        # Save the workbook
+        workbook.save(excel_file)
 
