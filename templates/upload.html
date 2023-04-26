@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
+
+<!doctype html>
+<html>
+    <head>
+        <title>Upload Image</title>
+    </head>
+    <body>
+        <h1>Upload Image</h1>
+        <form method="post" enctype="multipart/form-data" action="{{ url_for('upload_image') }}">
+            <input type="file" name="file">
+            <br><br>
+         <input type="submit" value="Upload">
+
+</form>
+
 </body>
 </html>

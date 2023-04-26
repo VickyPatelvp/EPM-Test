@@ -1,6 +1,9 @@
+from mail import Mail
+
 class Register():
     def __init__(self,db):
         self.db=db
+        self.mail=Mail()
 
     def register(self, data=None):
         data_dict = {}
@@ -13,6 +16,8 @@ class Register():
             return 'Already Company Registered'
         else:
             self.db.collection(data_dict['companyname']).document('Admin').set(data_dict)
+            '''SEND ID PASS WORD MAIL'''
+            self.mail.register_responce_mail(companyname=data_dict['companyname'])
             return True
 
 

@@ -1647,44 +1647,9 @@ element.style {
                                                                                                     <!-- /build -->
 
                                                                                                     <script>
-        // $(document).ready(function() {
-        // 	var sPath=window.location.pathname;
-        // 	var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
-        // 	$(".pmd-sidebar-nav").each(function(){
-        // 		$(this).find("a[href='"+sPage+"']").parents(".collapse").addClass("show");
-        // 		$(this).find("a[href='"+sPage+"']").parents(".collapse").prev('a.nav-link').addClass("active");
-        // 		$(this).find("a[href='"+sPage+"']").addClass("active");
-        // 	});
-        // 	$(".auto-update-year").html(new Date().getFullYear());
 
-        //         // Add More Education Form
-        //         $(".add-more-edu-form").hide();
-        //         $(".edu-view-card").hide();
-        //         $("#education-add-more").hide();
-        //         $("#education-add").click(function(){
-        //             $(".edu-view-card").show();
-        //             $(".first-edu-form").hide();
-        //             $("#education-add").hide();
-        //             $("#education-add-more").show();
-        //         });
-        //         $("#education-add-more").click(function(){
-        //             $(".add-more-edu-form").show();
-        //         });
-        //         // Add More Experience Form
-        //         $(".add-more-exp-form").hide();
-        //         $(".experience-view-card").hide();
-        //         $("#exp-add-more").hide();
-        //         $("#exp-add").click(function(){
-        //             $(".experience-view-card").show();
-        //             $(".first-exp-form").hide();
-        //             $("#exp-add").hide();
-        //             $("#exp-add-more").show();
-        //         });
-        //         $("#exp-add-more").click(function(){
-        //             $(".add-more-exp-form").show();
-        //         });
 
-        });
+
 
         // Upload Profile Picture
         var readURL = function(input) {
@@ -1705,21 +1670,7 @@ element.style {
            $(".file-upload").click();
         });
 
-        // //Birthday DatePicker
-        // $('#birthdate-picker').datetimepicker({
-        //     format: 'DD-MM-YYYY'
-        // });
 
-        // //Joining DatePicker
-        // $('#joindate-picker').datetimepicker({
-        //     format: 'DD-MM-YYYY'
-        // });
-
-        // // Passing Year
-        // $('#passing-year').datetimepicker({
-        //     viewMode: 'years',
-        //     format: 'YYYY'
-        // });
 
         // Add Education start date date and time picker
         $('#datepicker-start').datetimepicker({
@@ -2009,8 +1960,33 @@ element.style {
                                         </a>
                                     </div>
                                 </li>
-
-                                <!-- IMPORT BUTTON -->
+                                <!-- ADD New Employee -->
+                               <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add New Employee
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add New Employee</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        <form action="">
+                                            <label for="">Enter Email</label>
+                                            <input type="" name="" value="" class="form-control">
+                                        </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                              <!-- IMPORT BUTTON -->
 
                                 <li class="nav-item me-2">
                                     <div class="dropdown">
@@ -2109,7 +2085,6 @@ function nextpage()
     document.getElementById('close').click()
     document.getElementById('nexttds').click()
 }
-
 </script>
 
 {% endblock %}

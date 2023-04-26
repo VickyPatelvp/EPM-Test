@@ -1,7 +1,6 @@
 from flask import request
 
-from firebase_admin import firestore
-
+from firebase_admin import firestore, storage
 
 db = firestore.client()
 
@@ -12,11 +11,17 @@ def result():
 
     new_id = str(int(len(db.collection(u'alian_software').document(u'employee').collection('employee').get())) + 1)
     if request.method == 'POST':
+        file = request.files['file']
+        image_name=f'{new_id}_{file.filename}'
+        bucket = storage.bucket()
+        blob = bucket.blob(image_name)
+        blob.upload_from_file(file)
 
+        # Get a reference to the image blob
         # ADD PERSONAL DATA
 
         personal_data = {
-            'photo': request.form.get('photo'),
+            'photo': request.form.get(image_name),
             'employeeName': request.form.get('name'), 'userID': new_id, 'department': request.form.get('department'),
             'email': request.form.get('email'),
             'ctc': request.form.get('ctc'), 'jobPosition': request.form.get('jobposition'),
