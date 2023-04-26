@@ -4,6 +4,7 @@ from details import Profile
 from salary_manage import Salarymanage
 import os
 import calendar
+from concurrent.futures import ThreadPoolExecutor
 
 
 def draw_my_rular(pdf):
@@ -39,13 +40,11 @@ class SalarySlip():
 
             empid = salary_list[i]["userID"]
 
-            profile = Profile(empid)
+            personal_data = Profile(self.db, empid).personal_data()
 
-            personal_data = profile.personal_data()
+            salary_data = Profile(self.db, empid).salary_data()[salid]
 
-            salary_data = profile.salary_data()[salid]
-
-            leave_data = profile.leave_data()[0]
+            leave_data = Profile(self.db, empid).leave_data()[0]
 
             mont_in_num = int(salid[5:])
             month = calendar.month_name[mont_in_num]

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Employees list{% endblock %}
+{% block title %}Employees{% endblock %}
 {% block head %}
 {{ super() }}
 <style type="text/css">
@@ -328,7 +328,7 @@ element.style {
                                      tabindex="-1"
                                      aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
-                                    <form form-inline action="{{url_for('add')}}"  method="POST" id="createform">
+                                    <form form-inline action="{{url_for('add')}}" method="POST" id="createform" enctype="multipart/form-data">
 
                                     <div class="modal-dialog modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
                                         <div class="modal-content">
@@ -434,9 +434,7 @@ element.style {
                                                                                                                          class="fileinput fileinput-new">
                                                                                                                         <div data-trigger="fileinput"
                                                                                                                              class="fileinput-preview thumbnail img-fluid rounded-circle mb-0">
-                                                                                                                            <img src="static\assets\default_user.png"
-                                                                                                                                 width="200"
-                                                                                                                                 alt="profile avatar">
+                                                                                                                            <img id="photo-preview">
                                                                                                                         </div>
                                                                                                                         <div class="action-button">
                                                                                                                             <span class="btn btn-secondary pmd-btn-fab btn-sm pmd-btn-raised btn-file pmd-ripple-effect">
@@ -445,8 +443,8 @@ element.style {
                                                                                                                                 <span class="fileinput-exists"><i
                                                                                                                                         class="fa fa-pen"></i></span>
                                                                                                                                 <input type="file"
-                                                                                                                                       name="photo" id="photo"
-                                                                                                                                       accept="image/*" required>
+                                                                                                                                       name="photo" id="photo" accept="image/*">
+
                                                                                                                             </span>
                                                                                                                             <a data-dismiss="fileinput"
                                                                                                                                class="btn btn-danger btn-sm pmd-btn-fab pmd-ripple-effect pmd-btn-raised btn-file fileinput-exists"
@@ -459,7 +457,7 @@ element.style {
 
                                                                                                                 <!-- Basic details -->
 
-                                                                                                                <div class="col-sm-12 col-lg-4 col-md-5">
+                                                                                                                <div class=" col-sm-12 col-lg-4 col-md-5">
                                                                                                                     <div class="col-12 col-sm-12 col-md-10">
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-md-4 col-sm-4"
@@ -470,12 +468,11 @@ element.style {
                                                                                                                                        name="name"
                                                                                                                                        id="name"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Enter Text" required>
+                                                                                                                                       placeholder="Enter Text">
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
                                                                                                                         <br>
-                                                                                                                        
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label ">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
                                                                                                                                    for="department"><b>Department</b></label>
@@ -489,12 +486,10 @@ element.style {
                                                                                                                                     {% for i in department%}
                                                                                                                                     <option>{{ i }}</option>
                                                                                                                                     {% endfor %}
-                                                                                                                                    
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
-                                                                                                                        
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
@@ -517,7 +512,6 @@ element.style {
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
-                                                                                                                        
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
@@ -528,7 +522,7 @@ element.style {
                                                                                                                                        name="doj"
                                                                                                                                        id="doj"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Select" required>
+                                                                                                                                       placeholder="Select">
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -549,7 +543,7 @@ element.style {
                                                                                                                                        name="ctc"
                                                                                                                                        id="ctc"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Enter Amount" required>
+                                                                                                                                       placeholder="Enter Amount">
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -643,7 +637,7 @@ element.style {
                                                                                                                                        name="currentExperience"
                                                                                                                                        id="currentExperience"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Enter Text" required>
+                                                                                                                                       placeholder="Enter Text">
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -700,7 +694,7 @@ element.style {
                                                                                                                                                    name="dob"
                                                                                                                                                    value=""
                                                                                                                                                    id="dob"
-                                                                                                                                                   placeholder="Select" required>
+                                                                                                                                                   placeholder="Select">
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -712,7 +706,7 @@ element.style {
                                                                                                                                         <div class="col-sm-5">
                                                                                                                                             <select name="gender"
                                                                                                                                                     id="gender"
-                                                                                                                                                    class="form-control"required>
+                                                                                                                                                    class="form-control">
                                                                                                                                                 <option>
                                                                                                                                                     Select
                                                                                                                                                 </option>
@@ -755,7 +749,7 @@ element.style {
                                                                                                                                                    name="email"
                                                                                                                                                    id="email"
                                                                                                                                                    value=""
-                                                                                                                                                   placeholder="Enter Text" required>
+                                                                                                                                                   placeholder="Enter Text">
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -771,7 +765,7 @@ element.style {
                                                                                                                                                    name="mobileno"
                                                                                                                                                    value=""
                                                                                                                                                    id="mobileno"
-                                                                                                                                                   placeholder="Enter Text" required>
+                                                                                                                                                   placeholder="Enter Text">
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -2058,25 +2052,16 @@ element.style {
                 <!-- <th scope="row">1</th> -->
                 <td scope="col">
                     <a class="navbar-brand" href="#">
-                        <img src="{{ data[id]['photo'] }}" alt="" style="height: 50px; width: 50px;">
+                        <img src="{{ data[id]['photo'] }}" alt="hello" style="height: 50px; width: 50px; border-radius: 50%">
                     </a>
                 </td>
-                <td scope="col">
-                    {{id}}
-                </td>
-                <td scope="col">
-                    {{data[id]['employeeName']}}</td>
-                <td scope="col">
-                    {{data[id]['email']}}</td>
-                <td scope="col">
-                    {{data[id]['jobPosition']}}</td>
-                <td scope="col">
-                    {{data[id]['department']}}</td>
-                <td scope="col">
-                    {{data[id]['doj']}}</td>
-                <td scope="col">
-                    {{data[id]['currentExperience']}}</td>
-
+                <td scope="col">{{ id }}</td>
+                <td scope="col">{{data[id]['employeeName']}}</td>
+                <td scope="col">{{data[id]['email']}}</td>
+                <td scope="col">{{data[id]['jobPosition']}}</td>
+                <td scope="col">{{data[id]['department']}}</td>
+                <td scope="col">{{data[id]['doj']}}</td>
+                <td scope="col">{{data[id]['currentExperience']}}</td>
 
                 <td scope="col d-flex">
                     <ul class="nav ">
@@ -2101,6 +2086,24 @@ element.style {
         </table>
     </div>
 </div>
+
+
+<script>
+      const imageInput = document.getElementById('photo');
+      const imagePreview = document.getElementById('photo-preview');
+
+      imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', function() {
+          imagePreview.src = reader.result;
+        });
+
+        reader.readAsDataURL(file);
+      });
+</script>
+
 
 
 <script type="text/javascript">

@@ -4,10 +4,10 @@ from concurrent.futures import ThreadPoolExecutor
 
 from flask import Flask, render_template, request, redirect, url_for
 from leave_manage import Leavemanage
-from firebase_admin import credentials
+from firebase_admin import credentials, storage
 from firebase_admin import firestore
 from details import Profile
-from create_new_employee import result
+from create_new_employee import Create
 from salary_manage import Salarymanage
 from department import Department
 from update_employee import Update_information
@@ -94,7 +94,15 @@ def employee_list():
 @app.route('/result', methods=['POST', 'GET'])
 def add():
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
-    result()
+    # if request.method == 'POST':
+    #
+    #     file = request.files['photo']
+    #     bucket = storage.bucket()
+    #     blob = bucket.blob(file.filename)
+    #     blob.upload_from_file(file)
+    #     url = blob.public_url
+    create = Create(db)
+    create.result()
     return redirect(url_for('employee_list'))
 
 
@@ -120,9 +128,9 @@ def employee_profile(id):
 
     ''' GET EMPLOYEE DATA '''
     with ThreadPoolExecutor(max_workers=2) as executor:
-        personal_data_future = executor.submit(Profile(id).personal_data)
-        tds_data_future = executor.submit(Profile(id).tds_data)
-        salary_data_future = executor.submit(Profile(id).salary_data)
+        personal_data_future = executor.submit(Profile(db, id).personal_data)
+        tds_data_future = executor.submit(Profile(db, id).tds_data)
+        salary_data_future = executor.submit(Profile(db, id).salary_data)
 
     data = {'personal_data': personal_data_future.result(), 'tds_data': tds_data_future.result(),
             'salary_data': salary_data_future.result()}
@@ -146,7 +154,7 @@ def employee_profile(id):
 #     leave_list = leavobj.leave_list(users_ref)
 #
 #     ''' EDIT EMPLOYEE DETAILS '''
-#     profile = Profile(id)
+#     profile = Profile(db, id)
 #     data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data(), 'salary_data': profile.salary_data()}
 #     return redirect(url_for('employee_profile', id=id, data=data))
 
@@ -267,7 +275,7 @@ def excel_for_bank(salid):
 @app.route('/tds/<id>', methods=['GET', 'POST'])
 def tds(id):
     ''' DISPLAY TDS DETAILS OF EMPLOYEE '''
-    profile = Profile(id)
+    profile = Profile(db, id)
     employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
     return render_template('tds_test.html', data=employee_tds_data)
 
