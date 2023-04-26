@@ -37,8 +37,9 @@ footer a {
 
 {% block header %}
 <nav class="navbar navbar-expand-md">
+<!--    HEADER  SECTION   -->
     <div class="container-fluid text-dark">
-        <a class="navbar-brand p-0" href="/"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
+        <a class="navbar-brand p-0" href="/dashboard"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -50,15 +51,19 @@ footer a {
                 <li class="nav-item mt-1">
                     <a class="navbar-brand" href="/"><img    src="/static/assets/dashboard_icon.png" alt=""></a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/employeelist">Employees</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/department">Department</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/salary">Salary</a>
                 </li>
@@ -67,9 +72,11 @@ footer a {
 
             <form class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- COMPANY NAME -->
                     <li class="nav-item">
                         <a class="nav-link disabled">Company</a>
                     </li>
+                    <!-- USER PROFILE -->
                     <li class="nav-item">
                         <a class="navbar-brand" href="/register"> Jade powers
                             <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
@@ -86,6 +93,8 @@ footer a {
 <body>
 <div id="content">{% block content %}{% endblock %}</div>
 
+
+<!-- FOOTER SECTION -->
 <div id="footer">
     {% block footer %}
     <footer class="text-center text-lg-start" style="">

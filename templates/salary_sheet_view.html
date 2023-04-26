@@ -37,7 +37,10 @@
             <div class='col d-flex mt-3'>
                 <span class="nav-item me-4 mt-2"><b>Salary Sheet</b></span>
                 <div class="form-outline  text-start ">
-                    <input type="text" class="form-control" id="forminput" placeholder="month"/>
+                    {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April',
+                    '005': 'May', '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
+                    '0011': 'November', '0012': 'December'} %}
+                    <input type="text" class="form-control" id="forminput" placeholder="{{ month_dict[salid[3:]] }}"/>
                 </div>
             </div>
             <div class="col end-0 mt-3">
@@ -52,10 +55,22 @@
                     </li>
                     <li class="nav-item me-4">
                         <div class="dropdown">
+                            <a href="{{url_for('pdf',salid=salid)}}">
                             <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Download All
                             </button>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('excel_for_bank',salid=salid)}}">
+                            <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Generate Excelsheet
+                            </button>
+                            </a>
                         </div>
                     </li>
                 </ul>
