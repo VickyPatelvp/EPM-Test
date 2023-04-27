@@ -21,7 +21,7 @@ class Mail():
       subject = 'Company Registation Email'
       body = '''This mail is for Company Registration,
                 you can register Your Company with As follow given link below
-                http://192.168.0.150:3005/register
+                http://127.0.0.1:300/register
               warning: you have to specify your company name unique its very sensitive information
               it can not be chnage after you registered
       '''
@@ -51,7 +51,7 @@ class Mail():
        subject = 'Yor Company Account'
        body = f'''This mail is for Company Successsfully registered,
                 Now you can use following url to access your company login
-                http://192.168.0.150:3005/{companyname}/login
+                http://127.0.0.1:300/{companyname}/login
               Congratulation, Thank you so much..'''
        message = f"""
         From: {from_email}
@@ -77,9 +77,9 @@ class Mail():
       from_email = 'vickypatel.vp817@gmail.com'
       to_email = email
       subject = 'Employee Registation Form'
-      body = '''This mail is for Registration,
+      body = f'''This mail is for Registration,
                 you can register with As follow given link below
-                 http://192.168.0.150:3005/{companyname}/employee_regiter
+                 http://127.0.0.1:300/{companyname}/register_employee
                 Thank You,
         '''
 
@@ -95,7 +95,7 @@ class Mail():
       server.quit()
 
 
-def employee_registered_mail(self, email,companyname):
+  def employee_registered_mail(self, email,companyname):
     # Set up the connection to the SMTP server
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587  # or 465 for SSL/TLS
@@ -110,7 +110,7 @@ def employee_registered_mail(self, email,companyname):
     subject = 'Employee Registation Successfull'
     body = f'''This mail is for Company Successsfully registered,
                 Now you can use following url to access your company login
-                http://192.168.0.150:3005/{companyname}/login
+               http://127.0.0.1:300/{companyname}/login
               Congratulation, Thank you so much..'''
     message = f"""
        From: {from_email}
@@ -141,7 +141,7 @@ def forgot_mail(self,uid,password,companyname,email):
                 User ID: {uid}
                 Password: {password}
                 Now you can use following url to access your company login
-                http://192.168.0.150:3005/{companyname}/login
+                http://127.0.0.1:300/{companyname}/login
               Congratulation, Thank you so much..'''
     message = f"""
        From: {from_email}
@@ -149,6 +149,7 @@ def forgot_mail(self,uid,password,companyname,email):
        Subject: {subject}
        {body}
        """
+
     # Send the email
     server.sendmail(from_email, to_email, message)
     # Close the SMTP connection

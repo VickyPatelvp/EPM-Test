@@ -1,0 +1,819 @@
+{% extends "base.html" %}
+{% block title %}Employees{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+    @-webkit-keyframes chartjs-render-animation {
+        from {
+            opacity: 0.99
+        }
+
+        to {
+            opacity: 1
+        }
+    }
+
+    @keyframes chartjs-render-animation {
+        from {
+            opacity: 0.99
+        }
+
+        to {
+            opacity: 1
+        }
+    }
+
+    .chartjs-render-monitor {
+        -webkit-animation: chartjs-render-animation 0.001s;
+        animation: chartjs-render-animation 0.001s;
+    }
+
+    .important {
+        color: #336699;
+    }
+
+    .fileinput {
+        background-color: #d0d0d0;
+        border-radius: 50%;
+        width: 200px;
+        position: relative;
+    }
+
+    .fileinput {
+        margin-bottom: 9px;
+        display: inline-block;
+    }
+
+    .fileinput .thumbnail {
+        width: 200px;
+        height: 200px;
+    }
+
+
+    element.style {}
+
+    .fileinput .thumbnail {
+        width: 200px;
+        height: 200px;
+    }
+
+    .fileinput .thumbnail {
+        overflow: hidden;
+        display: inline-block;
+        margin-bottom: 5px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    body {
+        font-family: Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #455056;
+        background-color: #f2f8f9;
+        font-weight: 400;
+    }
+
+    .fileinput .thumbnail>img {
+        max-height: 100%;
+    }
+
+    img {
+        vertical-align: middle;
+        border-style: none;
+    }
+
+    .action-button {
+        opacity: 0;
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        text-align: center;
+        width: 100%;
+        -webkit-transition: .4s ease-in-out;
+        -moz-transition: .4s ease-in-out;
+        -o-transition: .4s ease-in-out;
+        transition: .4s ease-in-out;
+
+    }
+
+    .btn.pmd-btn-fab.btn-sm {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+
+    .btn.btn-file {
+        padding: 0;
+    }
+
+    .btn.btn-file>input[type=file] {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+
+    .btn.btn-file>input[type=file] {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .btn.pmd-btn-fab.btn-sm {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+
+    .btn.pmd-btn-fab.btn-sm {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .btn.btn-file {
+        overflow: hidden;
+        position: relative;
+        vertical-align: middle;
+        min-width: 36px;
+        padding: 5px 5px 4px;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #4caf50;
+        border-color: #4caf50;
+    }
+
+    element.style {}
+
+    .btn.btn-file>input[type=file] {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .btn.btn-file>input[type=file] {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .btn.btn-file>input[type=file] {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        background: red;
+        cursor: inherit;
+        display: block;
+    }
+</style>
+
+<!-- Google icon -->
+<link href="/static/New folder/icon" rel="stylesheet">
+
+<!-- Rubik Fonts -->
+<!--<link href="/static/New folder/css" rel="stylesheet">-->
+<!---->
+<!-- build:remove -->
+
+<!--Admin css-->
+<!--<link rel="stylesheet" type="text/css" href="/static/New folder/bootstrap4-admin-compress.min.css">-->
+
+<script async="" src="/static/New folder/analytics.js.download"></script>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'http://themes.propeller.in/bootstrap4/html/bootstrap4-admin-theme/assets/js/analytics.js', 'ga');
+
+    ga('create', 'UA-124615-22', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<link rel="canonical" href="http://themes.propeller.in/bootstrap4/html/bootstrap4-admin-theme/add-employee.html">
+
+{% endblock %}
+
+{% block content %}
+<form form-inline action="{{url_for('add')}}" method="POST" id="createform"
+enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 mt-2">
+                        <ul class="nav justify-content-start">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <h5><b>Create Employee</b></h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 mt-2">
+
+                        <ul class="nav justify-content-end">
+
+                            <!-- SAVE BUTTON -->
+                            <li class="nav-item me-2">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary border-1 " type="submit" value="submit" id="save"
+                                        data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                                        Save
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- CANCEL BUTTON-->
+                            <li class="nav-item me-2">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary border-1 " type="button" id="close"
+                                        data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div CLASS="row">
+            <div class="page-content">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- About Tab -->
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div role="tabpanel" class="tab-pane active show" id="about">
+                                <div class="card pmd-card">
+
+
+                                    <div class="card-body">
+
+                                        <!-- Create Employee -->
+
+                                        <div class="details-tab pt-3">
+                                            <h3 class="card-title mb-" style="color:black">
+                                                <b></b>
+                                            </h3>
+                                            <div class="row">
+
+                                                <!-- Upload Picture -->
+
+                                                <div class=" col-sm-12 col-lg-3 col-md-2">
+                                                    <div data-provides="fileinput" class="fileinput fileinput-new">
+                                                        <div data-trigger="fileinput"
+                                                            class="fileinput-preview thumbnail img-fluid rounded-circle mb-0">
+                                                            <img id="photo-preview">
+                                                        </div>
+                                                        <div class="action-button">
+                                                            <span
+                                                                class="btn btn-secondary pmd-btn-fab btn-sm pmd-btn-raised btn-file pmd-ripple-effect">
+                                                                <span class="fileinput-new"><i
+                                                                        class="fa fa-plus"></i></span>
+                                                                <span class="fileinput-exists"><i
+                                                                        class="fa fa-pen"></i></span>
+                                                                <input type="file" name="photo" id="photo"
+                                                                    accept="image/*">
+
+                                                            </span>
+                                                            <a data-dismiss="fileinput"
+                                                                class="btn btn-danger btn-sm pmd-btn-fab pmd-ripple-effect pmd-btn-raised btn-file fileinput-exists"
+                                                                href=""><i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Basic details -->
+
+                                                <div class=" col-sm-12 col-lg-4 col-md-5">
+                                                    <div class="col-12 col-sm-12 col-md-10">
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label
+                                                                class="col-form-label control-label col-md-4 col-sm-4"
+                                                                for="name"><b>Name</b></label>
+                                                            <div class="col-sm-8 col-md-8">
+                                                                <input type="text" class="form-control" name="name"
+                                                                    id="name" value="" placeholder="Enter Text">
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label ">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="department"><b>Department</b></label>
+                                                            <div class="col-sm-8">
+                                                                <select name="department" id="department"
+                                                                    class="form-control">
+                                                                    <option value="">
+                                                                        Select
+                                                                    </option>
+                                                                    {% for i in department%}
+                                                                    <option>{{ i }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="jobposition"><b>Job
+                                                                    Position</b></label>
+                                                            <div class="col-sm-8">
+                                                                <select name="jobposition" id="jobposition"
+                                                                    class="form-control">
+                                                                    <option>
+                                                                        Select
+                                                                    </option>
+                                                                    {% for key,value in department.items()%}
+                                                                    {%for i,j in value.items()%}
+                                                                    <option> {{ i }}
+                                                                    </option>
+                                                                    {% endfor %}
+                                                                    {%endfor%}
+                                                                </select>
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="doj"><b>DOJ</b></label>
+                                                            <div class="col-sm-8">
+                                                                <input type="date" class="form-control" name="doj"
+                                                                    id="doj" value="" placeholder="Select">
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+
+                                                <div class=" col-sm-12 col-lg-4 col-md-5">
+
+                                                    <div class="col-12 col-sm-12 col-md-10">
+
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="ctc"><b>CTC</b></label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" name="ctc"
+                                                                    id="ctc" value="" placeholder="Enter Amount">
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="designation"><b>Designation</b></label>
+                                                            <div class="col-sm-8">
+                                                                <select name="designation" id="designation"
+                                                                    class="form-control">
+                                                                    <option>
+                                                                        Select
+                                                                    </option>
+                                                                    <option>
+                                                                        UI
+                                                                        /
+                                                                        UX
+                                                                        Designer
+                                                                    </option>
+                                                                    <option>
+                                                                        Marketing
+                                                                        Manager
+                                                                    </option>
+                                                                    <option>
+                                                                        PHP
+                                                                        Developer
+                                                                    </option>
+                                                                    <option>
+                                                                        Mobile
+                                                                        App
+                                                                        Developer
+                                                                    </option>
+                                                                    <option>
+                                                                        Sales
+                                                                        and
+                                                                        Marketing
+                                                                        Head
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="manager"><b>Manager</b></label>
+                                                            <div class="col-sm-8">
+                                                                <select name="manager" id="manager"
+                                                                    class="form-control">
+                                                                    <option>
+                                                                        Select
+                                                                    </option>
+                                                                    <option>
+                                                                        UI
+                                                                        /
+                                                                        UX
+                                                                        Designer
+                                                                    </option>
+                                                                    <option>
+                                                                        Marketing
+                                                                        Manager
+                                                                    </option>
+                                                                    <option>
+                                                                        PHP
+                                                                        Developer
+                                                                    </option>
+                                                                    <option>
+                                                                        Mobile
+                                                                        App
+                                                                        Developer
+                                                                    </option>
+                                                                    <option>
+                                                                        Sales
+                                                                        and
+                                                                        Marketing
+                                                                        Head
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                        <br>
+                                                        <div
+                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                            <label class="col-form-label control-label col-sm-4"
+                                                                for="ctc"><b>Experience</b></label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control"
+                                                                    name="currentExperience" id="currentExperience"
+                                                                    value="" placeholder="Enter Text">
+                                                            </div>
+                                                            <span class="pmd-textfield-focused"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+
+                                        <div class="accordion" id="personalInforamation">
+                                            <!-- Personal Information -->
+
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="personalinformation-heading">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse active"
+                                                        data-bs-target="#personalinformation-collapseOne"
+                                                        aria-expanded="true"
+                                                        aria-controls="personalinformation-collapseOne">
+                                                        <h4>
+                                                            Personal
+                                                            Information</h4>
+                                                    </button>
+                                                </h2>
+                                                <div id="personalinformation-collapseOne"
+                                                    class="accordion-collapse collapse show"
+                                                    aria-labelledby="personalinformation-headingOne">
+                                                    <div class="accordion-body">
+
+                                                        <!-- Personal Details -->
+                                                        <div class="details-tab pt-3">
+
+                                                            <!-- Personal Details -->
+                                                            <h3 class="card-title" style="color:black">
+                                                                <b>Personal
+                                                                    Details</b>
+                                                            </h3>
+                                                            <br>
+                                                            <div class="row d-flex">
+                                                                <div class="col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="dob"><b>Date
+                                                                                of
+                                                                                Birth</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="date" class="form-control"
+                                                                                name="dob" value="" id="dob"
+                                                                                placeholder="Select">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="gender"><b>Gender</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <select name="gender" id="gender"
+                                                                                class="form-control">
+                                                                                <option>
+                                                                                    Select
+                                                                                </option>
+                                                                                <option>
+                                                                                    Male
+                                                                                </option>
+                                                                                <option>
+                                                                                    Female
+                                                                                </option>
+                                                                                <option>
+                                                                                    Other
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <hr>
+                                                        </div>
+
+                                                        <!-- Contact Details -->
+
+                                                        <div class="details-tab pt-3">
+                                                            <h3 class="card-title" style="color:black">
+                                                                <b>Contact
+                                                                    Details</b>
+                                                            </h3>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="email"><b>Email</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                name="email" id="email" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="mobileno"><b>Mobile
+                                                                                No</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                name="mobileno" value="" id="mobileno"
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+
+                                                        <!-- Bank Details -->
+
+                                                        <div class="details-tab pt-3">
+                                                            <h3 class="card-title" style="color:black">
+                                                                <b>Bank
+                                                                    Details</b>
+                                                            </h3>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="bankname"><b>Bank
+                                                                                Name</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="bankname" name="bankname" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="accountholdernamename"><b>Account
+                                                                                Holder
+                                                                                Name</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="accountholdernamename"
+                                                                                name="accountholdernamename" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="accountno"><b>Account
+                                                                                Number</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="accountno" name="accountno" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="ifsccode"><b>IFSC Code</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="ifsccode" name="ifsccode" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+
+                                                        <!-- Identity Information -->
+
+                                                        <div class="details-tab pt-3">
+                                                            <h3 class="card-title" style="color:black">
+                                                                <b>Identity
+                                                                    Information</b>
+                                                            </h3>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="aadharno"><b>Aadhar
+                                                                                Card
+                                                                                No</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="aadharno" name="aadharno" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="passportno"><b>Passport
+                                                                                No</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="passportno" name="passportno"
+                                                                                value="" placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                                <div class="col-6 col-sm-6 col-md-6">
+                                                                    <div
+                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                        <label
+                                                                            class="col-form-label control-label col-sm-4"
+                                                                            for="panno"><b>Pan
+                                                                                Card
+                                                                                No</b></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control"
+                                                                                id="panno" name="panno" value=""
+                                                                                placeholder="Enter Text">
+                                                                        </div>
+                                                                        <span class="pmd-textfield-focused"></span>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <br>
+
+                                        <div class="accordion" id="tdsdata">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript" src="/static/New folder/bootstrap4-admin-compress.min.js.download"></script>
+<!-- /build -->
+
+<script type="text/javascript" src="/static/New folder/bootstrap4-admin-compress.min.js.download"></script>
+<script>
+    const imageInput = document.getElementById('photo');
+    const imagePreview = document.getElementById('photo-preview');
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', function () {
+            imagePreview.src = reader.result;
+        });
+
+        reader.readAsDataURL(file);
+    });
+
+</script>
+
+{% endblock %}
