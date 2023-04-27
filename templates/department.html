@@ -136,7 +136,7 @@
                         </tr>
                     </thead>
                     <tbody style="background-color: #ffffff;">
-
+                        {% if data != None %}
                         {% for i in data%}
 
                         {% for j in data[i] %}
@@ -159,6 +159,7 @@
                         </tr>
                         {% endfor %}
                         {% endfor%}
+                        {% endif%}
 
                     </tbody>
                 </table>

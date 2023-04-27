@@ -2,7 +2,7 @@ from firebase_admin import firestore
 import firebase_admin
 
 # from firebase_admin import credentials
-# cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+# cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
 # firebase_app = firebase_admin.initialize_app(cred)
 
 # db = firestore.client()

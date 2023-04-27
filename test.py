@@ -10,7 +10,7 @@
 # # app = Flask(__name__)
 # #
 # # # Initialize Firebase app
-# # cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+# # cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
 # # firebase_admin.initialize_app(cred, {
 # #     'storageBucket': 'employee-payroll-system-848cc.appspot.com'
 # # })
@@ -87,7 +87,7 @@
 # #   "storageBucket": "employee-payroll-system-848cc.appspot.com",
 # #   "messagingSenderId": "99989108168",
 # #   "appId": "1:99989108168:web:65c1ccfb45178fc09bfcfd",
-# #   "serviceAccount":"employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json",
+# #   "serviceAccount":"empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json",
 # #     "databaseURL":"gs://employee-payroll-system-848cc.appspot.com"
 # # }
 #
@@ -95,7 +95,7 @@
 # # firbase=firebase_admin.initialize_app(firebaseConfig)
 #
 #
-# cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+# cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
 # initialize_app(cred, {
 #     'storageBucket': 'employee-payroll-system-848cc.appspot.com'
 # })

@@ -2,7 +2,7 @@ import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from leave_manage import Leavemanage
 from firebase_admin import credentials, storage
 from firebase_admin import firestore
@@ -27,7 +27,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 # USE A SERVICE ACCOUNT
 
-cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
 db = firestore.client()
 
 leavobj = Leavemanage(db)
@@ -54,6 +54,7 @@ def login(comapyname):
         data = request.form
         responce = login_obj.login(data,comapyname)
         if responce==True:
+            # session['companyname']=comapyname
             return redirect(url_for('dashboard'))
     ''' LOGIN PAGE '''
     url=f'/{comapyname}/login'
@@ -65,8 +66,6 @@ def success():
 
 @app.route('/register')
 def register():
-
-
     responce=''
     if request.method=='POST':
         data=request.form
@@ -84,12 +83,12 @@ def register():
 
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
+    session['companyname']='alian_software'
+    companyname=session['companyname']
     if request.method == "POST":
-            working_days = request.form.get('workingdays')
-            week_off_days = request.form.get('weekoff')
-            holidays = request.form.get('holidays')
-            print(f"{working_days}, {week_off_days}, {holidays}")
-
+            form=request.form.items()
+            
+            db.collection[companyname].document('month_data').set(form)
 
 
     ''' DISPLAY DASHBOARD '''
@@ -246,7 +245,7 @@ def department():
     if request.method == 'POST':
         ''' Add New DEPARTMENT '''
         result=request.form
-        dept.add_deaprtment(result)
+        dept.add_department(result)
 
     doc_ref = db.collection(u'alian_software').document(u'department')
     data = doc_ref.get().to_dict()
@@ -261,7 +260,7 @@ def delete_department(dep,pos):
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
     pos=re.sub(pattern,'',pos)
-    dept.delete_deaprtment(dep,pos)
+    dept.delete_department(dep,pos)
     return redirect(url_for('department'))
 
 

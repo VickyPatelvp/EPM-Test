@@ -7,9 +7,9 @@ import datetime
 from io import BytesIO
 
 
-cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
 firebase_app = firebase_admin.initialize_app(cred, {
-    'storageBucket': 'epms-9d639.appspot.com'
+    'storageBucket': 'empoyee-payroll-system.appspot.com'
 })
 
 
