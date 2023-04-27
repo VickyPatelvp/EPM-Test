@@ -3,9 +3,9 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import concurrent.futures
 
-cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
-
-db = firestore.client()
+# cred = credentials.Certificate('employee-payroll-system-848cc-firebase-adminsdk-xkv2w-cfaf2643db.json')
+#
+# db = firestore.client()
 
 
 class Department:

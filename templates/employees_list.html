@@ -1957,9 +1957,16 @@ element.style {
                                 </li>
                                 <!-- ADD New Employee -->
                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Add New Employee
-                                </button>
+                                <li class="nav-item me-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary border-1 " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Add New Employee
+                                        </button>
+                                    </div>
+                                </li>
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -1968,16 +1975,16 @@ element.style {
                                         <h5 class="modal-title" id="exampleModalLabel">Add New Employee</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <form action="{{url_for('employee_list')}}" method="POST" id="newemployee" >
                                         <div class="modal-body">
-                                        <form action="">
-                                            <label for="">Enter Email</label>
-                                            <input type="" name="" value="" class="form-control">
-                                        </form>
+                                            <label for="new_email">Enter Email</label>
+                                            <input type="email" name="new_email" id="new_email" value="" class="form-control">
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" value="submit" class="btn btn-primary">Send Mail</button>
                                         </div>
+                                        </form>
                                     </div>
                                     </div>
                                 </div>

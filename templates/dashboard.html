@@ -26,6 +26,51 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="col-lg-6 col-sm-12 mt-2">
+                            <ul class="nav justify-content-end  end-0 mb-4 mt-2">
+
+                                <!-- MODAL -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Manage Month Days</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{url_for('dashboard')}}" method="POST" id="monthdata" >
+                            <div class="modal-body inline">
+                                <label for="workingdays" class="col-4">Working Days</label>
+                                <input type="text" name="workingdays" id="workingdays" value="" class="form-control-sm">
+                            </div>
+                            <div class="modal-body inline">
+                                <label for="weekoff" class="col-4">Week off Days</label>
+                                <input type="text" name="weekoff" id="weekoff" value="" class="form-control-sm">
+                            </div>
+                            <div class="modal-body inline">
+                                <label for="holidays" class="col-4">Holidays </label>
+                                <input type="text" name="holidays" id="holidays" value="" class="form-control-sm">
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" value="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                                <li class="nav-item me-4">
+                                    <div class="dropdown">
+                                        <!-- Button trigger modal -->
+                                        <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Days of Month
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -33,11 +78,22 @@
     </div>
 </div>
 
+
+
 <div class="container-fluid" style="background-color: #E7E7E7;">
     <div class="wrapper">
         <div class="main">
             <main class="content">
                 <div class="container-fluid p-3">
+
+                    <div>
+                        <div class="pt-3">
+                            <p class="p-2  error">Leave application <b>Sep 24, 2021</b> to <b>Sep 26, 2021</b> <a href="#">Click</a>
+                            </p>
+                        </div>
+                    </div>
+
+
 
                     <div class="row mt-3 p-1">
 

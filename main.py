@@ -82,8 +82,16 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def dashboard():
+    if request.method == "POST":
+            working_days = request.form.get('workingdays')
+            week_off_days = request.form.get('weekoff')
+            holidays = request.form.get('holidays')
+            print(f"{working_days}, {week_off_days}, {holidays}")
+
+
+
     ''' DISPLAY DASHBOARD '''
     employee_on_leave,total_leaves,employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data()
     return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
@@ -91,6 +99,12 @@ def dashboard():
 
 @app.route('/employeelist', methods=['GET', 'POST'])
 def employee_list():
+    if request.method == 'POST':
+        employee_mail = request.form.get('new_email')
+        print(employee_mail)
+
+
+
 
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
 
@@ -271,6 +285,11 @@ def my_route():
 @app.route('/salary', methods=['GET', 'POST'])
 def salary():
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
+    if request.method == 'POST':
+        hra_perc = request.form.get('hrapercentage')
+        da_perc = request.form.get('dapercentage')
+        leave_deduction = request.form.get('deductionpercentage')
+        print(f'{hra_perc},{da_perc},{leave_deduction}')
     salary_list = Salarymanage(db).get_all_month_salary_data()
     return render_template('salary_sheet_month.html',data=salary_list)
 
@@ -334,6 +353,19 @@ if datetime.date.today().day==20:
     TDSData(db).deduction("EMP002")
 
 
+# @app.route('/test_create')
+# def test():
+#     def get_department_data():
+#         department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+#         return department
+#
+#     with concurrent.futures.ThreadPoolExecutor() as executor:
+#         department_data = executor.submit(get_department_data)
+#
+#     department = department_data.result()
+#     return render_template('create.html', department=department)
+
+
 if __name__ == '__main__':
-    # app.run(debug=True, port=300)
-    app.run(debug=True, host="192.168.0.150", port=3005)
+    app.run(debug=True, port=300)
+    # app.run(debug=True, host="192.168.0.150", port=3005)
