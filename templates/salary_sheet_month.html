@@ -34,21 +34,21 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form action="{{url_for('dashboard')}}" method="POST" id="salarydata">
+                                            <form action="{{url_for('salary')}}" method="POST" id="salarydata">
                                                 <div class="modal-body inline">
                                                     <label for="hrapercentage" class="col-3">HRA</label>
-                                                    <input type="text" name="hrapercentage" id="hrapercentage" value=""
+                                                    <input type="text" name="hrapercentage" id="hrapercentage" value="" placeholder="{{salary_criteria['hrapercentage']}}"
                                                            class="form-control-sm">
                                                 </div>
                                                 <div class="modal-body inline">
                                                     <label for="dapercentage" class="col-3">DA</label>
-                                                    <input type="text" name="dapercentage" id="dapercentage" value=""
+                                                    <input type="text" name="dapercentage" id="dapercentage" value="" placeholder="{{salary_criteria['dapercentage']}}"
                                                            class="form-control-sm">
                                                 </div>
                                                 <div class="modal-body inline">
                                                     <label for="deductionpercentage" class="col-3">Leave
                                                         Deduction </label>
-                                                    <input type="text" name="deductionpercentage"
+                                                    <input type="text" name="deductionpercentage" placeholder="{{salary_criteria['deductionpercentage']}}"
                                                            id="deductionpercentage" value="" class="form-control-sm">
                                                 </div>
                                                 <div class="modal-footer">

@@ -100,9 +100,9 @@
 
                     <div>
                         <div class="pt-3">
-                            <p class="p-2  error">
-                             {%   for i in range(0,3) %}
-                                <b class="pe-4">Sep 24, 2021  </b>
+                            <p class="p-2 ps-5  error">
+                             {%   for key, value in moath_data.items() %}
+                                <b class="pe-4">{{key}} : {{value}}  </b>
                                {% endfor %}
 <!--                                <a href="#">Click</a>-->
                             </p>

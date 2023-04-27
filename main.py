@@ -19,6 +19,7 @@ import concurrent.futures
 from salary_slip import SalarySlip
 from register import Register
 from login import Login
+from moth_days import Month_count
 # FLASK APP
 app = Flask(__name__)
 app.secret_key = 'tO$&!|0wkamvVia0?n$NqIRVWOG'
@@ -36,14 +37,8 @@ update_obj=Update_information(db)
 dashboard_obj=Dashboard(db)
 register_obj=Register(db)
 login_obj=Login(db)
+moth_count=Month_count()
 
-if datetime.date.today().day==1:
-     pass
-#     Code
-
-# Leave reset
-if datetime.date.today().day==1 or datetime.date.month==1:
-    leavobj.leave_add()
 
 
 
@@ -84,16 +79,24 @@ def register():
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
     session['companyname']='alian_software'
-    companyname=session['companyname']
-    if request.method == "POST":
-            form=request.form.items()
-            
-            db.collection[companyname].document('month_data').set(form)
+
+
+
+    moath_data=moth_count.count()
+    print(moath_data)
+    for key,value in moath_data.items():
+        print(f'k{key}:{value}')
+
+    #     Code
+
+    # Leave reset
+    if datetime.date.today().day == 1 or datetime.date.month == 1:
+        leavobj.leave_add()
 
 
     ''' DISPLAY DASHBOARD '''
     employee_on_leave,total_leaves,employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data()
-    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
+    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary,moath_data=moath_data)
 
 
 @app.route('/employeelist', methods=['GET', 'POST'])
@@ -284,13 +287,23 @@ def my_route():
 @app.route('/salary', methods=['GET', 'POST'])
 def salary():
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
+    companyname = session['companyname']
+
     if request.method == 'POST':
-        hra_perc = request.form.get('hrapercentage')
-        da_perc = request.form.get('dapercentage')
-        leave_deduction = request.form.get('deductionpercentage')
-        print(f'{hra_perc},{da_perc},{leave_deduction}')
+        # hra_perc = request.form.get('hrapercentage')
+        # da_perc = request.form.get('dapercentage')
+        # leave_deduction = request.form.get('deductionpercentage')
+        # print(f'{hra_perc},{da_perc},{leave_deduction}')
+        print(companyname)
+        form = request.form
+        data_dict={}
+        for key,value in form.items():
+            data_dict.update({key:value})
+        # ADD Salary Criteria
+        db.collection(companyname).document('salary_calc').set(data_dict)
+    salary_criteria=db.collection(str(companyname)).document('salary_calc').get().to_dict()
     salary_list = Salarymanage(db).get_all_month_salary_data()
-    return render_template('salary_sheet_month.html',data=salary_list)
+    return render_template('salary_sheet_month.html',data=salary_list,salary_criteria=salary_criteria)
 
 
 @app.route('/salarysheetview/<salid>', methods=['GET', 'POST'])
@@ -363,6 +376,8 @@ if datetime.date.today().day==20:
 #
 #     department = department_data.result()
 #     return render_template('create.html', department=department)
+
+
 
 
 if __name__ == '__main__':
