@@ -3,9 +3,9 @@
 {% block head %}
 {{ super() }}
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="shortcut icon" href="img/icons/icon-48x48.png"/>
+<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-<link rel="canonical" href="https://demo-basic.adminkit.io/"/>
+<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <!-- <link href="/static/css/app.css" rel="stylesheet"> -->
 
@@ -33,11 +33,107 @@
     </div>
 </div>
 
+
+
 <div class="container-fluid" style="background-color: #E7E7E7;">
     <div class="wrapper">
         <div class="main">
             <main class="content">
                 <div class="container-fluid p-3">
+
+                    <div>
+                        <div class="pt-3">
+                            <p class="p-2  error">Leave application <b>Sep 24, 2021</b> to <b>Sep 26, 2021</b> <a
+                                    href="#">Click</a>
+                            </p>
+
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal1">
+                        Launch demo modal
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title ps-4" id="exampleModalLabel">Manage Month Days </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{url_for('dashboard')}}" method="POST" id="newemployee">
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-4 ps-4">Working Days</label>
+                                        <input type="email" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-4 ps-4">Week off Days</label>
+                                        <input type="text" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-4 ps-4">Holidays </label>
+                                        <input type="text" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="text" value="submit" class="btn btn-primary">Save</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal END -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"> Salary Data </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{url_for('dashboard')}}" method="POST" id="newemployee">
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-3">HRA</label>
+                                        <input type="email" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-3">DA</label>
+                                        <input type="text" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+                                    <div class="modal-body inline">
+                                        <label for="new_email" class="col-3">Leave Deduction </label>
+                                        <input type="text" name="new_email" id="new_email" value=""
+                                            class="form-control-sm">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="text" value="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal END -->
 
                     <div class="row mt-3 p-1">
 
@@ -52,7 +148,7 @@
                                                     <div class="col-4 mt-4">
                                                         <div class=" text-primary">
                                                             <img src="/static/assets/team.png" class="card-img-top"
-                                                                 alt="" style="width: 4rem;">
+                                                                alt="" style="width: 4rem;">
 
                                                         </div>
                                                     </div>
@@ -76,7 +172,7 @@
                                                     <div class="col-4 mt-4">
                                                         <div class="text-primary">
                                                             <img src="/static/assets/checklist.png" alt=""
-                                                                 style="width: 4rem;">
+                                                                style="width: 4rem;">
                                                             <!-- <i class="align-middle" data-feather="users"></i> -->
                                                         </div>
                                                     </div>
@@ -96,7 +192,7 @@
                                                     <div class="col-4 mt-4">
                                                         <div class=" text-primary">
                                                             <img src="/static/assets/presentation.png" alt=""
-                                                                 style="width: 4rem;">
+                                                                style="width: 4rem;">
                                                             <!-- <i class="fa-regular fa-chalkboard-user"></i> -->
                                                             <!-- <i class="align-middle" data-feather="dollar-sign"></i> -->
                                                         </div>
@@ -129,23 +225,29 @@
                                                 <div style="vertical-align: middle; " class="mt-5">
                                                     <table class="table mt-5 me-5" style="font-size: 20px;">
                                                         <ul>
-                                                        <tbody>
-                                                        <tr>
-                                                                <td class="text-end"><li style="color:#0d6efd;"></li></td>
-                                                                <td class="ms-1 text-start">Fulltime</td>
-                                                        <tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#dc3545;"></li></td>
-                                                            <td class="ms-1 text-start">Internship</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#ffc107;"></li></td>
-                                                            <td class="ms-1 text-start">Trainee</td>
-                                                        </tr>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#0d6efd;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Fulltime</td>
+                                                                <tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#dc3545;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Internship</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#ffc107;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Trainee</td>
+                                                                </tr>
 
 
-                                                        </tbody>
-                                                            </ul>
+                                                            </tbody>
+                                                        </ul>
                                                     </table>
                                                 </div>
                                             </div>
@@ -173,37 +275,54 @@
                                                 <div>
                                                     <table class="table mt-3" style="font-size: 20px;">
                                                         <ul>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#0d6efd;"></li></td>
-                                                            <td class="ms-1 text-start">Account Department</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#dc3545;"></li></td>
-                                                            <td class="ms-1 text-start">UI/UX Design</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#0d6efd;"></li></td>
-                                                            <td class="ms-1 text-start">Development Department</td>
-                                                        </tr>
-                                                        <tr class="mt-2">
-                                                            <td class="text-end"><li style="color:#0dcaf0;"></li></td>
-                                                            <td class="ms-1 text-start">HR Department</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#6c757d;"></li></td>
-                                                            <td class="ms-1 text-start">Marketing Department</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#20c997;"></li></td>
-                                                            <td class="ms-1 text-start">Testing Department</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-end"><li style="color:#ffc107;"></li></td>
-                                                            <td class="ms-1 text-start">Android and IOS App Developer</td>
-                                                        </tr>
-                                                        </tbody>
-                                                            </ul>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#0d6efd;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Account Department</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#dc3545;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">UI/UX Design</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#0d6efd;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Development Department
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="mt-2">
+                                                                    <td class="text-end">
+                                                                        <li style="color:#0dcaf0;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">HR Department</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#6c757d;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Marketing Department
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#20c997;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Testing Department</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:#ffc107;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Android and IOS App
+                                                                        Developer</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </ul>
                                                     </table>
                                                 </div>
 
@@ -251,114 +370,114 @@
 
                     <div class="row mt-3 p-1">
                         <div class="col-3 col-lg-3 col-xxl-3 d-flex">
-                            <div class="card flex-fill" style="background-color: #ffffff" >
+                            <div class="card flex-fill" style="background-color: #ffffff">
                                 <div class="card-header">
 
                                     <h4 class="card-title mb-0">Employees On Leave</h4>
                                 </div>
                                 <div class="card p-3" style="border:none !important">
-                                <table class="table table-hover my-0">
-                                    <thead style="background-color: #DFE1E6">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th class="d-none d-xl-table-cell">Leave Date</th>
+                                    <table class="table table-hover my-0">
+                                        <thead style="background-color: #DFE1E6">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th class="d-none d-xl-table-cell">Leave Date</th>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for name,sdate in employee_on_leave.items() %}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td class="d-none d-xl-table-cell align-middle"> {{sdate}}</td>
-                                    </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for name,sdate in employee_on_leave.items() %}
+                                            <tr>
+                                                <td>{{name}}</td>
+                                                <td class="d-none d-xl-table-cell align-middle"> {{sdate}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3 col-lg-3 col-xxl-3 d-flex">
-                            <div class="card flex-fill" >
+                            <div class="card flex-fill">
                                 <div class="card-header">
 
                                     <h4 class="card-title mb-0">Top 5 Leave Takers</h4>
                                 </div>
                                 <div class="card p-3" style="border:none !important">
-                                <table class="table table-hover my-0">
-                                    <thead  style="background-color: #DFE1E6">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th class="d-none d-xl-table-cell">No of Leave</th>
+                                    <table class="table table-hover my-0">
+                                        <thead style="background-color: #DFE1E6">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th class="d-none d-xl-table-cell">No of Leave</th>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for name,days in total_leaves.items() %}
-                                    <tr>
-                                        <td>{{ name }}</td>
-                                        <td class="d-none d-xl-table-cell align-middle">{{ days }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for name,days in total_leaves.items() %}
+                                            <tr>
+                                                <td>{{ name }}</td>
+                                                <td class="d-none d-xl-table-cell align-middle">{{ days }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3 col-lg-3 col-xxl-3 d-flex">
-                            <div class="card flex-fill" >
+                            <div class="card flex-fill">
                                 <div class="card-header">
 
                                     <h4 class="card-title mb-0">This month Employees Birthday</h4>
                                 </div>
                                 <div class="card p-3" style="border:none !important">
-                                <table class="table table-hover my-0">
-                                    <thead style="background-color: #DFE1E6">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th class="d-none d-xl-table-cell">Date</th>
+                                    <table class="table table-hover my-0">
+                                        <thead style="background-color: #DFE1E6">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th class="d-none d-xl-table-cell">Date</th>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for name,dob in employee_birthday.items() %}
-                                    <tr>
-                                        <td>{{ name }}</td>
-                                        <td class="d-none d-xl-table-cell align-middle">{{ dob }}</td>
-                                    </tr>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for name,dob in employee_birthday.items() %}
+                                            <tr>
+                                                <td>{{ name }}</td>
+                                                <td class="d-none d-xl-table-cell align-middle">{{ dob }}</td>
+                                            </tr>
 
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3 col-lg-3 col-xxl-3 d-flex">
-                            <div class="card flex-fill" >
+                            <div class="card flex-fill">
                                 <div class="card-header">
 
                                     <h4 class="card-title mb-0">Work Anniversaries</h4>
                                 </div>
                                 <div class="card p-3" style="border:none !important">
-                                <table class="table table-hover my-0">
-                                    <thead style="background-color: #DFE1E6">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Year</th>
-                                        <th class="d-none d-xl-table-cell">Date</th>
+                                    <table class="table table-hover my-0">
+                                        <thead style="background-color: #DFE1E6">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Year</th>
+                                                <th class="d-none d-xl-table-cell">Date</th>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {%  for key,value in employee_anniversary.items() %}
-                                    <tr>
-                                        <td>{{ value['name'] }}</td>
-                                        <td> {{ value['years'] }} </td>
-                                        <td>{{ value['date'] }}</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key,value in employee_anniversary.items() %}
+                                            <tr>
+                                                <td>{{ value['name'] }}</td>
+                                                <td> {{ value['years'] }} </td>
+                                                <td>{{ value['date'] }}</td>
 
-                                    </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -371,16 +490,15 @@
 </div>
 
 
+
 <script src="/static/js/app.js"></script>
-
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Pie chart
         new Chart(document.getElementById("chartjs-dashboard-pie"), {
             type: "pie",
             data: {
-                labels: ["fulltime", "internship",  "trainee"],
+                labels: ["fulltime", "internship", "trainee"],
                 datasets: [{
                     data: [150, 100, 30],
                     backgroundColor: [
@@ -432,7 +550,7 @@
                         window.theme.info,
                         window.theme.secondary,
                         window.theme.success,
-                       
+
 
                     ],
                     borderWidth: 5
@@ -471,8 +589,8 @@
                     borderColor: window.theme.primary,
                     hoverBackgroundColor: window.theme.primary,
                     hoverBorderColor: window.theme.primary,
-                    data: [54, 67, 41, 55,,1],
-                    barPercentage:0.5,
+                    data: [54, 67, 41, 55, , 1],
+                    barPercentage: 0.5,
                     categoryPercentage: 0.6
                 }]
             },
@@ -496,7 +614,7 @@
                         stacked: true,
                         gridLines: {
                             color: "transparent",
-                            with:50
+                            with: 50
                         }
                     }]
                 }
@@ -519,43 +637,43 @@
         new Chart(document.getElementById("chartjs-dashboard-bar1"), {
             type: "bar",
             data: {
-    labels: ["0 to 20k ", "20k to 50k", "50k to 80k", "80k to 100k", "100k +"],
-    datasets: [{
-      label: "Last year",
-      backgroundColor: window.theme.primary,
-      borderColor: window.theme.primary,
-      hoverBackgroundColor: window.theme.primary,
-      hoverBorderColor: window.theme.primary,
-      data: [54, 67, 41, 55, 62,],
-      barPercentage: .75,
-      categoryPercentage: 0.6
-    }, {
-      label: "This year",
-      backgroundColor: "#d224e6",
-      borderColor: "#dee2e6",
-      hoverBackgroundColor: "#dee2e6",
-      hoverBorderColor: "#dee2e6",
-      data: [69, 66, 24, 48, 52,],
-      barPercentage: .75,
-      categoryPercentage: 0.6
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        gridLines: {
-          display: false
-        },
-        stacked: false
-      }],
-      xAxes: [{
-        stacked: false,
-        gridLines: {
-          color: "transparent"
-        }
-      }]
-    }
-}
+                labels: ["0 to 20k ", "20k to 50k", "50k to 80k", "80k to 100k", "100k +"],
+                datasets: [{
+                    label: "Last year",
+                    backgroundColor: window.theme.primary,
+                    borderColor: window.theme.primary,
+                    hoverBackgroundColor: window.theme.primary,
+                    hoverBorderColor: window.theme.primary,
+                    data: [54, 67, 41, 55, 62,],
+                    barPercentage: .75,
+                    categoryPercentage: 0.6
+                }, {
+                    label: "This year",
+                    backgroundColor: "#d224e6",
+                    borderColor: "#dee2e6",
+                    hoverBackgroundColor: "#dee2e6",
+                    hoverBorderColor: "#dee2e6",
+                    data: [69, 66, 24, 48, 52,],
+                    barPercentage: .75,
+                    categoryPercentage: 0.6
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        stacked: false
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        gridLines: {
+                            color: "transparent"
+                        }
+                    }]
+                }
+            }
         });
     });
 

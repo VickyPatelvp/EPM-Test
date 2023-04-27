@@ -1,8 +1,7 @@
 import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor
-
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from leave_manage import Leavemanage
 from firebase_admin import credentials, storage
 from firebase_admin import firestore
@@ -19,6 +18,7 @@ import concurrent.futures
 from salary_slip import SalarySlip
 from register import Register
 from login import Login
+from mail import Mail
 # FLASK APP
 app = Flask(__name__)
 app.secret_key = 'tO$&!|0wkamvVia0?n$NqIRVWOG'
@@ -36,6 +36,7 @@ update_obj=Update_information(db)
 dashboard_obj=Dashboard(db)
 register_obj=Register(db)
 login_obj=Login(db)
+mail=Mail()
 
 if datetime.date.today().day==1:
      pass
@@ -47,53 +48,73 @@ if datetime.date.today().day==1 or datetime.date.month==1:
 
 
 
-@app.route('/<comapyname>/login', methods=["POST", "GET"])
-def login(comapyname):
+@app.route('/<companyname>/login', methods=["POST", "GET"])
+def login(companyname):
     responce=''
     if request.method == 'POST':
         data = request.form
-        responce = login_obj.login(data,comapyname)
+        responce = login_obj.login(data,companyname)
         if responce==True:
+            session['companyname'] = companyname
             return redirect(url_for('dashboard'))
     ''' LOGIN PAGE '''
-    url=f'/{comapyname}/login'
+    url=f'/{companyname}/login'
     return render_template('login.html',responce=responce,url=url)
 
 @app.route('/success', methods=["POST", "GET"])
 def success():
     return render_template('success.html')
 
-@app.route('/register')
+@app.route('/register',methods=["POST", "GET"])
 def register():
-
-
     responce=''
     if request.method=='POST':
         data=request.form
         responce=register_obj.register(data)
         if responce==True:
-
             return redirect(url_for('success'))
-
-
-
     ''' REGISTER PAGE '''
-
     return render_template('register.html')
+
+@app.route('/<companyname>/employee_registration')
+def add_employee(companyname):
+    if request.method=='POST':
+        create = Create(db)
+        create.result(companyname)
+        return redirect(url_for(f'{companyname}//login'))
+    def get_department_data():
+        department = (db.collection(u'alian_software').document(u'department').get()).to_dict()
+        return department
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        department_data = executor.submit(get_department_data)
+    department = department_data.result()
+    return render_template('add_employee.html', department=department)
+
 
 
 @app.route('/')
 def dashboard():
     ''' DISPLAY DASHBOARD '''
+    if request.method=='post':
+        pass
     employee_on_leave,total_leaves,employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data()
-    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary)
+    companyname=''
+    if 'companyname' in session:
+        companyname=session['companyname']
+    return render_template('dashboard.html',employee_on_leave=employee_on_leave,total_leaves=total_leaves,employee_birthday=employee_birthday,employee_anniversary=employee_anniversary,companyname=companyname)
 
 
 @app.route('/employeelist', methods=['GET', 'POST'])
 def employee_list():
+    if request.method == 'POST':
+        employee_mail = request.form.get('new_email')
+        print(employee_mail)
+        companyname=''
+        if 'companyname'in session:
+            companyname=session['companyname']
+        mail.new_employee_mail(email=employee_mail,companyname=companyname)
 
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
-
     def get_employee_data():
         docs = db.collection(u'alian_software').document(u'employee').collection('employee').stream()
         employee_list = {}
@@ -117,13 +138,7 @@ def employee_list():
 @app.route('/result', methods=['POST', 'GET'])
 def add():
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
-    # if request.method == 'POST':
-    #
-    #     file = request.files['photo']
-    #     bucket = storage.bucket()
-    #     blob = bucket.blob(file.filename)
-    #     blob.upload_from_file(file)
-    #     url = blob.public_url
+
     create = Create(db)
     create.result()
     return redirect(url_for('employee_list'))
@@ -335,5 +350,5 @@ if datetime.date.today().day==20:
 
 
 if __name__ == '__main__':
-    # app.run(debug=True, port=300)
-    app.run(debug=True, host="192.168.0.150", port=3005)
+    app.run(debug=True, port=300)
+    # app.run(debug=True, host="192.168.0.150", port=3005)

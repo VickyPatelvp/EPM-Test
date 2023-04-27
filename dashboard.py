@@ -13,17 +13,17 @@ class Dashboard():
                          'dob': emp_doc.get('dob'),
                          'doj': emp_doc.get('doj'),
                          'leaves': {}}
-
-        if datetime.strptime(employee_data['dob'], '%Y-%m-%d').month == datetime.today().month:
-            employee_data['birthday'] = employee_data['dob']
-
-        doj = datetime.strptime(employee_data['doj'], '%Y-%m-%d')
-        if doj.month == datetime.today().month:
-            years = datetime.today().year - doj.year
-            employee_data['anniversary'] = {
-                                            'name':employee_data['name'],
-                                            'date': employee_data['doj'],
-                                            'years': years}
+        if employee_data['dob']!='':
+            if datetime.strptime(employee_data['dob'], '%Y-%m-%d').month == datetime.today().month:
+                employee_data['birthday'] = employee_data['dob']
+        if employee_data['doj'] != '':
+            doj = datetime.strptime(employee_data['doj'], '%Y-%m-%d')
+            if doj.month == datetime.today().month:
+                years = datetime.today().year - doj.year
+                employee_data['anniversary'] = {
+                                                'name':employee_data['name'],
+                                                'date': employee_data['doj'],
+                                                'years': years}
 
         leaves = emp_doc.reference.collection('leaveMST')
         total_leaves = 0
