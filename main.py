@@ -79,15 +79,13 @@ def register():
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
     session['companyname']='alian_software'
-
-
-
-    moath_data=moth_count.count()
+    companyname=session['companyname']
+    moath_data = moth_count.count()
+    if datetime.datetime.today().day== datetime.datetime.today().day:
+        db.collection(companyname).document('month_data').set(moath_data)
     print(moath_data)
     for key,value in moath_data.items():
         print(f'k{key}:{value}')
-
-    #     Code
 
     # Leave reset
     if datetime.date.today().day == 1 or datetime.date.month == 1:
@@ -293,6 +291,7 @@ def salary():
         # hra_perc = request.form.get('hrapercentage')
         # da_perc = request.form.get('dapercentage')
         # leave_deduction = request.form.get('deductionpercentage')
+        # print(f'{hra_perc},{da_perc},{leave_deduction}')
         # print(f'{hra_perc},{da_perc},{leave_deduction}')
         print(companyname)
         form = request.form

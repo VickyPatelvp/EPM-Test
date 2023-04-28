@@ -40,11 +40,11 @@ class Salarymanage():
                     }})
                 if j != "salid":
                     salary_data.update({j: {
-                        'netSalary': salary_data[j]['netSalary'] + int(employee_salary[i][j]["netSalary"]),
-                        'grossSalary': salary_data[j]['grossSalary'] + int(employee_salary[i][j]["grossSalary"]),
-                        'epfo': salary_data[j]['epfo'] + int(employee_salary[i][j]["epfo"]),
-                        'pt': salary_data[j]['pt'] + int(employee_salary[i][j]["pt"]),
-                        'tds': salary_data[j]['tds'] + int(employee_salary[i][j]["tds"]),
+                        'netSalary':round( salary_data[j]['netSalary'] + float(employee_salary[i][j]["netSalary"]),2),
+                        'grossSalary': salary_data[j]['grossSalary'] + float(employee_salary[i][j]["grossSalary"]),
+                        'epfo': salary_data[j]['epfo'] + float(employee_salary[i][j]["epfo"]),
+                        'pt': salary_data[j]['pt'] + float(employee_salary[i][j]["pt"]),
+                        'tds':round((salary_data[j]['tds'] + float(employee_salary[i][j]["tds"])),2)
                     }})
         return salary_data
 

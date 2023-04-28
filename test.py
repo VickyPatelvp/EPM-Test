@@ -144,37 +144,147 @@
 #
 # if __name__ == '__main__':
 #     app.run(port=4000, debug=True)
-import smtplib
+# import smtplib
+#
+#
+# def register_responce_mail():
+#     # Set up the connection to the SMTP server
+#     smtp_server = 'smtp.gmail.com'
+#     smtp_port = 587  # or 465 for SSL/TLS
+#     smtp_username = 'vickypatel.vp817@gmail.com'
+#     smtp_password = "qglshjrbjznxkepg"
+#     server = smtplib.SMTP(smtp_server, smtp_port)
+#     server.starttls()
+#     server.login(smtp_username, smtp_password)
+#     # Compose the email message
+#     from_email = 'vickypatel.vp817@gmail.com'
+#     to_email = 'vickypatel.vp817@gmail.com'
+#     subject = 'Yor Company Account'
+#     body = '''This mail is for Company Successsfully registered,
+#               Now you can use following url to access your company login
+#               http://192.168.0.150:3005/NV2/login
+#             Congratulation, Thank you so much..'''
+#     message = f"""
+#       From: {from_email}
+#       To: {to_email}
+#       Subject: {subject}
+#       {body}
+#       """
+#     # Send the email
+#     server.sendmail(from_email, to_email, message)
+#     # Close the SMTP connection
+#     server.quit()
+#
+#
+#
+# register_responce_mail()
+import datetime
+
+from firebase_admin import firestore
+import firebase_admin
+
+from firebase_admin import credentials
+cred = credentials.Certificate('fir-emp-7d1ed-firebase-adminsdk-kzxuw-f9465d22f8.json')
+
+firebase_app = firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+# start = datetime.datetime.now()
+
+# for num in range(0, 100):
+#
+#     # admin_data = {
+#     #     'AdminID': 'admin@aliansoftware.com',
+#     #     'Company Name': 'alian',
+#     #     'password': 12345
+#     # }
+#     #
+#     # db.collection('alian').document(u'admin').collection('employee').document('num').collection('emp').document('demo'+str(num)).set(admin_data)
+#     # # ADD DEPARTMENT DATA
+#     # db.collection('demo').document('demo'+str(num)).set(admin_data)
+#     # print(num)
+#     dict_data={}
+#     data=db.collection('alian').document(u'admin').collection('employee').document('num').collection('emp').document(
+#         'demo' + str(num)).get()
+#     db.collection('demo').document('demo' + str(num)).set(admin_data)
+#     dict.update({num :data})
+#
+# endtime=datetime.datetime.now()
+#
+# print(start-endtime)
+
+# dict_data = {}
+#
+# start = datetime.datetime.now()
+# for num in range(0, 100):
+#     admin_data = {
+#         'AdminID': 'admin@aliansoftware.com',
+#         'Company Name': 'alian',
+#         'password': 12345
+#     }
+#     dict_data.update({str(num): admin_data})
+# db.collection('alian').document(u'admin').collection('employee').document('num').collection('emp').document('demohello').set(dict_data)
+# endtime=datetime.datetime.now()
+#
+# print(endtime- start)
+#
+#
+#
+#
+#
+#     # ADD DEPARTMENT DATA
+#
+# dict_data = {}
+# start = datetime.datetime.now()
+# for num in range(0, 100):
+#     admin_data = {
+#         'AdminID': 'admin@aliansoftware.com',
+#         'Company Name': 'alian',
+#         'password': 12345
+#     }
+#     dict_data.update({str(num): admin_data})
+#
+# db.collection('demo').document('demo'+str(num)).set(dict_data)
+#
+# endtime=datetime.datetime.now()
+#
+# print(endtime-start)
 
 
-def register_responce_mail():
-    # Set up the connection to the SMTP server
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 587  # or 465 for SSL/TLS
-    smtp_username = 'vickypatel.vp817@gmail.com'
-    smtp_password = "qglshjrbjznxkepg"
-    server = smtplib.SMTP(smtp_server, smtp_port)
-    server.starttls()
-    server.login(smtp_username, smtp_password)
-    # Compose the email message
-    from_email = 'vickypatel.vp817@gmail.com'
-    to_email = 'vickypatel.vp817@gmail.com'
-    subject = 'Yor Company Account'
-    body = '''This mail is for Company Successsfully registered,
-              Now you can use following url to access your company login
-              http://192.168.0.150:3005/NV2/login
-            Congratulation, Thank you so much..'''
-    message = f"""
-      From: {from_email}
-      To: {to_email}
-      Subject: {subject}
-      {body}
-      """
-    # Send the email
-    server.sendmail(from_email, to_email, message)
-    # Close the SMTP connection
-    server.quit()
+start = datetime.datetime.now()
+
+db.collection('alian').document(u'admin').collection('employee').document('num').collection('emp').document('demohello').get()
+
+
+endtime=datetime.datetime.now()
+
+print(endtime-start)
+
+
+start = datetime.datetime.now()
+db.collection('demo').document('demo99').get()
+endtime=datetime.datetime.now()
+print(endtime-start)
 
 
 
-register_responce_mail()
+
+
+# start = datetime.datetime.now()
+# dict_data = {}
+# for num in range(0, 10):
+#     data=db.collection('demo').document('demo' + str(num)).get()
+#     dict.update({num :data})
+#
+# endtime=datetime.datetime.now()
+# print(endtime-start)
+#
+# start = datetime.datetime.now()
+# dict_data = {}
+# for num in range(0, 10):
+#     data=db.collection('alian').document(u'admin').collection('employee').document('num').collection('emp').document(
+#         'demo' + str(num)).get()
+#     dict.update({num :data})
+# endtime=datetime.datetime.now()
+# print(endtime-start)

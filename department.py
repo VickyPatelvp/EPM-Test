@@ -31,7 +31,10 @@ class Department:
                     pos.append(value)
                 elif re.findall("^sal", key):
                     sal.append(value)
+
+
             data = {p: s for p, s in zip(pos, sal)}
+
             doc_ref.update({deptnm: data})
 
     def add_department(self, result):
