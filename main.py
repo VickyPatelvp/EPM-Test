@@ -84,6 +84,9 @@ def dashboard(companyname):
     print(moath_data)
     for key, value in moath_data.items():
         print(f'k{key}:{value}')
+        if request.method== 'POST':
+            form= request.form
+
 
     # Leave reset
     if datetime.date.today().day == 1 or datetime.date.month == 1:
