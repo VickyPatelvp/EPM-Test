@@ -34,7 +34,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form action="{{url_for('salary')}}" method="POST" id="salarydata">
+                                            <form action="{{url_for('salary', companyname=companyname)}}" method="POST" id="salarydata">
                                                 <div class="modal-body inline">
                                                     <label for="hrapercentage" class="col-3">HRA</label>
                                                     <input type="text" name="hrapercentage" id="hrapercentage" value="" placeholder="{{salary_criteria['hrapercentage']}}"
@@ -131,13 +131,13 @@
                 <td scope="col d-flex">
                     <ul class="nav ">
                         <!-- Download icon  -->
-                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',salid=i)}}">
+                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',companyname=companyname, salid=i)}}">
                             <i class="fa fa-download"></i>
                         </a>
                         </li>
                         <!-- Eye icon  -->
                         <li class="nav-item  d-inline"><a class="nav-link"
-                                                          href="{{url_for('salary_sheet_view',salid=i)}}">
+                                                          href="{{url_for('salary_sheet_view',companyname=companyname, salid=i)}}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>

@@ -15,14 +15,15 @@ firebase_app = firebase_admin.initialize_app(cred, {
 
 class Create():
 
-    def __init__(self,db):
+    def __init__(self,db,companyname):
         self.db=db
+        self.companyname=companyname
 
     def result(self):
 
         ''' ADD FORM DETAILS INTO DATABASE '''
 
-        new_id = "EMP00" + str(int(len(self.db.collection(u'alian_software').document(u'employee').collection('employee').get())) + 1)
+        new_id = "EMP00" + str(int(len(self.db.collection(self.companyname).document(u'employee').collection('employee').get())) + 1)
 
         if request.method == 'POST':
             file = request.files['photo']
@@ -50,7 +51,7 @@ class Create():
                 'passportNo': request.form.get('passportno'),
                 'pfAccountNo': 'MABAN00000640000000125', 'uanNo': '100904319456', 'esicNo': '31–00–123456–000–0001'
             }
-            self.db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).set(personal_data)
+            self.db.collection(self.companyname).document(u'employee').collection('employee').document(new_id).set(personal_data)
 
             # ADD LEAVE DATA
 
@@ -59,7 +60,7 @@ class Create():
                 'total_leaves': {'CL': 0, 'PL': 0, 'SL': 0, 'LWP': 0}
             }
 
-            self.db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("leaveMST").document("total_leaves").set(leave_data["total_leaves"])
+            self.db.collection(self.companyname).document(u'employee').collection('employee').document(new_id).collection("leaveMST").document("total_leaves").set(leave_data["total_leaves"])
 
             # ADD SALARY DATA
             # salary_slip_data = {
@@ -113,4 +114,4 @@ class Create():
                     'tfannual': request.form.get("tfannual"),
                     'tfperiod': request.form.get("tfperiod")
             }
-            self.db.collection(u'alian_software').document(u'employee').collection('employee').document(new_id).collection("tdsmst").document("tds").set(tds_detail)
+            self.db.collection(self.companyname).document(u'employee').collection('employee').document(new_id).collection("tdsmst").document("tds").set(tds_detail)

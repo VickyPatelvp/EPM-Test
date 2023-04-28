@@ -328,7 +328,7 @@ element.style {
                                      tabindex="-1"
                                      aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
-                                    <form form-inline action="{{url_for('add')}}" method="POST" id="createform" enctype="multipart/form-data">
+                                    <form form-inline action="{{url_for('add', companyname=companyname)}}" method="POST" id="createform" enctype="multipart/form-data">
 
                                     <div class="modal-dialog modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
                                         <div class="modal-content">
@@ -503,6 +503,7 @@ element.style {
                                                                                                                                         Select
                                                                                                                                     </option>
                                                                                                                                     {% for key,value in department.items()%}
+                                                                                                                                    if
                                                                                                                                     {%for i,j in value.items()%}
                                                                                                                                     <option> {{ i }}
                                                                                                                                     </option>
@@ -1975,7 +1976,7 @@ element.style {
                                         <h5 class="modal-title" id="exampleModalLabel">Add New Employee</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{url_for('employee_list')}}" method="POST" id="newemployee" >
+                                        <form action="{{url_for('employee_list',companyname=companyname)}}" method="POST" id="newemployee" >
                                         <div class="modal-body">
                                             <label for="new_email">Enter Email</label>
                                             <input type="email" name="new_email" id="new_email" value="" class="form-control">
@@ -2049,12 +2050,8 @@ element.style {
                 <td scope="col d-flex">
                     <ul class="nav ">
 
-                        <li class="nav-item  d-inline"><a class="nav-link" href="/employeeprofile/{{ id }}" id="{{ data[id] }}">
+                        <li class="nav-item  d-inline"><a class="nav-link" href="/{{companyname}}/employeeprofile/{{ id }}" id="{{ data[id] }}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-                        </li>
-                        <li class="nav-item d-inline"><a class="nav-link" href="/employeeprofileedit/{{ id }}">
-                            <i class="fas fa-edit"></i>
                         </a>
                         </li>
                     </ul>

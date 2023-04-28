@@ -32,7 +32,7 @@ class SalarySlip():
     def __init__(self, db):
         self.db = db
 
-    def salary_slip(self, salid):
+    def salary_slip(self, salid,companyname):
         ''' CREATE SALARYSLIP PDF '''
 
         salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid)
@@ -40,11 +40,11 @@ class SalarySlip():
 
             empid = salary_list[i]["userID"]
 
-            personal_data = Profile(self.db, empid).personal_data()
+            personal_data = Profile(self.db, empid,companyname).personal_data()
 
-            salary_data = Profile(self.db, empid).salary_data()[salid]
+            salary_data = Profile(self.db, empid,companyname).salary_data()[salid]
 
-            leave_data = Profile(self.db, empid).leave_data()[0]
+            leave_data = Profile(self.db, empid,companyname).leave_data()[0]
 
             mont_in_num = int(salid[5:])
             month = calendar.month_name[mont_in_num]

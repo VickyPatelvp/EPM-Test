@@ -40,8 +40,8 @@ class Dashboard():
 
         return employee_data
 
-    def Dashboard_data(self):
-        users_ref = self.db.collection(u'alian_software').document('employee').collection('employee')
+    def Dashboard_data(self, companyname):
+        users_ref = self.db.collection(companyname).document('employee').collection('employee')
         employee_data = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for emp_doc in users_ref.stream():

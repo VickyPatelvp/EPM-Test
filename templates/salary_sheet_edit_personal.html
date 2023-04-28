@@ -54,7 +54,7 @@
 
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('salary_sheet_view',salid=id)}}">
+                            <a href="{{url_for('salary_sheet_view',companyname=companyname, salid=id)}}">
                                 <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                         aria-expanded="false">
                                     Back
@@ -105,7 +105,7 @@
             
             <tbody style="background-color: #ffffff;">
             <tr class="ttr text-center">
-            <form action="{{url_for('salary_sheet_edit_',empid=data[id]['userID'],salid=id )}}" method="POST">
+            <form action="{{url_for('salary_sheet_edit_', companyname=companyname, empid=data[id]['userID'],salid=id )}}" method="POST">
                 <label name="" ></label>
                 <th scope="col">{{ data[id]["employeeName"] }}</th>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["lwp"] }}' name="lwp" id="lwp"></td>
