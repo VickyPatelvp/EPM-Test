@@ -197,6 +197,7 @@ element.style {
 
 
 
+
 </style>
 
 <!-- Google icon -->
@@ -219,6 +220,7 @@ element.style {
 
     ga('create', 'UA-124615-22', 'auto');
     ga('send', 'pageview');
+
 
 
 
@@ -291,6 +293,7 @@ element.style {
 
 
 
+
 </style>
 
 
@@ -328,92 +331,94 @@ element.style {
                                      tabindex="-1"
                                      aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
-                                    <form form-inline action="{{url_for('add', companyname=companyname)}}" method="POST" id="createform" enctype="multipart/form-data">
+                                    <form form-inline action="{{url_for('add', companyname=companyname)}}" method="POST"
+                                          id="createform" enctype="multipart/form-data">
 
-                                    <div class="modal-dialog modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
-                                        <div class="modal-content">
+                                        <div class="modal-dialog modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
+                                            <div class="modal-content">
 
-                                            <!-- MODAL HEADER -->
+                                                <!-- MODAL HEADER -->
 
-                                            <div class="modal-header">
-                                                <div class="container-fluid" style="background-color: #ffffff;">
-                                                    <div class="wrapper">
-                                                        <div class="main">
-                                                            <main class="content">
-                                                                <div class="container-fluid p-1">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6 col-sm-12 mt-2">
-                                                                            <ul class="nav justify-content-start">
-                                                                                <li class="nav-item">
-                                                                                    <a class="nav-link active"
-                                                                                       aria-current="page" href="#">
-                                                                                        <h5><b>Create Employee</b></h5>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-sm-12 mt-2">
-                                                                            <ul class="nav justify-content-end">
+                                                <div class="modal-header">
+                                                    <div class="container-fluid" style="background-color: #ffffff;">
+                                                        <div class="wrapper">
+                                                            <div class="main">
+                                                                <main class="content">
+                                                                    <div class="container-fluid p-1">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-sm-12 mt-2">
+                                                                                <ul class="nav justify-content-start">
+                                                                                    <li class="nav-item">
+                                                                                        <a class="nav-link active"
+                                                                                           aria-current="page" href="#">
+                                                                                            <h5><b>Create Employee</b>
+                                                                                            </h5>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-sm-12 mt-2">
+                                                                                <ul class="nav justify-content-end">
 
-                                                                                <!-- SAVE BUTTON -->
-                                                                                <li class="nav-item me-2">
-                                                                                    <div class="dropdown">
-                                                                                        <button class="btn btn-secondary border-1 "
-                                                                                                type="submit"
-                                                                                                value="submit"
-                                                                                                id="save"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-haspopup="true"
-                                                                                                aria-expanded="false">
-                                                                                            Save
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </li>
+                                                                                    <!-- SAVE BUTTON -->
+                                                                                    <li class="nav-item me-2">
+                                                                                        <div class="dropdown">
+                                                                                            <button class="btn btn-secondary border-1 "
+                                                                                                    type="submit"
+                                                                                                    value="submit"
+                                                                                                    id="save"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                Save
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </li>
 
-                                                                                <!-- CANCEL BUTTON-->
-                                                                                <li class="nav-item me-2">
-                                                                                    <div class="dropdown">
-                                                                                        <button class="btn btn-secondary border-1 "
-                                                                                                type="button"
-                                                                                                id="close"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-haspopup="true"
-                                                                                                aria-expanded="false">
-                                                                                            Cancel
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </li>
+                                                                                    <!-- CANCEL BUTTON-->
+                                                                                    <li class="nav-item me-2">
+                                                                                        <div class="dropdown">
+                                                                                            <button class="btn btn-secondary border-1 "
+                                                                                                    type="button"
+                                                                                                    id="close"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                Cancel
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </li>
 
-                                                                            </ul>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </main>
+                                                                </main>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <!-- MODAL BODY -->
+                                                <!-- MODAL BODY -->
 
-                                            <div class="modal-body">
-                                                <div class="" style="background-color: #FFFFFF;">
-                                                    <div class="wrapper">
-                                                        <div class="main">
-                                                            <main class="content">
-                                                                <div class="container-fluid p-2">
-                                                                    <div class="row">
-                                                                        <div class="page-content">
-                                                                            <!-- Tab panes -->
-                                                                            <div class="tab-content">
-                                                                                <!-- About Tab -->
-                                                                                <div class="row">
+                                                <div class="modal-body">
+                                                    <div class="" style="background-color: #FFFFFF;">
+                                                        <div class="wrapper">
+                                                            <div class="main">
+                                                                <main class="content">
+                                                                    <div class="container-fluid p-2">
+                                                                        <div class="row">
+                                                                            <div class="page-content">
+                                                                                <!-- Tab panes -->
+                                                                                <div class="tab-content">
+                                                                                    <!-- About Tab -->
+                                                                                    <div class="row">
 
-                                                                                    <div class="col-lg-12">
-                                                                                        <div role="tabpanel"
-                                                                                             class="tab-pane active show"
-                                                                                             id="about">
-                                                                                            <div class="card pmd-card">
+                                                                                        <div class="col-lg-12">
+                                                                                            <div role="tabpanel"
+                                                                                                 class="tab-pane active show"
+                                                                                                 id="about">
+                                                                                                <div class="card pmd-card">
 
 
                                                                                                     <div class="card-body">
@@ -443,7 +448,9 @@ element.style {
                                                                                                                                 <span class="fileinput-exists"><i
                                                                                                                                         class="fa fa-pen"></i></span>
                                                                                                                                 <input type="file"
-                                                                                                                                       name="photo" id="photo" accept="image/*">
+                                                                                                                                       name="photo"
+                                                                                                                                       id="photo"
+                                                                                                                                       accept="image/*">
 
                                                                                                                             </span>
                                                                                                                             <a data-dismiss="fileinput"
@@ -483,9 +490,19 @@ element.style {
                                                                                                                                     <option value="">
                                                                                                                                         Select
                                                                                                                                     </option>
-                                                                                                                                    {% for i in department%}
-                                                                                                                                    <option>{{ i }}</option>
-                                                                                                                                    {% endfor %}
+                                                                                                                                    {%
+                                                                                                                                    for
+                                                                                                                                    i
+                                                                                                                                    in
+                                                                                                                                    department%}
+                                                                                                                                    <option>
+                                                                                                                                        {{
+                                                                                                                                        i
+                                                                                                                                        }}
+                                                                                                                                    </option>
+                                                                                                                                    {%
+                                                                                                                                    endfor
+                                                                                                                                    %}
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
@@ -502,12 +519,24 @@ element.style {
                                                                                                                                     <option>
                                                                                                                                         Select
                                                                                                                                     </option>
-                                                                                                                                    {% for key,value in department.items()%}
+                                                                                                                                    {%
+                                                                                                                                    for
+                                                                                                                                    key,value
+                                                                                                                                    in
+                                                                                                                                    department.items()%}
                                                                                                                                     if
-                                                                                                                                    {%for i,j in value.items()%}
-                                                                                                                                    <option> {{ i }}
+                                                                                                                                    {%for
+                                                                                                                                    i,j
+                                                                                                                                    in
+                                                                                                                                    value.items()%}
+                                                                                                                                    <option>
+                                                                                                                                        {{
+                                                                                                                                        i
+                                                                                                                                        }}
                                                                                                                                     </option>
-                                                                                                                                    {% endfor %}
+                                                                                                                                    {%
+                                                                                                                                    endfor
+                                                                                                                                    %}
                                                                                                                                     {%endfor%}
                                                                                                                                 </select>
                                                                                                                             </div>
@@ -837,7 +866,8 @@ element.style {
                                                                                                                                     <br>
                                                                                                                                     <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
-                                                                                                                                               for="ifsccode"><b>IFSC Code</b></label>
+                                                                                                                                               for="ifsccode"><b>IFSC
+                                                                                                                                            Code</b></label>
                                                                                                                                         <div class="col-sm-5">
                                                                                                                                             <input type="text"
                                                                                                                                                    class="form-control"
@@ -1628,6 +1658,7 @@ element.style {
                                                                                                                                 </div>
                                                                                                                             </div>
                                                                                                                             <br>
+                                                                                                                        
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
@@ -1752,29 +1783,30 @@ element.style {
 
 
 
+
                                                                                                     </script>
 
 
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
+
                                                                                     </div>
 
                                                                                 </div>
-
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </main>
+                                                                </main>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <script type="text/javascript"
-                                                        src="/static/New folder/bootstrap4-admin-compress.min.js.download"></script>
-                                                <!-- /build -->
+                                                    <script type="text/javascript"
+                                                            src="/static/New folder/bootstrap4-admin-compress.min.js.download"></script>
+                                                    <!-- /build -->
 
-                                                <script>
+                                                    <script>
 	// $(document).ready(function() {
 	// 	var sPath=window.location.pathname;
 	// 	var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
@@ -1933,12 +1965,13 @@ element.style {
 
 
 
-                                                </script>
+
+                                                    </script>
+
+                                                </div>
 
                                             </div>
-
                                         </div>
-                                    </div>
 
                                     </form>
                                 </div>
@@ -1957,10 +1990,11 @@ element.style {
                                     </div>
                                 </li>
                                 <!-- ADD New Employee -->
-                               <!-- Button trigger modal -->
+                                <!-- Button trigger modal -->
                                 <li class="nav-item me-2">
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary border-1 " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                        <button class="btn btn-secondary border-1 " type="button" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
                                                 aria-haspopup="true"
                                                 aria-expanded="false">
                                             Add New Employee
@@ -1969,27 +2003,35 @@ element.style {
                                 </li>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add New Employee</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add New Employee</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{url_for('employee_list',companyname=companyname)}}"
+                                                  method="POST" id="newemployee">
+                                                <div class="modal-body">
+                                                    <label for="new_email">Enter Email</label>
+                                                    <input type="email" name="new_email" id="new_email" value=""
+                                                           class="form-control">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="submit" value="submit" class="btn btn-primary">Send
+                                                        Mail
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <form action="{{url_for('employee_list',companyname=companyname)}}" method="POST" id="newemployee" >
-                                        <div class="modal-body">
-                                            <label for="new_email">Enter Email</label>
-                                            <input type="email" name="new_email" id="new_email" value="" class="form-control">
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" value="submit" class="btn btn-primary">Send Mail</button>
-                                        </div>
-                                        </form>
-                                    </div>
                                     </div>
                                 </div>
-                              <!-- IMPORT BUTTON -->
+                                <!-- IMPORT BUTTON -->
 
                                 <li class="nav-item me-2">
                                     <div class="dropdown">
@@ -2036,7 +2078,8 @@ element.style {
                 <!-- <th scope="row">1</th> -->
                 <td scope="col">
                     <a class="navbar-brand" href="#">
-                        <img src="{{ data[id]['photo'] }}" alt="hello" style="height: 50px; width: 50px; border-radius: 50%">
+                        <img src="{{ data[id]['photo'] }}" alt="hello"
+                             style="height: 50px; width: 50px; border-radius: 50%">
                     </a>
                 </td>
                 <td scope="col">{{ id }}</td>
@@ -2050,7 +2093,9 @@ element.style {
                 <td scope="col d-flex">
                     <ul class="nav ">
 
-                        <li class="nav-item  d-inline"><a class="nav-link" href="/{{companyname}}/employeeprofile/{{ id }}" id="{{ data[id] }}">
+                        <li class="nav-item  d-inline"><a class="nav-link"
+                                                          href="/{{companyname}}/employeeprofile/{{ id }}"
+                                                          id="{{ data[id] }}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
@@ -2082,8 +2127,8 @@ element.style {
 
         reader.readAsDataURL(file);
       });
-</script>
 
+</script>
 
 
 <script type="text/javascript">
@@ -2093,6 +2138,7 @@ function nextpage()
     document.getElementById('close').click()
     document.getElementById('nexttds').click()
 }
+
 </script>
 
 {% endblock %}

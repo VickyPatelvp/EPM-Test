@@ -32,10 +32,10 @@ class SalarySlip():
     def __init__(self, db):
         self.db = db
 
-    def salary_slip(self, salid,companyname):
+    def salary_slip(self, companyname, salid):
         ''' CREATE SALARYSLIP PDF '''
 
-        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid)
+        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
         for i in salary_list:
 
             empid = salary_list[i]["userID"]

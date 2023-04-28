@@ -203,6 +203,7 @@
         cursor: inherit;
         display: block;
     }
+
 </style>
 
 <!-- Google icon -->
@@ -227,6 +228,7 @@
 
     ga('create', 'UA-124615-22', 'auto');
     ga('send', 'pageview');
+
 </script>
 
 <link rel="canonical" href="http://themes.propeller.in/bootstrap4/html/bootstrap4-admin-theme/add-employee.html">
@@ -235,7 +237,7 @@
 
 {% block content %}
 <form form-inline action="{{url_for('add')}}" method="POST" id="createform"
-enctype="multipart/form-data">
+      enctype="multipart/form-data">
 
     <div class="row">
         <div class="col">
@@ -258,7 +260,7 @@ enctype="multipart/form-data">
                             <li class="nav-item me-2">
                                 <div class="dropdown">
                                     <button class="btn btn-secondary border-1 " type="submit" value="submit" id="save"
-                                        data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                                            data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
                                         Save
                                     </button>
                                 </div>
@@ -268,7 +270,7 @@ enctype="multipart/form-data">
                             <li class="nav-item me-2">
                                 <div class="dropdown">
                                     <button class="btn btn-secondary border-1 " type="button" id="close"
-                                        data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                                            data-bs-dismiss="modal" aria-haspopup="true" aria-expanded="false">
                                         Cancel
                                     </button>
                                 </div>
@@ -310,23 +312,23 @@ enctype="multipart/form-data">
                                                 <div class=" col-sm-12 col-lg-3 col-md-2">
                                                     <div data-provides="fileinput" class="fileinput fileinput-new">
                                                         <div data-trigger="fileinput"
-                                                            class="fileinput-preview thumbnail img-fluid rounded-circle mb-0">
+                                                             class="fileinput-preview thumbnail img-fluid rounded-circle mb-0">
                                                             <img id="photo-preview">
                                                         </div>
                                                         <div class="action-button">
                                                             <span
-                                                                class="btn btn-secondary pmd-btn-fab btn-sm pmd-btn-raised btn-file pmd-ripple-effect">
+                                                                    class="btn btn-secondary pmd-btn-fab btn-sm pmd-btn-raised btn-file pmd-ripple-effect">
                                                                 <span class="fileinput-new"><i
                                                                         class="fa fa-plus"></i></span>
                                                                 <span class="fileinput-exists"><i
                                                                         class="fa fa-pen"></i></span>
                                                                 <input type="file" name="photo" id="photo"
-                                                                    accept="image/*">
+                                                                       accept="image/*">
 
                                                             </span>
                                                             <a data-dismiss="fileinput"
-                                                                class="btn btn-danger btn-sm pmd-btn-fab pmd-ripple-effect pmd-btn-raised btn-file fileinput-exists"
-                                                                href=""><i class="fa fa-trash"></i>
+                                                               class="btn btn-danger btn-sm pmd-btn-fab pmd-ripple-effect pmd-btn-raised btn-file fileinput-exists"
+                                                               href=""><i class="fa fa-trash"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -337,24 +339,24 @@ enctype="multipart/form-data">
                                                 <div class=" col-sm-12 col-lg-4 col-md-5">
                                                     <div class="col-12 col-sm-12 col-md-10">
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label
-                                                                class="col-form-label control-label col-md-4 col-sm-4"
-                                                                for="name"><b>Name</b></label>
+                                                                    class="col-form-label control-label col-md-4 col-sm-4"
+                                                                    for="name"><b>Name</b></label>
                                                             <div class="col-sm-8 col-md-8">
                                                                 <input type="text" class="form-control" name="name"
-                                                                    id="name" value="" placeholder="Enter Text">
+                                                                       id="name" value="" placeholder="Enter Text">
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label ">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label ">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="department"><b>Department</b></label>
+                                                                   for="department"><b>Department</b></label>
                                                             <div class="col-sm-8">
                                                                 <select name="department" id="department"
-                                                                    class="form-control">
+                                                                        class="form-control">
                                                                     <option value="">
                                                                         Select
                                                                     </option>
@@ -367,13 +369,13 @@ enctype="multipart/form-data">
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="jobposition"><b>Job
-                                                                    Position</b></label>
+                                                                   for="jobposition"><b>Job
+                                                                Position</b></label>
                                                             <div class="col-sm-8">
                                                                 <select name="jobposition" id="jobposition"
-                                                                    class="form-control">
+                                                                        class="form-control">
                                                                     <option>
                                                                         Select
                                                                     </option>
@@ -389,12 +391,12 @@ enctype="multipart/form-data">
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="doj"><b>DOJ</b></label>
+                                                                   for="doj"><b>DOJ</b></label>
                                                             <div class="col-sm-8">
                                                                 <input type="date" class="form-control" name="doj"
-                                                                    id="doj" value="" placeholder="Select">
+                                                                       id="doj" value="" placeholder="Select">
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -407,23 +409,23 @@ enctype="multipart/form-data">
                                                     <div class="col-12 col-sm-12 col-md-10">
 
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="ctc"><b>CTC</b></label>
+                                                                   for="ctc"><b>CTC</b></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control" name="ctc"
-                                                                    id="ctc" value="" placeholder="Enter Amount">
+                                                                       id="ctc" value="" placeholder="Enter Amount">
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="designation"><b>Designation</b></label>
+                                                                   for="designation"><b>Designation</b></label>
                                                             <div class="col-sm-8">
                                                                 <select name="designation" id="designation"
-                                                                    class="form-control">
+                                                                        class="form-control">
                                                                     <option>
                                                                         Select
                                                                     </option>
@@ -458,12 +460,12 @@ enctype="multipart/form-data">
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="manager"><b>Manager</b></label>
+                                                                   for="manager"><b>Manager</b></label>
                                                             <div class="col-sm-8">
                                                                 <select name="manager" id="manager"
-                                                                    class="form-control">
+                                                                        class="form-control">
                                                                     <option>
                                                                         Select
                                                                     </option>
@@ -498,13 +500,13 @@ enctype="multipart/form-data">
                                                         </div>
                                                         <br>
                                                         <div
-                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                for="ctc"><b>Experience</b></label>
+                                                                   for="ctc"><b>Experience</b></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control"
-                                                                    name="currentExperience" id="currentExperience"
-                                                                    value="" placeholder="Enter Text">
+                                                                       name="currentExperience" id="currentExperience"
+                                                                       value="" placeholder="Enter Text">
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -521,18 +523,18 @@ enctype="multipart/form-data">
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="personalinformation-heading">
                                                     <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse active"
-                                                        data-bs-target="#personalinformation-collapseOne"
-                                                        aria-expanded="true"
-                                                        aria-controls="personalinformation-collapseOne">
+                                                            data-bs-toggle="collapse active"
+                                                            data-bs-target="#personalinformation-collapseOne"
+                                                            aria-expanded="true"
+                                                            aria-controls="personalinformation-collapseOne">
                                                         <h4>
                                                             Personal
                                                             Information</h4>
                                                     </button>
                                                 </h2>
                                                 <div id="personalinformation-collapseOne"
-                                                    class="accordion-collapse collapse show"
-                                                    aria-labelledby="personalinformation-headingOne">
+                                                     class="accordion-collapse collapse show"
+                                                     aria-labelledby="personalinformation-headingOne">
                                                     <div class="accordion-body">
 
                                                         <!-- Personal Details -->
@@ -547,29 +549,29 @@ enctype="multipart/form-data">
                                                             <div class="row d-flex">
                                                                 <div class="col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="dob"><b>Date
-                                                                                of
-                                                                                Birth</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="dob"><b>Date
+                                                                            of
+                                                                            Birth</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="date" class="form-control"
-                                                                                name="dob" value="" id="dob"
-                                                                                placeholder="Select">
+                                                                                   name="dob" value="" id="dob"
+                                                                                   placeholder="Select">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="gender"><b>Gender</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="gender"><b>Gender</b></label>
                                                                         <div class="col-sm-5">
                                                                             <select name="gender" id="gender"
-                                                                                class="form-control">
+                                                                                    class="form-control">
                                                                                 <option>
                                                                                     Select
                                                                                 </option>
@@ -603,29 +605,30 @@ enctype="multipart/form-data">
                                                             <div class="row">
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="email"><b>Email</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="email"><b>Email</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                name="email" id="email" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   name="email" id="email" value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="mobileno"><b>Mobile
-                                                                                No</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="mobileno"><b>Mobile
+                                                                            No</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                name="mobileno" value="" id="mobileno"
-                                                                                placeholder="Enter Text">
+                                                                                   name="mobileno" value=""
+                                                                                   id="mobileno"
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -646,31 +649,32 @@ enctype="multipart/form-data">
                                                             <div class="row">
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="bankname"><b>Bank
-                                                                                Name</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="bankname"><b>Bank
+                                                                            Name</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="bankname" name="bankname" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="bankname" name="bankname"
+                                                                                   value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
                                                                     <br>
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="accountholdernamename"><b>Account
-                                                                                Holder
-                                                                                Name</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="accountholdernamename"><b>Account
+                                                                            Holder
+                                                                            Name</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="accountholdernamename"
-                                                                                name="accountholdernamename" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="accountholdernamename"
+                                                                                   name="accountholdernamename" value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -678,28 +682,30 @@ enctype="multipart/form-data">
                                                                 </div>
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="accountno"><b>Account
-                                                                                Number</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="accountno"><b>Account
+                                                                            Number</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="accountno" name="accountno" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="accountno" name="accountno"
+                                                                                   value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
                                                                     <br>
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="ifsccode"><b>IFSC Code</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="ifsccode"><b>IFSC Code</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="ifsccode" name="ifsccode" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="ifsccode" name="ifsccode"
+                                                                                   value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -719,30 +725,31 @@ enctype="multipart/form-data">
                                                             <div class="row">
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="aadharno"><b>Aadhar
-                                                                                Card
-                                                                                No</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="aadharno"><b>Aadhar
+                                                                            Card
+                                                                            No</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="aadharno" name="aadharno" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="aadharno" name="aadharno"
+                                                                                   value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
                                                                     <br>
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="passportno"><b>Passport
-                                                                                No</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="passportno"><b>Passport
+                                                                            No</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="passportno" name="passportno"
-                                                                                value="" placeholder="Enter Text">
+                                                                                   id="passportno" name="passportno"
+                                                                                   value="" placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -750,16 +757,16 @@ enctype="multipart/form-data">
                                                                 </div>
                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                     <div
-                                                                        class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                            class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                         <label
-                                                                            class="col-form-label control-label col-sm-4"
-                                                                            for="panno"><b>Pan
-                                                                                Card
-                                                                                No</b></label>
+                                                                                class="col-form-label control-label col-sm-4"
+                                                                                for="panno"><b>Pan
+                                                                            Card
+                                                                            No</b></label>
                                                                         <div class="col-sm-5">
                                                                             <input type="text" class="form-control"
-                                                                                id="panno" name="panno" value=""
-                                                                                placeholder="Enter Text">
+                                                                                   id="panno" name="panno" value=""
+                                                                                   placeholder="Enter Text">
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -813,6 +820,7 @@ enctype="multipart/form-data">
 
         reader.readAsDataURL(file);
     });
+
 
 </script>
 

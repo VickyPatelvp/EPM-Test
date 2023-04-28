@@ -19,6 +19,8 @@ height: 100%;
 }
 }
 
+
+
 </style>
 
 {% endblock %}
@@ -36,32 +38,33 @@ height: 100%;
 
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example3">Company Name</label>
-                        <input type="text" id="form3Example1" class="form-control form-control-lg"
+                        <label class="form-label" for="companyname">Company Name</label>
+                        <input type="text" id="companyname" class="form-control form-control-lg"
                                placeholder="Enter Company Name" name="companyname" Required/>
                     </div>
 
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example3">Email address</label>
-                        <input type="email" id="form3Example2" class="form-control form-control-lg"
+                        <label class="form-label" for="email">Email address</label>
+                        <input type="email" id="email" class="form-control form-control-lg"
                                placeholder="Enter a valid email address" name="email" Required/>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-3">
-                        <label class="form-label" for="form3Example4">Password</label>
-                        <input type="password" id="password" class="form-control form-control-lg"
-                               placeholder="Enter password" name="password" Required/>
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control form-control-lg"
+                               placeholder="Enter password" name="password" id="password" Required/>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-3">
-                        <label class="form-label" for="form3Example4">Confirm your password</label>
-                        <input type="password" id="confirm_password" onblur="checkPassword()" class="form-control form-control-lg"
-                               placeholder="Enter password"  Required/>
-                               <label for="" id=error></label>
-                               <div id="password_error" class="text-danger"></div>
+                        <label class="form-label" for="confirm_password">Confirm your password</label>
+                        <input type="password" id="confirm_password" onblur="checkPassword()"
+                               class="form-control form-control-lg"
+                               placeholder="Enter password" Required/>
+                        <label for="password_error" id=error></label>
+                        <div id="password_error" class="text-danger"></div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
@@ -108,5 +111,7 @@ height: 100%;
 
       }
     }
-    </script>
+
+
+</script>
 {% endblock %}

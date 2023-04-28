@@ -1,10 +1,9 @@
 import datetime
-import time
 from concurrent.futures import ThreadPoolExecutor
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from leave_manage import Leavemanage
-from firebase_admin import credentials, storage
+from firebase_admin import credentials
 from firebase_admin import firestore
 from details import Profile
 from create_new_employee import Create
@@ -13,13 +12,13 @@ from department import Department
 from update_employee import Update_information
 from dashboard import Dashboard
 import re
-from tds_data import TDSData
 from excel_sheet import SalaryData
 import concurrent.futures
 from salary_slip import SalarySlip
 from register import Register
 from login import Login
 from moth_days import Month_count
+from salary_calculation import SalaryCalculation
 
 # FLASK APP
 app = Flask(__name__)
@@ -73,20 +72,18 @@ def register():
     return render_template('register.html')
 
 
-if datetime.date.today().day == 27:
-    # TDS Data
-    TDSData(db).deduction("EMP002")
-
-
 @app.route('/<companyname>/', methods=['GET', 'POST'])
 def dashboard(companyname):
     moath_data = moth_count.count()
     print(moath_data)
     for key, value in moath_data.items():
-        print(f'k{key}:{value}')
-        if request.method== 'POST':
-            form= request.form
+        # print(f'k{key}:{value}')
+        if request.method == 'POST':
+            form = request.form
+    working_days = moath_data['workingDays']
 
+    if datetime.datetime.now().day == 25:
+        SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
 
     # Leave reset
     if datetime.date.today().day == 1 or datetime.date.month == 1:
@@ -103,7 +100,6 @@ def dashboard(companyname):
 def employee_list(companyname):
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
-        print(employee_mail)
 
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
 
@@ -158,8 +154,8 @@ def employee_profile(companyname, id):
 
     ''' GET EMPLOYEE DATA '''
     with ThreadPoolExecutor(max_workers=2) as executor:
-        personal_data_future = executor.submit(Profile( db, id,companyname).personal_data)
-        tds_data_future = executor.submit(Profile(db, id, companyname ).tds_data)
+        personal_data_future = executor.submit(Profile(db, id, companyname).personal_data)
+        tds_data_future = executor.submit(Profile(db, id, companyname).tds_data)
         salary_data_future = executor.submit(Profile(db, id, companyname).salary_data)
 
     data = {'personal_data': personal_data_future.result(), 'tds_data': tds_data_future.result(),
@@ -249,6 +245,14 @@ def salary(companyname):
 @app.route('/<companyname>/salarysheetview/<salid>', methods=['GET', 'POST'])
 def salary_sheet_view(companyname, salid):
     # month = int(salid[5:])
+    if request.method == 'POST':
+        form = request.form
+        fields = {}
+        for key, value in form.items():
+            fields.update({key: value})
+        print(fields)
+        salary_excel = SalaryData(db)
+        salary_excel.add_data(companyname=companyname, salid=salid, fields=fields)
     ''' DISPLAY SALARY DETAILS OF EMPLOYEES IN MONTH '''
     salary_list = Salarymanage(db).get_all_emp_salary_data(companyname, salid)
     return render_template('salary_sheet_view.html', data=salary_list, salid=salid, companyname=companyname)
@@ -274,8 +278,9 @@ def salary_sheet_edit_(companyname, empid, salid):
         return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname, ))
 
     employee_salary_data = Salarymanage(db).get_salary_data(companyname, empid, salid)
+    salary_percentage = (db.collection(companyname).document('salary_calc').get()).to_dict()
     return render_template('salary_sheet_edit_personal.html', data=employee_salary_data, id=salid,
-                           companyname=companyname)
+                           companyname=companyname, salary_data=salary_percentage)
 
 
 @app.route('/<companyname>/pdf/<salid>')
