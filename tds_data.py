@@ -19,7 +19,7 @@ class TDSData():
 
         ''' Calculate TDS '''
 
-        if datetime.date.today().day == 20:
+        if datetime.date.today().day == 27:
 
             users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(id)
 
@@ -141,7 +141,9 @@ class TDSData():
             if no_of_remaining_month == 0:
                 tds = abs(new_total_6)
             else:
-                tds = abs((new_total_6 - tds_deducted_till_now) / no_of_remaining_month)
+                tds = abs((new_total_6 - tds_deducted_till_now) / (12 - no_of_remaining_month))
+
+            print(f'TDS = {tds}')
 
 
             # Store TDS deduction to database

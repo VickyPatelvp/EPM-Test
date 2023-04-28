@@ -5,9 +5,9 @@ class Leavemanage():
     def __init__(self, db):
         self.db = db
 
-    def leave_add(self):
+    def leave_add(self, companyname):
         if datetime.date.today().day == 13:
-            users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(
+            users_ref = self.db.collection(companyname).document('employee').collection('employee').document(
                 'empid').collection('leaveMST')
             leaves = users_ref.document('total_leaves').get().to_dict()
             users_ref.document('total_leaves').set({

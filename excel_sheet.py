@@ -10,7 +10,7 @@ class SalaryData():
     def __init__(self,db):
         self.db=db
 
-    def add_data(self, salid):
+    def add_data(self,companyname, salid):
         mont_in_num = int(salid[5:])
         month = calendar.month_name[mont_in_num]
 
@@ -45,44 +45,32 @@ class SalaryData():
 
         workbook.save(excel_file)
 
-        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid)
+        salary_list = Salarymanage(self.db).get_all_emp_salary_data(companyname,salid)
 
-        def get_employee_data():
+        for i in salary_list:
 
-            for i in salary_list:
+            empid = salary_list[i]["userID"]
 
-                empid = salary_list[i]["userID"]
+            user_ref = self.db.collection(companyname).document('employee').collection('employee').document(empid)
 
-                user_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid)
+            data = user_ref.get().to_dict()
 
-                data = user_ref.get().to_dict()
+            salary_data = user_ref.collection("salaryslips").document(f"{salid}").get().to_dict()
 
-                salary_data = user_ref.collection("salaryslips").document(f"{salid}").get().to_dict()
+            name = data["accountHolderName"]
 
-                name = data["accountHolderName"]
+            bank_name = data["bankName"]
 
-                bank_name = data["bankName"]
+            account_number = data["accountNumber"]
 
-                account_number = data["accountNumber"]
+            ifsc_code = data["ifscCode"]
 
-                ifsc_code = data["ifscCode"]
+            total_salary = salary_data["netSalary"]
 
-                total_salary = salary_data["netSalary"]
+            employee_data = [name, bank_name, account_number, ifsc_code, total_salary]
 
-                employee_details = [name, bank_name, account_number, ifsc_code, total_salary]
+            worksheet.append(employee_data)
 
-                return employee_details
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-
-            employee_data_future = executor.submit(get_employee_data)
-
-        employee_data = employee_data_future.result()
-
-        print(employee_data)
-
-        worksheet.append(employee_data)
-
-        # Save the workbook
-        workbook.save(excel_file)
+            # Save the workbook
+            workbook.save(excel_file)
 
