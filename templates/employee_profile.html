@@ -1751,10 +1751,10 @@
                                                                                         {{data["salary_data"][i]['year']}}
                                                                                     </td>
                                                                                     <td scope="col">
-                                                                                        {{data["salary_data"][i]['netPayable']}}
+                                                                                        {{data["salary_data"][i]['netSalary']}}
                                                                                     </td>
-                                                                                    <td scope="col"><i
-                                                                                            class="fa fa-download"></i>
+                                                                                    <td scope="col"><a href="/{{companyname}}/pdf/{{ data['personal_data']['userID'] }}/{{i}}"><i
+                                                                                            class="fa fa-download"></i></a>
                                                                                     </td>
                                                                                 </tr>
                                                                                 {% endfor%}

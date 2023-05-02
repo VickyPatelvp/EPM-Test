@@ -10,7 +10,7 @@ class SalaryData():
     def __init__(self,db):
         self.db=db
 
-    def add_data(self,companyname, salid, fields):
+    def add_data(self,companyname, salid, fields, path):
         mont_in_num = int(salid[5:])
         month = calendar.month_name[mont_in_num]
 
@@ -18,7 +18,7 @@ class SalaryData():
         workbook = openpyxl.Workbook()
 
         # Store Excelsheet
-        file_path = f"C:/Users/alian/Desktop/EPM-Test/Excelsheets/"
+        file_path = f"{path}/Excelsheets/"
 
         if not os.path.exists(file_path):
             os.makedirs(file_path)

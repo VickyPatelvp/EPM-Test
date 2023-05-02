@@ -198,6 +198,13 @@ element.style {
 
 
 
+
+
+
+
+
+
+
 </style>
 
 <!-- Google icon -->
@@ -252,6 +259,13 @@ element.style {
 
 
 
+
+
+
+
+
+
+
 </script>
 
 <link rel="canonical" href="http://themes.propeller.in/bootstrap4/html/bootstrap4-admin-theme/add-employee.html">
@@ -269,6 +283,13 @@ element.style {
           max-width: 800px; /* New width for default modal */
         }
     }
+
+
+
+
+
+
+
 
 
 
@@ -673,6 +694,7 @@ element.style {
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
+
                                                                                                             </div>
                                                                                                             <br>
                                                                                                             <hr>
@@ -1658,7 +1680,7 @@ element.style {
                                                                                                                                 </div>
                                                                                                                             </div>
                                                                                                                             <br>
-                                                                                                                        
+
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
@@ -1750,6 +1772,13 @@ element.style {
                 'max': [ 10 ]
             }
         });
+
+
+
+
+
+
+
 
 
 
@@ -1966,6 +1995,13 @@ element.style {
 
 
 
+
+
+
+
+
+
+
                                                     </script>
 
                                                 </div>
@@ -1989,6 +2025,7 @@ element.style {
                                         </a>
                                     </div>
                                 </li>
+
                                 <!-- ADD New Employee -->
                                 <!-- Button trigger modal -->
                                 <li class="nav-item me-2">
@@ -2031,17 +2068,32 @@ element.style {
                                         </div>
                                     </div>
                                 </div>
-                                <!-- IMPORT BUTTON -->
 
+                                <!-- EXCEL SHEET DOWNLOAD BUTTON -->
                                 <li class="nav-item me-2">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary border-1 " type="button"
-                                                aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Import
-                                        </button>
+                                    <div class="">
+                                        <a href="/create_excel">
+                                            <button class="btn btn-secondary border-1 " type="button"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Excel Sheet
+                                            </button>
+                                        </a>
                                     </div>
                                 </li>
+
+
+                                <!-- IMPORT BUTTON -->
+                                <li class="nav-item me-2">
+                                    <div class="dropdown">
+
+                                    <button id="set-path-btn" class="btn border-1 btn-secondary "
+                                            onclick="setStoragePath()">Excelsheet Path</button>
+
+                                    </div>
+                                </li>
+                                 <!-- HTML code -->
+                              
 
                             </ul>
                         </div>
@@ -2099,6 +2151,10 @@ element.style {
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
+                        <li class="nav-item  d-inline"><a type="btn" class="btn" href="/{{companyname}}/{{ id }}/delete">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                        </li>
                     </ul>
 
                 </td>
@@ -2128,6 +2184,13 @@ element.style {
         reader.readAsDataURL(file);
       });
 
+
+
+
+
+
+
+
 </script>
 
 
@@ -2139,7 +2202,27 @@ function nextpage()
     document.getElementById('nexttds').click()
 }
 
+
+
+
+
+
 </script>
+
+
+
+<script>
+function setStoragePath() {
+  var path = window.prompt("Enter the path where excelsheet store:", "");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/{{companyname}}/storage-path");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify({ excel_path: path }));
+}
+
+</script>
+
 
 {% endblock %}
 
