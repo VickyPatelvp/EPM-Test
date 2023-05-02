@@ -1,6 +1,7 @@
 from mail import Mail
+from moth_days import Month_count
 
-
+moth_count = Month_count()
 class Register():
     def __init__(self, db):
         self.db = db
@@ -20,9 +21,11 @@ class Register():
             self.db.collection(data_dict['CompanyName']).document('department').set({})
             self.db.collection(data_dict['CompanyName']).document('employee').set({})
             self.db.collection(data_dict['CompanyName']).document('month_data').set({})
-            self.db.collection(data_dict['CompanyName']).document('holiday').set({})
             self.db.collection(data_dict['CompanyName']).document('salary_calc').set({})
-
+            self.db.collection(data_dict['CompanyName']).document('holidays').set({})
+            holidays = self.db.collection(data_dict['CompanyName']).document('holidays').get().to_dict()
+            moath_data = moth_count.count(holidays)
+            self.db.collection(data_dict['CompanyName']).document('month_data').set(moath_data)
             '''SEND ID PASS WORD MAIL'''
             self.mail.register_responce_mail(companyname=data_dict['CompanyName'])
             return True

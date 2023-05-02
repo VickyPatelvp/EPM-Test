@@ -77,7 +77,7 @@
                                 </li>
 
                                 <li class="nav-item me-2">
-                                    <div class="dropdown">
+                                  <div class="dropdown">
 
                                     <button id="set-path-btn" class="btn border-1 btn-secondary "
                                             onclick="setStoragePath()">Set Storage Path</button>
@@ -174,7 +174,19 @@
 </div>
 
 
+<script>
 
+<!--JavaScript code for storage location-->
+  function setStoragePath() {
+  var path = window.prompt("Enter the path where you want to store files:", "");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/set-storage-path");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify({ path: path }));
+}
+
+</script>
 
 
 <script>
@@ -211,6 +223,10 @@
     // re-attach the sorted rows to the table
     rows.forEach((row) => table.tBodies[0].appendChild(row));
   }
+
+
+
+
 </script>
 
 

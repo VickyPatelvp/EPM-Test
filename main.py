@@ -1,18 +1,9 @@
 import datetime
-# datetime.date.strftime()
-import time
 from concurrent.futures import ThreadPoolExecutor
-
-from flask import Flask, render_template, request, redirect, url_for, session
-
-import mail
 from concurrent.futures import ThreadPoolExecutor
-
 # import localStorage as localStorage
 from flask import Flask, render_template, request, redirect, url_for, session, send_file, Response
 import io
-
-import read_data
 from leave_manage import Leavemanage
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -34,12 +25,10 @@ from mail import Mail
 
 from salary_calculation import SalaryCalculation
 from openpyxl import load_workbook
-import requests
+
 from generate_excel import create_excel_file
 import pandas as pd
 from read_data import ExcelData
-
-
 
 # FLASK APP
 app = Flask(__name__)
@@ -58,7 +47,6 @@ dashboard_obj = Dashboard(db)
 register_obj = Register(db)
 login_obj = Login(db)
 moth_count = Month_count()
-
 mail_obj=Mail()
 
 
@@ -82,7 +70,7 @@ def login(comapyname):
             if responce['type']=='HR':
                 return redirect(url_for('dashboard', companyname=comapyname, username=responce['name']))
             else:
-                 return redirect(url_for('employee_profile', companyname=comapyname, username=responce['name'],id=responce['empid']))
+                 return redirect(url_for('employee_profile', companyname=comapyname, username=responce['name'],id=responce['empid'],type='user'))
         else:
             responce ='Inavalid Id and Password'
     ''' LOGIN PAGE '''
@@ -95,7 +83,7 @@ def success():
     return render_template('success.html')
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def register():
     responce = ''
     if request.method == 'POST':
@@ -116,19 +104,18 @@ if datetime.date.today().day == 27:
 
 @app.route('/<companyname>/<username>/dashboard', methods=['GET', 'POST'])
 def dashboard(companyname,username):
-    moath_data = moth_count.count()
     if request.method == 'POST':
         form = request.form.to_dict()
         # print(form)
         data={ str(form["date"]):form["description"]}
         db.collection(companyname).document('holidays').update(data)
         holidays = db.collection(companyname).document('holidays').get().to_dict()
-
         moath_data = moth_count.count(holidays)
         db.collection(companyname).document('month_data').set(moath_data)
 
+    holidays = db.collection(companyname).document('holidays').get().to_dict()
+    moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-
     if datetime.datetime.now().day == 25:
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
 
@@ -139,30 +126,12 @@ def dashboard(companyname,username):
 
     ''' DISPLAY DASHBOARD '''
 
-    holidays = db.collection(companyname).document('holidays').get().to_dict()
-    moath_data = moth_count.count(holidays)
+
     holidays=moth_count.get_holidays(holidays)
     employee_on_leave, total_leaves, employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data(companyname)
     return render_template('dashboard.html', employee_on_leave=employee_on_leave, total_leaves=total_leaves,
                            employee_birthday=employee_birthday, employee_anniversary=employee_anniversary,
                            moath_data=moath_data, companyname=companyname,holidays=holidays,username=username)
-
-
-
-@app.route('/<companyname>/<username>/employeelist', methods=['GET', 'POST'])
-def employee_list(companyname ,username):
-    print(username)
-    if request.method == 'POST':
-        employee_mail = request.form.get('new_email')
-        print(employee_mail)
-        mail_obj.new_employee_mail(employee_mail,companyname)
-
-@app.route('/convert_to_csv', methods=['POST'])
-def convert_to_csv():
-    excel_data = pd.read_excel(request.form['data'], engine='openpyxl')
-    csv_data = excel_data.to_csv(index=False)
-    session['data'] = csv_data
-    return csv_data
 
 
 @app.route("/<companyname>/storage-path", methods=["POST"])
@@ -178,10 +147,13 @@ def excel_sheet_path(companyname):
         return excel_path
 
 
-@app.route('/<companyname>/employeelist', methods=['GET', 'POST'])
-def employee_list(companyname):
+@app.route('/<companyname>/<username>/employeelist', methods=['GET', 'POST'])
+def employee_list(companyname ,username):
+    print(username)
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
+        print(employee_mail)
+        mail_obj.new_employee_mail(employee_mail,companyname)
     elif 'excel_path' in session:
         excel_path = session['excel_path']
         print(excel_path)
@@ -189,16 +161,14 @@ def employee_list(companyname):
         excel.store_excel_data(companyname, excel_path)
     session.pop('excel_path', default=None)
 
-
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
+
     def get_employee_data():
 
         docs = db.collection(companyname).document(u'employee').collection('employee').stream()
         employee_list = {}
         for doc in docs:
-
             employee_list.update({doc.id: doc.to_dict()})
-
         return employee_list
 
     def get_department_data():
@@ -219,8 +189,16 @@ def add(companyname, username):
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
     create = Create(db, companyname)
     create.result()
+    employee_mail = request.form.get('email')
+    print(employee_mail)
+    mail_obj.employee_registered_mail(employee_mail, companyname)
     return redirect(url_for('employee_list', companyname=companyname , username=username))
 
+@app.route('/<companyname>/<username>/<id>/delete', methods=['POST', 'GET'])
+def delete_employee(companyname,username, id):
+    doc_ref = db.collection(companyname).document(u'employee').collection('employee').document(id)
+    doc_ref.delete()
+    return redirect(url_for('employee_list', companyname=companyname, username=username))
 
 @app.route('/<companyname>/register_employee', methods=['POST', 'GET'])
 def employee_register_by_mail(companyname):
@@ -238,14 +216,6 @@ def employee_register_by_mail(companyname):
         department_data = executor.submit(get_department_data)
     department=get_department_data()
     return render_template('add_employee.html',companyname=companyname,department=department,department_data=department_data)
-
-@app.route('/<companyname>/<username>/employeeprofile/<id>', methods=['GET', 'POST'])
-def employee_profile(companyname,username, id):
-@app.route('/<companyname>/<id>/delete', methods=['POST', 'GET'])
-def delete_employee(companyname, id):
-    doc_ref = db.collection(companyname).document(u'employee').collection('employee').document(id)
-    doc_ref.delete()
-    return redirect(url_for('employee_list', companyname=companyname))
 
 
 @app.route('/create_excel')
@@ -286,8 +256,8 @@ def upload_file(companyname):
     return redirect(url_for('employee_list', companyname=companyname))
 
 
-@app.route('/<companyname>/employeeprofile/<id>', methods=['GET', 'POST'])
-def employee_profile(companyname, id):
+@app.route('/<companyname>/<username>/employeeprofile/<id>', methods=['GET', 'POST'])
+def employee_profile(companyname,username, id):
 
     ''' DISPLAY EMPLOYEE DETAILS '''
     users_ref = db.collection(str(companyname)).document('employee').collection('employee').document(id).collection(
@@ -331,22 +301,20 @@ def employee_profile(companyname, id):
 
 
 
-@app.route('/<companyname>/<username>/personal_data_update/<id>', methods=['GET', 'POST'])
-def personal_data_update(companyname,username, id):
 
-@app.route('/<companyname>/pdf/<id>/<salid>')
-def pdf_personal(companyname, id, salid):
+
+@app.route('/<companyname>/<username>/pdf/<id>/<salid>')
+def pdf_personal(companyname,username, id, salid):
     ''' SALARY SLIP PDF GENERATION '''
     if 'storage_path' in session:
         path = session["storage_path"]
         salary = SalarySlip(db)
         salary.salary_slip_personal(companyname, id, salid, path)
-        return redirect(url_for('employee_profile', companyname=companyname, id=id, salid=salid))
+        return redirect(url_for('employee_profile', companyname=companyname, id=id, salid=salid,username=username))
 
 
-@app.route('/<companyname>/personal_data_update/<id>', methods=['GET', 'POST'])
-def personal_data_update(companyname, id):
-
+@app.route('/<companyname>/<username>/personal_data_update/<id>', methods=['GET', 'POST'])
+def personal_data_update(companyname,username, id):
     ''' UPDATE EMPLOYEE PERSONAL DETAILS '''
     if request.method == 'POST':
         form = request.get_json()
@@ -365,11 +333,6 @@ def tds_data_update(companyname,username, id):
 
 @app.route('/<companyname>/<username>/department', methods=['GET', 'POST'])
 def department(companyname, username):
-
-@app.route('/<companyname>/department', methods=['GET', 'POST'])
-def department(companyname):
-
-
     ''' DISPLAY DEPARTMENT '''
     if request.method == 'POST':
         ''' Add New DEPARTMENT '''
@@ -395,24 +358,18 @@ def delete_department(companyname,username, dep, pos):
 
 
 
-@app.route('/my-route')
-def my_route():
-    return dept
 
-
-
-@app.route('/<companyname>/<username>/salary', methods=['GET', 'POST'])
-def salary(companyname,username):
 
 @app.route("/set-storage-path", methods=["POST"])
 def set_storage_path():
     path = request.json["path"]
     session["storage_path"] = path
+    print(session['storage_path'])
     return path
 
 
-@app.route('/<companyname>/salary', methods=['GET', 'POST'])
-def salary(companyname):
+@app.route('/<companyname>/<username>/salary', methods=['GET', 'POST'])
+def salary(companyname,username):
 
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
     if request.method == 'POST':
@@ -445,6 +402,8 @@ def salary_sheet_view(companyname, username, salid):
         print(fields)
         if 'storage_path' in session:
             path = session["storage_path"]
+            print(path)
+            print(path)
         salary_excel = SalaryData(db)
         salary_excel.add_data(companyname=companyname, salid=salid, fields=fields, path=path)
     ''' DISPLAY SALARY DETAILS OF EMPLOYEES IN MONTH '''
@@ -457,49 +416,43 @@ def salary_sheet_view(companyname, username, salid):
 @app.route('/<companyname>/<username>/salarysheetedit/<empid> <salid>', methods=['GET', 'POST'])
 def salary_sheet_edit_(companyname, username, empid, salid):
 
-@app.route('/<companyname>/salarysheetedit/<empid> <salid>', methods=['GET', 'POST'])
-def salary_sheet_edit_(companyname, empid, salid):
-
     ''' EDIT SALARY DETAILS OF EMPLOYEE IN MONTH '''
     if request.method == 'POST':
         result = request.form
         Salarymanage(db).salary_update(companyname, empid, salid, data=result)
         return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname,username=username ))
 
+    holidays = db.collection(companyname).document('holidays').get().to_dict()
+    moath_data = moth_count.count(holidays)
+    working_days = moath_data['workingDays']
     employee_salary_data = Salarymanage(db).get_salary_data(companyname, empid, salid)
     salary_percentage = (db.collection(companyname).document('salary_calc').get()).to_dict()
     return render_template('salary_sheet_edit_personal.html', data=employee_salary_data, id=salid,
+                           companyname=companyname, salary_data=salary_percentage,username=username,working_days=working_days)
 
-                           companyname=companyname ,username=username)
 
-                           companyname=companyname, salary_data=salary_percentage)
 
 
 
 @app.route('/<companyname>/<username>/pdf/<salid>')
 def pdf(companyname, username,salid):
     ''' SALARY SLIP PDF GENERATION '''
-
-    salary = SalarySlip(db)
-    salary.salary_slip(companyname, salid)
-    return redirect(url_for('salary', companyname=companyname,username=username,salid=salid))
-
     if 'storage_path' in session:
         path = session["storage_path"]
         salary = SalarySlip(db)
-        salary.salary_slip(companyname, salid, path)
-        return redirect(url_for('salary', companyname=companyname))
+        salary.salary_slip(companyname, salid,path )
+        return redirect(url_for('salary', companyname=companyname,username=username,salid=salid))
 
 
 
-# @app.route('/<companyname>/excel/<salid>')
-# def excel_for_bank(companyname, salid):
+# @app.route('/<companyname>/<username>/excel/<salid>')
+# def excel_for_bank(companyname,username, salid):
 #     ''' GENERATE EXCELSHEET FOR BANK '''
 #     if 'storage_path' in session:
 #         path = session["storage_path"]
 #         salary_excel = SalaryData(db)
 #         salary_excel.add_data(companyname, salid, path)
-#         return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname))
+#     return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname,username=username))
 
 
 @app.route('/<companyname>/tds/<id>', methods=['GET', 'POST'])
