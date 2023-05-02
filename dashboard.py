@@ -13,8 +13,9 @@ class Dashboard():
                          'dob': emp_doc.get('dob'),
                          'doj': emp_doc.get('doj'),
                          'leaves': {}}
-        if employee_data['dob']!='':
-            if datetime.strptime(employee_data['dob'], '%Y-%m-%d').month == datetime.today().month:
+        if employee_data['dob']!='' or employee_data['dob']==None:
+            dob = datetime.strptime(employee_data['dob'].strip(), '%Y-%m-%d')
+            if dob.month == datetime.today().month:
                 employee_data['birthday'] = employee_data['dob']
         if employee_data['doj'] != '':
             doj = datetime.strptime(employee_data['doj'], '%Y-%m-%d')

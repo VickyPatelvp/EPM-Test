@@ -13,19 +13,19 @@
             <ol class="breadcrumb mb-0">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
+                    <b class="nav-link active" aria-current="page">
                         <h5 style="color: black"><b>Employees</b></h5>
-                    </a>
+                    </b>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
+                    <i class="nav-link active" aria-current="page">
                         <h5 style="color: black"><b>|</b></h5>
-                    </a>
+                    </i>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
+                    <b class="nav-link active" aria-current="page" href="#">
                         <h5><b>{{ data["personal_data"]["employeeName"] }}</b></h5>
-                    </a>
+                    </b>
                 </li>
             </ol>
         </div>
@@ -156,7 +156,7 @@
                                                                                             <div class="card mb-4">
                                                                                                 <div class="row">
 
-                                                                                                    <form action="{{url_for('personal_data_update', companyname=companyname, id=data['personal_data']['userID'] )}}"
+                                                                                                    <form action="{{url_for('personal_data_update', companyname=companyname,username=username, id=data['personal_data']['userID'] )}}"
                                                                                                           method="POST"
                                                                                                           id="form1">
                                                                                                         <div class="col-12">
@@ -514,7 +514,7 @@
                                                                                         <div class="col-lg-12">
                                                                                             <div class="card mb-4">
                                                                                                 <div class="row">
-                                                                                                    <form action="{{url_for('tds_data_update', companyname=companyname, id=data['personal_data']['userID'] )}}"
+                                                                                                    <form action="{{url_for('tds_data_update', companyname=companyname,username=username, id=data['personal_data']['userID'] )}}"
                                                                                                           method="POST"
                                                                                                           id="form2">
                                                                                                         <div class="col-12">
@@ -1282,7 +1282,7 @@
                     <!-- Back Button -->
                     <li class="nav-item me-2">
                         <div class="">
-                            <a href="/{{companyname}}/employeelist">
+                            <a href="/{{companyname}}/{{username}}/employeelist">
                                 <button class="btn btn-secondary border-1 " type="button"
                                         aria-haspopup="true"
                                         aria-expanded="false">
@@ -1307,9 +1307,11 @@
                     <!-- Display Leave  -->
                     {% if leave %}
                     <div class="pt-3">
-                        <p class="p-2  error">Leave application <b>Sep 24, 2021</b> to <b>Sep 26, 2021</b> <a href="#">Click</a>
+                        <p class="p-2  error">
+
+                         <b>leave Application for </b>:   {{leave_date}}
                         </p>
-                        <p class="p-2  error">Bond/Contract Renewal Date is <b>Sep 24, 2021</b></p>
+
                     </div>
 
                     {% endif %}
@@ -2468,7 +2470,7 @@
                                                                                                                     class="row">
                                                                                                                 <div
                                                                                                                         class="col-md-12">
-                                                                                                                    <form action="{{url_for('employee_profile',companyname=companyname,id=data['personal_data']['userID'])}}"
+                                                                                                                    <form action="{{url_for('employee_profile',companyname=companyname,username=username, id=data['personal_data']['userID'])}}"
                                                                                                                           method="POST">
 
                                                                                                                         <div
@@ -2714,6 +2716,7 @@
         const form = document.getElementById(`${formId}`);
             console.log(formId)
             let id = '{{ data["personal_data"]["userID"] }}'
+            let username = '{{ username }}'
             let companyname = '{{companyname}}'
             form.addEventListener('submit', function (event) {
                 event.preventDefault(); // prevent form submission
@@ -2724,6 +2727,7 @@
                 }
                 console.log(data); // do something with the form data
                 var url = document.getElementById(formId).action;
+                console.log(url)
                 var xhr = new XMLHttpRequest();
                 console.log(url)
                 var fData = JSON.stringify(data)
@@ -2732,7 +2736,7 @@
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.addEventListener('readystatechange', function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        window.location.href = `http://127.0.0.1:300/${companyname}/tds_data_update/${id}`;
+                        window.location.href = `http://127.0.0.1:300/${companyname}/${username}/tds_data_update/${id}`;
                     } else if (xhr.readyState === 4 && xhr.status !== 200) {
                         console.error(xhr.responseText); // Handle error response
                     }

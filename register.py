@@ -11,12 +11,18 @@ class Register():
         for key, value in data.items():
             data_dict.update({key: value})
         print(data_dict)
-        docs = self.db.collection(data_dict['companyname']).get()
+        docs = self.db.collection(data_dict['CompanyName']).get()
         if len(docs) > 0:
             print('Already Company Registered')
             return 'Already Company Registered'
         else:
-            self.db.collection(data_dict['companyname']).document('Admin').set(data_dict)
+            self.db.collection(data_dict['CompanyName']).document('admin').set(data_dict)
+            self.db.collection(data_dict['CompanyName']).document('department').set({})
+            self.db.collection(data_dict['CompanyName']).document('employee').set({})
+            self.db.collection(data_dict['CompanyName']).document('month_data').set({})
+            self.db.collection(data_dict['CompanyName']).document('holiday').set({})
+            self.db.collection(data_dict['CompanyName']).document('salary_calc').set({})
+
             '''SEND ID PASS WORD MAIL'''
-            self.mail.register_responce_mail(companyname=data_dict['companyname'])
+            self.mail.register_responce_mail(companyname=data_dict['CompanyName'])
             return True

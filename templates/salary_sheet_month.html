@@ -34,7 +34,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form action="{{url_for('salary', companyname=companyname)}}" method="POST" id="salarydata">
+                                            <form action="{{url_for('salary', companyname=companyname,username=username)}}" method="POST" id="salarydata">
                                                 <div class="modal-body inline">
                                                     <label for="hrapercentage" class="col-3">HRA</label>
                                                     <input type="text" name="hrapercentage" id="hrapercentage" value="" placeholder="{{salary_criteria['hrapercentage']}}"
@@ -96,19 +96,19 @@
             <br>
         </div>
 
-        <table class="table mt-4">
+        <table class="table mt-4" data-sort-direction="asc">
             <!-- Table Heading -->
             <thead class="table-secondary" style="background-color:#DFE1E6;">
 
             <tr class="bg-dark">
-                <th scope="col">Month</th>
-                <th scope="col">Gross Salary</th>
-                <th scope="col">Total PF</th>
-                <th scope="col">Total PT</th>
-                <th scope="col">Total TDS</th>
-                <th scope="col">Net Salary</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col" onclick="sortTable(0)">Month</th>
+                <th scope="col" onclick="sortTable(1)">Gross Salary</th>
+                <th scope="col" onclick="sortTable(2)">Total PF</th>
+                <th scope="col" onclick="sortTable(3)">Total PT</th>
+                <th scope="col" onclick="sortTable(4)">Total TDS</th>
+                <th scope="col" onclick="sortTable(5)">Net Salary</th>
+                <th scope="col" onclick="sortTable(6)">Status</th>
+                <th scope="col" onclick="sortTable(7)">Action</th>
             </tr>
 
             </thead>
@@ -131,13 +131,13 @@
                 <td scope="col d-flex">
                     <ul class="nav ">
                         <!-- Download icon  -->
-                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',companyname=companyname, salid=i)}}">
+                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',companyname=companyname,username=username, salid=i)}}">
                             <i class="fa fa-download"></i>
                         </a>
                         </li>
                         <!-- Eye icon  -->
                         <li class="nav-item  d-inline"><a class="nav-link"
-                                                          href="{{url_for('salary_sheet_view',companyname=companyname, salid=i)}}">
+                                                          href="{{url_for('salary_sheet_view',companyname=companyname,username=username, salid=i)}}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
@@ -158,6 +158,48 @@
 
     </div>
 </div>
+
+
+
+
+
+<script>
+
+  function sortTable(columnIndex) {
+    const table = document.getElementById("table_salary");
+    const rows = Array.from(table.rows).slice(1); // exclude the header row
+    const direction = table.getAttribute("data-sort-direction") || "asc"; // get the current sort direction or set it to ascending by default
+
+    // fix for sorting more than 10 rows:
+    table.rows.length = table.rows.length;
+    const rows = Array.from(table.rows).slice(1);
+
+    rows.sort((row1, row2) => {
+      const cell1 = row1.cells[columnIndex].textContent.toLowerCase();
+      const cell2 = row2.cells[columnIndex].textContent.toLowerCase();
+      return direction === "asc" ? cell1.localeCompare(cell2) : cell2.localeCompare(cell1);
+    });
+
+    // remove the sort icon from all the column headers
+    table.querySelectorAll("th").forEach((th) => {
+      // only remove the sort icon if it exists in the header text
+      if (th.textContent.includes("▲") || th.textContent.includes("▼")) {
+        th.textContent = th.textContent.replace("▲", "").replace("▼", "");
+      }
+    });
+
+    // update the sort direction and icon for the clicked column header
+    const icon = direction === "asc" ? "▲" : "▼";
+    const th = table.querySelector(`th:nth-child(${columnIndex + 1})`);
+    th.textContent += ` ${icon}`;
+    table.setAttribute("data-sort-direction", direction === "asc" ? "desc" : "asc");
+
+    // re-attach the sorted rows to the table
+    rows.forEach((row) => table.tBodies[0].appendChild(row));
+  }
+</script>
+
+
 
 
 {% endblock %}

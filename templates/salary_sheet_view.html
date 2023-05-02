@@ -55,7 +55,7 @@
                     </li>
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('pdf',companyname=companyname, salid=salid)}}">
+                            <a href="{{url_for('pdf',companyname=companyname,username=username, salid=salid)}}">
                             <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Download All
@@ -65,7 +65,7 @@
                     </li>
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('excel_for_bank',companyname=companyname, salid=salid)}}">
+                            <a href="{{url_for('excel_for_bank',companyname=companyname,username=username, salid=salid)}}">
                             <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Generate Excelsheet
@@ -137,7 +137,7 @@
                     <td scope="col">
 
                         <!-- Edit Button  -->
-                         <a href="{{url_for('salary_sheet_edit_',companyname=companyname,empid=data[i]['userID'],salid=salid)}}">
+                         <a href="{{url_for('salary_sheet_edit_',companyname=companyname,username=username,empid=data[i]['userID'],salid=salid)}}">
                         <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"
                                 aria-expanded="false"
                                 style="color:#2F3990; border-color:#2F3990; background-color: #FFFFFF">

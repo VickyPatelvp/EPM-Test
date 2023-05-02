@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import concurrent.futures
 
-# cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
+# cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-1602329ca8.json')
 #
 # db = firestore.client()
 
@@ -13,12 +13,17 @@ class Department:
         self.db = db
 
     def _process_department(self, companyname, data):
+        print('hello')
         doc_ref = self.db.collection(companyname).document(u'department')
+        print(data)
         is_available = False
+
         for key, value in doc_ref.get().to_dict().items():
             if key == data['deptname'] and value != {}:
                 is_available = True
-        if is_available == True and len(data.items()) == 1:
+                break
+        print(data)
+        if is_available == True and len(data) == 3:
             doc_ref.update({f'{data["deptname"]}.{data["pos0"]}': data['sal0']})
         else:
             pos = []
@@ -31,8 +36,6 @@ class Department:
                     pos.append(value)
                 elif re.findall("^sal", key):
                     sal.append(value)
-
-
             data = {p: s for p, s in zip(pos, sal)}
 
             doc_ref.update({deptnm: data})
@@ -40,7 +43,6 @@ class Department:
     def add_department(self,companyname, result):
         with concurrent.futures.ThreadPoolExecutor() as executor:
             executor.submit(self._process_department,companyname, result)
-
     def delete_department(self,companyname, dept, pos):
         doc_ref = self.db.collection(companyname).document(u'department')
         position = dept + '.' + pos

@@ -2,7 +2,7 @@ from firebase_admin import firestore
 import firebase_admin
 
 from firebase_admin import credentials
-cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-bc19d4a8c9.json')
+cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-1602329ca8.json')
 
 firebase_app = firebase_admin.initialize_app(cred)
 
@@ -116,7 +116,7 @@ def result():
                 company_name = company_list[num]
                 admin_data = {
                     'AdminID': 'admin@aliansoftware.com',
-                    'Company Name': company_name,
+                    'CompanyName': company_name,
                     'password': 12345
                 }
 
@@ -124,7 +124,13 @@ def result():
 
 
                 # ADD DEPARTMENT DATA
-                db.collection(company_name).document(u'department').set()
+                # db.collection(company_name).document('department').set()
+
+
+                db.collection(company_name).document('employee').set()
+                db.collection(company_name).document('month_data').set()
+                db.collection(company_name).document('holiday').set()
+                db.collection(company_name).document('salary_calc').set()
 
 
 

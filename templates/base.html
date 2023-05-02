@@ -39,7 +39,7 @@ footer a {
 <nav class="navbar navbar-expand-md">
 <!--    HEADER  SECTION   -->
     <div class="container-fluid text-dark">
-        <a class="navbar-brand p-0" href="/dashboard"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
+        <a class="navbar-brand p-0" href="/{{ companyname }}/{{username}}/dashboard"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -49,23 +49,23 @@ footer a {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item mt-1">
-                    <a class="navbar-brand" href="/"><img    src="/static/assets/dashboard_icon.png" alt=""></a>
+                    <a class="navbar-brand" href="/{{ companyname }}/{{username}}/dashboard"><img    src="/static/assets/dashboard_icon.png" alt=""></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/{{ companyname }}/">Dashboard</a>
+                    <a class="nav-link active" aria-current="page" href="/{{ companyname }}/{{username}}/dashboard">Dashboard</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/employeelist">Employees</a>
+                    <a class="nav-link" href="/{{ companyname }}/{{username}}/employeelist">Employees</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/department">Department</a>
+                    <a class="nav-link" href="/{{ companyname }}/{{username}}/department">Department</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/salary">Salary</a>
+                    <a class="nav-link" href="/{{ companyname }}/{{username}}/salary">Salary</a>
                 </li>
             </ul>
 
@@ -78,7 +78,7 @@ footer a {
                     </li>
                     <!-- USER PROFILE -->
                     <li class="nav-item">
-                        <a class="navbar-brand" href="/register"> Jade powers
+                        <a class="navbar-brand" href="/register"> {{ username }}
                             <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
                     </li>
                 </ul>
@@ -90,14 +90,22 @@ footer a {
 
 {% endblock%}
 </head>
-<body>
-<div id="content">{% block content %}{% endblock %}</div>
+<body style="    margin: 0;
+padding: 0;
+min-height: 100vh;
+display: flex;
+flex-direction: column;">
+<div id="content" style="flex: 1;">{% block content %}{% endblock %}</div>
 
 
 <!-- FOOTER SECTION -->
 <div id="footer">
     {% block footer %}
-    <footer class="text-center text-lg-start" style="">
+    <footer class="text-center text-lg-start" style="margin-top: auto;
+    /* background-color: #ccc; */
+    height: 50px;
+    width: 100%;
+">
         <section class="p-0 pt-0">
             <div class="row d-flex align-items-center">
 
