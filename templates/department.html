@@ -15,8 +15,8 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">
                             <h5><b>
-                                    Department
-                                </b>
+                                Department
+                            </b>
                             </h5>
                         </a>
                     </li>
@@ -25,11 +25,98 @@
             <div class="col-lg-6 col-sm-12">
                 <ul class="nav justify-content-end mt-2">
 
-                    <li class="nav-item me-2">
+                    <!-- CREATE DEPARTMENT MODAL -->
+
+                    <div class="modal " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div
+                                class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
+                            <div class="modal-content vh-100">
+                                <!-- MODAL HEADER -->
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add New Department</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+
+                                <!-- MODAL BODY -->
+
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <form action="{{url_for('department',companyname=companyname,username=username)}}" method="post">
+                                                    <table class="justify-content-between">
+                                                        <thead>
+                                                        <tr>
+                                                            <td class="p-2">
+                                                                <h6><b> Department Name </b></h6>
+                                                            </td>
+                                                            <td class="p-2"><input type="text" id="deptname"
+                                                                                   class="form-control-sm"
+                                                                                   name="deptname" value="" required>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-2">
+                                                                <h6><b> position </b></h6>
+                                                            </td>
+                                                            <td class="p-2">
+                                                                <h6><b> salary </b></h6>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id='input-cont1' class="p-1">
+                                                                <input type="text" class="form-control-sm" id="pos"
+                                                                       name="pos0" value="" required>
+                                                            </td>
+                                                            <td id='input-cont2' class="p-1">
+                                                                <input type="text" class="form-control-sm" id="sal"
+                                                                       name="sal0" value="" required>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td colspan="2">
+                                                                <button type="submit">Submit</button>
+                                                            </td>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+
+                                                </form>
+                                                <button onclick='addInput()' id="add_input">+Add input</button>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL FOOTER -->
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ADD NEW DEPARTMENT BUTTON -->
+
+                    <li class="nav-item">
                         <div class="dropdown">
-                            <a type="btn" class="btn border-1 btn-secondary" onclick="add_modal()" data-bs-target="#staticBackdrop">
-                                <i class="fas fa-edit"></i> Add new Department
-                            </a>
+                            <button class="btn border-1 btn-secondary " type="button"
+                                    onclick="add_modal()" data-bs-target="#staticBackdrop"
+                                    aria-haspopup="true"
+                                    data-bs-toggle="modal"
+                                    aria-expanded="false">
+                                Add New Department
+                            </button>
                         </div>
                     </li>
 
@@ -47,83 +134,6 @@
             <main class="content">
                 <div class="container-fluid p-3">
 
-                    <!-- CREATE DEPARTMENT MODAL -->
-
-                    <div class="modal " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div
-                            class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
-                            <div class="modal-content vh-100">
-                                <!-- MODAL HEADER -->
-
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Add of Department</h5>
-                                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close">
-                                    </button>
-                                </div>
-
-                                <!-- MODAL BODY -->
-
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12">
-
-                                                <form action="{{url_for('department',companyname=companyname,username=username)}}" method="post">
-                                                    <table class="justify-content-between">
-                                                        <thead>
-                                                            <tr>
-                                                                <td class="p-2">
-                                                                    <h6><b> Department Name </b></h6>
-                                                                </td>
-                                                                <td class="p-2"><input type="text" id="deptname"
-                                                                        class="form-control-sm" name="deptname" value="" required></td>
-                                                            </tr>
-                                                            <tr >
-                                                                <td class="pt-2">
-                                                                    <h6><b> position </b></h6>
-                                                                </td>
-                                                                <td class="p-2">
-                                                                    <h6><b> salary </b></h6>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td id='input-cont1' class="p-1" >
-                                                                    <input type="text" class="form-control-sm" id="pos" name="pos0" value="" required>
-                                                                </td>
-                                                                <td id='input-cont2' class="p-1">
-                                                                    <input type="text" class="form-control-sm" id="sal" name="sal0" value="" required>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td colspan="2"><button type="submit">Submit</button></td>
-                                                            </tr>
-                                            </thead>
-                                            </table>
-
-                                            </form>
-                                            <button onclick='addInput()' id="add_input">+Add input</button>
-
-
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- MODAL FOOTER -->
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- TABLE -->
                 <table class="table" id="table_dept">
@@ -134,24 +144,25 @@
                             <th scope="col" onclick="sortTable(2)">Basic Salary</th>
                             <th scope="col">Action</th>
                         </tr>
-                    </thead>
-                    <tbody style="background-color: #ffffff;">
+                        </thead>
+                        <tbody style="background-color: #ffffff;">
                         {% if data != None %}
                         {% for i in data%}
 
                         {% for j in data[i] %}
                         <tr>
-                            <td scope="col" >{{i}}</td>
+                            <td scope="col">{{i}}</td>
 
                             <td scope="col">{{ j }}</td>
                             <td scope="col">{{data[i][j]}}</td>
 
                             <td scope="col">
 
-                                 <a type="btn" class="btn"   onclick="open_modal('{{i}}','{{j}}','{{data[i][j]}}')"value="{{[i,j,data[i][j]]}}">
-                                     <i class="fas fa-edit"></i>
+                                <a type="btn" class="btn" onclick="open_modal('{{i}}','{{j}}','{{data[i][j]}}')"
+                                   value="{{[i,j,data[i][j]]}}">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                                <a type="btn" class="btn"  href="delete_department/{{i,j}}" onclick=""value="{{[i,j]}}">
+                                <a type="btn" class="btn" href="delete_department/{{i,j}}" onclick="" value="{{[i,j]}}">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -161,12 +172,12 @@
                         {% endfor%}
                         {% endif%}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
         </div>
-        </main>
     </div>
-</div>
 </div>
 
 <script>
@@ -259,6 +270,8 @@
     }
 
   
+
+
 </script>
 
 

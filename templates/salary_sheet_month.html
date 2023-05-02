@@ -37,18 +37,21 @@
                                             <form action="{{url_for('salary', companyname=companyname,username=username)}}" method="POST" id="salarydata">
                                                 <div class="modal-body inline">
                                                     <label for="hrapercentage" class="col-3">HRA</label>
-                                                    <input type="text" name="hrapercentage" id="hrapercentage" value="" placeholder="{{salary_criteria['hrapercentage']}}"
+                                                    <input type="text" name="hrapercentage" id="hrapercentage" value=""
+                                                           placeholder="{{salary_criteria['hrapercentage']}}"
                                                            class="form-control-sm">
                                                 </div>
                                                 <div class="modal-body inline">
                                                     <label for="dapercentage" class="col-3">DA</label>
-                                                    <input type="text" name="dapercentage" id="dapercentage" value="" placeholder="{{salary_criteria['dapercentage']}}"
+                                                    <input type="text" name="dapercentage" id="dapercentage" value=""
+                                                           placeholder="{{salary_criteria['dapercentage']}}"
                                                            class="form-control-sm">
                                                 </div>
                                                 <div class="modal-body inline">
                                                     <label for="deductionpercentage" class="col-3">Leave
                                                         Deduction </label>
-                                                    <input type="text" name="deductionpercentage" placeholder="{{salary_criteria['deductionpercentage']}}"
+                                                    <input type="text" name="deductionpercentage"
+                                                           placeholder="{{salary_criteria['deductionpercentage']}}"
                                                            id="deductionpercentage" value="" class="form-control-sm">
                                                 </div>
                                                 <div class="modal-footer">
@@ -62,16 +65,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <li class="nav-item">
+
+                                <li class="nav-item me-2">
                                     <div class="dropdown">
                                         <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                                 data-bs-toggle="modal" data-bs-target="#exampleModal1"
-                                                aria-haspopup="true"
                                                 aria-expanded="false">
                                             Salary Percentage
                                         </button>
                                     </div>
                                 </li>
+
+                                <li class="nav-item me-2">
+                                    <div class="dropdown">
+
+                                    <button id="set-path-btn" class="btn border-1 btn-secondary "
+                                            onclick="setStoragePath()">Set Storage Path</button>
+
+                                    </div>
+                                </li>
+
+
                             </ul>
                         </div>
                     </div>

@@ -77,6 +77,8 @@ class SalarySlip():
                          "Bank Name": personal_data["bankName"],
                          "Bank A/c No.": personal_data["accountNumber"],
                          }
+
+
         textLines_three = {"Basic Salary": salary_data["basic"],
                            "HRA": salary_data["hra"],
                            "DA": salary_data["da"],

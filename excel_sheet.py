@@ -2,7 +2,7 @@ import openpyxl
 import calendar
 from salary_manage import Salarymanage
 import os
-import concurrent.futures
+from openpyxl.styles import Alignment
 
 
 class SalaryData():
@@ -10,7 +10,7 @@ class SalaryData():
     def __init__(self,db):
         self.db=db
 
-    def add_data(self,companyname, salid):
+    def add_data(self,companyname, salid, fields, path):
         mont_in_num = int(salid[5:])
         month = calendar.month_name[mont_in_num]
 
@@ -18,7 +18,7 @@ class SalaryData():
         workbook = openpyxl.Workbook()
 
         # Store Excelsheet
-        file_path = f"C:/Users/alian/Desktop/EPM-Test/Excelsheets/"
+        file_path = f"{path}/Excelsheets/"
 
         if not os.path.exists(file_path):
             os.makedirs(file_path)
@@ -30,18 +30,25 @@ class SalaryData():
         # Select the active worksheet
         worksheet = workbook.active
 
+
         # Worksheet Name
         worksheet.title = "Alian Software"
 
         # Merge cell for heading
-        A1 = worksheet.merge_cells('A1:Z1')
+        A1 = worksheet.merge_cells('A1:E1')
 
         # Heading
         worksheet['A1'] = 'Bank Name Associated With Company'
 
+        title_field = fields
+
         # Set Table Header
-        title_row = ["Employee Name", "Bank Name", "Account No", "IFSC Code", "Total Salary"]
+        title_row = [title_field['field1'], title_field['field2'], title_field['field3'], title_field['field4'], title_field['field5']]
+
         worksheet.append(title_row)
+
+        for n in range(1,6):
+            worksheet.column_dimensions[worksheet.cell(row=2, column=n).column_letter].width = 25
 
         workbook.save(excel_file)
 
@@ -57,20 +64,25 @@ class SalaryData():
 
             salary_data = user_ref.collection("salaryslips").document(f"{salid}").get().to_dict()
 
-            name = data["accountHolderName"]
+            data = {
+                'Employee Name': data["accountHolderName"],
+                'Bank Name': data["bankName"],
+                'Account Number': data["accountNumber"],
+                'IFSC Code': data["ifscCode"],
+                'Salary': salary_data["netSalary"]
+            }
 
-            bank_name = data["bankName"]
-
-            account_number = data["accountNumber"]
-
-            ifsc_code = data["ifscCode"]
-
-            total_salary = salary_data["netSalary"]
-
-            employee_data = [name, bank_name, account_number, ifsc_code, total_salary]
+            employee_data = [data[title_field['field1']], data[title_field['field2']], data[title_field['field3']], data[title_field['field4']], data[title_field['field5']]]
 
             worksheet.append(employee_data)
 
             # Save the workbook
             workbook.save(excel_file)
+
+        # Text Alignment For All Cell
+        alignment = Alignment(horizontal='center')
+        for n in range(1, 50):
+            for cell in worksheet[str(n)]:
+                cell.alignment = alignment
+        workbook.save(excel_file)
 
