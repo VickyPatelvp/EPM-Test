@@ -77,6 +77,12 @@ def login(comapyname):
     url = f'/{comapyname}/login'
     return render_template('login.html', responce=responce, url=url)
 
+@app.route('/<comapyname>/forgot_password', methods=["POST", "GET"])
+def forgot_password(comapyname):
+
+    return render_template('success.html')
+
+
 
 @app.route('/success', methods=["POST", "GET"])
 def success():
@@ -156,7 +162,11 @@ def employee_list(companyname ,username):
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
         print(employee_mail)
-        mail_obj.new_employee_mail(employee_mail,companyname)
+        auth_data=db.collection(companyname).document('admin').get().to_dict()
+        print(auth_data)
+        company_mail=auth_data['AdminID']
+        auth_password=auth_data['auth_password']
+        mail_obj.empnew_employee_mail(employee_mail,companyname,company_mail,auth_password)
     elif 'excel_path' in session:
         excel_path = session['excel_path']
         print(excel_path)
@@ -193,8 +203,11 @@ def add(companyname, username):
     create = Create(db, companyname)
     create.result()
     employee_mail = request.form.get('email')
-    print(employee_mail)
-    mail_obj.employee_registered_mail(employee_mail, companyname)
+    auth_data = db.collection(companyname).document('admin').get().to_dict()
+    print(auth_data)
+    company_mail = auth_data['AdminID']
+    auth_password = auth_data['auth_password']
+    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
     return redirect(url_for('employee_list', companyname=companyname , username=username))
 
 @app.route('/<companyname>/<username>/<id>/delete', methods=['POST', 'GET'])
@@ -209,7 +222,13 @@ def employee_register_by_mail(companyname):
         create = Create(db, companyname)
         create.result()
         email=request.form.get('email')
-        mail_obj.employee_registered_mail(email=email,companyname=companyname)
+        auth_data = db.collection(companyname).document('admin').get().to_dict()
+        print(auth_data)
+        company_mail = auth_data['AdminID']
+        auth_password = auth_data['auth_password']
+        mail_obj.employee_registered_mail(email, companyname, company_mail, auth_password)
+
+
         return redirect(url_for('success'))
 
     def get_department_data():

@@ -66,6 +66,15 @@ height: 100%;
                                <div id="password_error" class="text-danger"></div>
                     </div>
 
+                    <div class="form-outline mb-3">
+                        <label class="form-label">Email authenticate password</label>
+                        <input type="password" id="authenticate" onblur="checkPassword()" class="form-control form-control-lg"
+                               placeholder="abcd-efgh-abcd-efgh" name="auth_password" Required/>
+                               <label id=error></label>
+                               <div id="password_error" class="text-danger"></div>
+                    </div>
+
+
                     <div class="d-flex justify-content-between align-items-center">
                         <!-- Checkbox -->
                         <div class="form-check mb-0">

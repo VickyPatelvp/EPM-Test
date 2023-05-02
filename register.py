@@ -23,6 +23,7 @@ class Register():
             self.db.collection(data_dict['CompanyName']).document('month_data').set({})
             self.db.collection(data_dict['CompanyName']).document('salary_calc').set({})
             self.db.collection(data_dict['CompanyName']).document('holidays').set({})
+            self.db.collection(data_dict['CompanyName']).document('salary_status').set({})
             holidays = self.db.collection(data_dict['CompanyName']).document('holidays').get().to_dict()
             moath_data = moth_count.count(holidays)
             self.db.collection(data_dict['CompanyName']).document('month_data').set(moath_data)
