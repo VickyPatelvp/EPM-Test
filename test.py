@@ -352,10 +352,17 @@ firebase_admin.initialize_app(cred)
 
 # access the Firestore database and collection
 db = firestore.client()
-collection_ref = db.collection("VV").document("employee").collection('employee').where('email', "==", 'vivekpatel.vp817@gmail.com' ).where('password',"==",'1').get()
-print(len(collection_ref))
-if len(collection_ref) > 0:
-    document = collection_ref[0].to_dict()
-    print(document)
+# collection_ref = db.collection("VV").document("employee").collection('employee').where('email', "==", 'vivekpatel.vp817@gmail.com' ).where('password',"==",'1').get()
+docs=db.collection('alian_software').document(u'employee').collection('employee').get()
+
+# print(len(collection_ref))
+# if len(collection_ref) > 0:
+#     document = collection_ref[0].to_dict()
+#     print(document)
 
 # print the document
+
+print(docs[-1].to_dict()['userID'])
+
+
+

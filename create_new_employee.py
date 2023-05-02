@@ -22,7 +22,7 @@ class Create():
     def result(self):
 
         ''' ADD FORM DETAILS INTO DATABASE '''
-        new_id = "EMP00" + str(int(len(self.db.collection(self.companyname).document(u'employee').collection('employee').get())) + 1)
+        new_id = "EMP00" + str(int(len(self.db.collection(self.companyname).document(u'employee').collection('employee').get())))
         if request.method == 'POST':
             file = request.files['photo']
             bucket = storage.bucket()
@@ -40,8 +40,8 @@ class Create():
                 'employeeName': request.form.get('name'), 'userID': new_id, 'department': request.form.get('department'),
                 'email': request.form.get('email'),
                 'password':request.form.get('password'),
-                'salary': request.form.get('ctc'), 'jobPosition': request.form.get('jobposition'),
-                'manager': request.form.get('manager'), 'doj': request.form.get('doj'),
+                'salary': request.form.get('salary'), 'jobPosition': request.form.get('jobposition'),
+                 'doj': request.form.get('doj'),
                 'currentExperience': request.form.get('currentExperience'), 'dob': request.form.get('dob'), 'gender': request.form.get('gender'),
                 'phoneNo': request.form.get('mobileno'),
                 'bankName': request.form.get('bankname'), 'accountHolderName': request.form.get('accountholdername'),

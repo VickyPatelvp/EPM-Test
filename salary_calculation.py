@@ -43,7 +43,7 @@ class SalaryCalculation():
 
             emp_name = emp_data['employeeName']
 
-            emp_salary = emp_data['ctc']
+            emp_salary = emp_data['salary']
 
             # emp_salary = 50000
 
@@ -79,7 +79,7 @@ class SalaryCalculation():
 
             pt = 200
 
-            tds = TDSData(db=self.db).deduction(empid)
+            tds = TDSData(db=self.db).deduction(empid,companyname)
 
             other_deduction = 0
 

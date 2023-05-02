@@ -161,6 +161,57 @@
                                                                                                           id="form1">
                                                                                                         <div class="col-12">
                                                                                                             <div class="container">
+                                                                                                                    <div class="row mt-3">
+                                                                                                                    <div class="col-12">
+                                                                                                                        <h3 style="color:black;">
+                                                                                                                          Salary Edit</h3>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-6">
+                                                                                                                        <table class="table table-striped">
+                                                                                                                            <thead>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                   Salary
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="salary"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["salary"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                        </table>
+
+                                                                                                                    </div>
+                                                                                                                    <div class="col-6">
+
+                                                                                                                        <table class="table table-striped">
+                                                                                                                            <thead>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Password
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            type="text"
+                                                                                                                                            name="password"
+                                                                                                                                            class="form-control"
+                                                                                                                                            placeholder='{{ data["personal_data"]["password"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                        </table>
+                                                                                                                    </div>
+
+                                                                                                                </div>
+
+                                                                                                                <hr
+                                                                                                                        style="width:100%;text-align:left;margin-left:0;color:black;">
 
                                                                                                                 <!-- Personal Details -->
 
@@ -220,6 +271,9 @@
 
                                                                                                                 <hr
                                                                                                                         style="width:100%;text-align:left;margin-left:0;color:black;">
+
+
+
 
                                                                                                                 <!-- Contact Details -->
 
@@ -1269,7 +1323,7 @@
                     <!-- Edit Button -->
                     <li class="nav-item me-2">
                         <div class="dropdown">
-                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop3" id="edit_btn">
                                 <button class="btn border-1 btn-secondary " type="button"
                                         aria-haspopup="true"
                                         aria-expanded="false">
@@ -1362,8 +1416,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">CTC</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["ctc"]
+                                                                    <th class="col-3">Salary</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
                                                                         }}
                                                                     </td>
                                                                 </tr>
@@ -1448,6 +1502,7 @@
                                                     </button>
                                                 </li>
                                             </ul>
+
 
                                             <div class="tab-content" id="myTabContent">
 
@@ -1755,7 +1810,7 @@
                                                                                     <td scope="col">
                                                                                         {{data["salary_data"][i]['netSalary']}}
                                                                                     </td>
-                                                                                    <td scope="col"><a href="/{{companyname}}/pdf/{{ data['personal_data']['userID'] }}/{{i}}"><i
+                                                                                    <td scope="col"><a href="/{{companyname}}/{{username}}/pdf/{{ data['personal_data']['userID'] }}/{{i}}"><i
                                                                                             class="fa fa-download"></i></a>
                                                                                     </td>
                                                                                 </tr>
@@ -2631,6 +2686,7 @@
                                                                                                 <td scope="col"><a
                                                                                                         type="btn"
                                                                                                         class="btn"
+                                                                                                        id="add_leave"
                                                                                                         data-bs-toggle="modal"
                                                                                                         data-bs-target="#staticBackdrop">
                                                                                                     <i
@@ -2710,6 +2766,19 @@
 
 <!--Script For Update detail -->
 <script>
+
+var user = "{{ username }}";
+  console.log(user);
+  if (user === "Admin"){
+    edit_btn.style.display = block;
+    add_leave.style.display = block;
+  }
+   else if (!user.includes("HR")) {
+    var add_leave = document.getElementById("add_leave");
+    var edit_btn = document.getElementById("edit_btn");
+    edit_btn.style.display = "none";
+    add_leave.style.display = "none";
+  }
 
     // Take action on perticular form submit
     function submitForm(formId) {

@@ -6,42 +6,42 @@ class TDSData():
     def __init__(self, db):
         self.db = db
 
-    def deduction(self, id):
+    def deduction(self, id,companyname):
 
         ''' Calculate TDS '''
 
-        users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(id)
+        users_ref = self.db.collection(companyname).document('employee').collection('employee').document(id)
 
         tds_data = users_ref.collection('tdsmst').document('tds').get().to_dict()
 
-        # current_month = int(datetime.date.today().month)
+        # current_month = float(datetime.date.today().month)
 
         current_month = 5
 
         # Annual Salary of Employee
 
-        total_salary = int(users_ref.get().to_dict()["ctc"] * 12)
+        total_salary = float(users_ref.get().to_dict()["salary"]) * 12
 
-        # total_salary = int(50000 * 12)
+        # total_salary = float(50000 * 12)
 
         # TDS Data from Database
 
-        principle_home_loan = int(tds_data["hlamount"])
+        principle_home_loan = float(tds_data["hlamount"])
 
-        primium_on_insurance = int(tds_data["piannual"])
+        primium_on_insurance = float(tds_data["piannual"])
 
-        elss = int(tds_data["elssannual"])
+        elss = float(tds_data["elssannual"])
 
-        tution_fee = int(tds_data["tfannual"])
+        tution_fee = float(tds_data["tfannual"])
 
         # EPFO Data from previous Salaryslip
 
         if current_month == 1:
-            annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{12-current_month}').get().to_dict())["epfo"]) * 12
+            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{12-current_month}').get().to_dict())["epfo"]) * 12
         elif current_month == 2:
-            annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{13-current_month}').get().to_dict())["epfo"]) * 12
+            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{13-current_month}').get().to_dict())["epfo"]) * 12
         else:
-            annual_pf = int((users_ref.collection('salaryslips').document(f'sal00{current_month-2}').get().to_dict())["epfo"]) * 12
+            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{current_month-2}').get().to_dict())["epfo"]) * 12
 
         # 80C (1,50,000 Limit)
 
@@ -55,9 +55,9 @@ class TDSData():
 
         # TDS Health Insurance
 
-        health_insurance = int(tds_data["hipannual"]) + \
-                           int(tds_data["hisannual"]) + \
-                           int(tds_data["hifannual"])
+        health_insurance = float(tds_data["hipannual"]) + \
+                           float(tds_data["hisannual"]) + \
+                           float(tds_data["hifannual"])
 
         if health_insurance >= 50000:
             new_total_2 = 50000
@@ -65,19 +65,19 @@ class TDSData():
         else:
             new_total_2 = health_insurance
 
-        # TDS Interest on Home loan
+        # TDS floaterest on Home loan
 
-        interest_on_home_loan = int(tds_data["ihlannual"])
+        floaterest_on_home_loan = float(tds_data["ihlannual"])
 
-        if interest_on_home_loan >= 200000:
+        if floaterest_on_home_loan >= 200000:
             new_total_3 = 200000
 
         else:
-            new_total_3 = interest_on_home_loan
+            new_total_3 = floaterest_on_home_loan
 
         # TDS House rent
 
-        annual_house_rent = int(tds_data["ahrmonth"]) * 12
+        annual_house_rent = float(tds_data["ahrmonth"]) * 12
 
         if principle_home_loan > 0:
             new_total_4 = 0
@@ -92,7 +92,7 @@ class TDSData():
 
         gross_salary_taxable = total_salary - new_total_1 - new_total_2 - new_total_3 - new_total_4 - 50000
 
-        # print(f"Gross = {gross_salary_taxable}")
+        # prfloat(f"Gross = {gross_salary_taxable}")
 
         if gross_salary_taxable > 1000000:
             new_total_5 = ((gross_salary_taxable - 1000000) * 0.3 + (500000 * 0.2) + 12500)
@@ -115,15 +115,15 @@ class TDSData():
         if current_month <= 4:
             no_of_remaining_month = (12 - 9 - current_month) + 2
             if current_month <= 2:
-                tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(10 + current_month)}').get().to_dict())["tds"])) * (12 - no_of_remaining_month)
+                tds_deducted_till_now = (float((users_ref.collection('salaryslips').document(f'sal00{str(10 + current_month)}').get().to_dict())["tds"])) * (12 - no_of_remaining_month)
             else:
-                tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (12 - no_of_remaining_month))
+                tds_deducted_till_now = (float((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (12 - no_of_remaining_month))
         elif current_month == 5:
             no_of_remaining_month = 12
             tds_deducted_till_now = 0
         else:
             no_of_remaining_month = (12 - current_month) + 5
-            tds_deducted_till_now = (int((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (12 - no_of_remaining_month))
+            tds_deducted_till_now = (float((users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict())["tds"]) * (12 - no_of_remaining_month))
 
         # TDS Calculate
 

@@ -6,14 +6,25 @@ class Leavemanage():
         self.db = db
 
     def leave_add(self, companyname):
-        if datetime.date.today().day == 13:
-            users_ref = self.db.collection(companyname).document('employee').collection('employee').document(
-                'empid').collection('leaveMST')
-            leaves = users_ref.document('total_leaves').get().to_dict()
-            users_ref.document('total_leaves').set({
-                'SL': (leaves['SL'] + 0.5),
-                'PL': (leaves['PL'] + 1),
-                'CL': (leaves['CL'] + 0.5)
+        docs = self.db.collection(companyname).document(u'employee').collection('employee')
+        for doc in docs.get():
+            leaves_ref = docs.document(doc.id).collection('leaveMST').document('total_leaves')
+            leaves=leaves_ref.get().to_dict()
+            leaves_ref.set({
+                'SL':(float(leaves['SL']) + 0.5),
+                'PL': (float(leaves['PL']) + 1),
+                'CL': (float(leaves['CL']) + 0.5)
+            })
+
+    def leave_reset(self, companyname):
+        docs = self.db.collection(companyname).document(u'employee').collection('employee')
+        for doc in docs.get():
+            leaves_ref = docs.document(doc.id).collection('leaveMST').document('total_leaves')
+            leaves = leaves_ref.get().to_dict()
+            leaves_ref.set({
+                'SL': 0.5,
+                'PL': 1,
+                'CL': 0.5
             })
 
     def take_leave(self, ref_obj, data=None):

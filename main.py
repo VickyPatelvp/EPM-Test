@@ -70,7 +70,7 @@ def login(comapyname):
             if responce['type']=='HR':
                 return redirect(url_for('dashboard', companyname=comapyname, username=responce['name']))
             else:
-                 return redirect(url_for('employee_profile', companyname=comapyname, username=responce['name'],id=responce['empid'],type='user'))
+                 return redirect(url_for('employee_profile', companyname=comapyname, username=responce['name'],id=responce['empid']))
         else:
             responce ='Inavalid Id and Password'
     ''' LOGIN PAGE '''
@@ -104,6 +104,8 @@ if datetime.date.today().day == 27:
 
 @app.route('/<companyname>/<username>/dashboard', methods=['GET', 'POST'])
 def dashboard(companyname,username):
+
+
     if request.method == 'POST':
         form = request.form.to_dict()
         # print(form)
@@ -116,13 +118,14 @@ def dashboard(companyname,username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 25:
+    if datetime.datetime.now().day == 1:
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
-
-
-    # Leave reset
-    if datetime.date.today().day == 1 or datetime.date.month == 1:
         leaveobj.leave_add(companyname)
+    if datetime.datetime.today().day == 1 and datetime.datetime.today().month ==1 :
+        leaveobj.leave_reset(companyname)
+
+
+
 
     ''' DISPLAY DASHBOARD '''
 
