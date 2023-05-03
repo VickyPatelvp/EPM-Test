@@ -67,7 +67,7 @@ class SalarySlip():
                      "Date of effectiveness": personal_data["doj"],
                      "Week Offs": "",
                      "Working Days": "",
-                     "LWP": leave_data["LWP"]
+                     "LWP": salary_data["lwp"]
                      }
 
         textLines_two = {"PAN No.": personal_data["panCardNo"],
@@ -282,7 +282,7 @@ class SalarySlip():
                          "Date of effectiveness": personal_data["doj"],
                          "Week Offs": "",
                          "Working Days": "",
-                         "LWP": leave_data["LWP"]
+                         "LWP": salary_data['lwp']
                          }
 
             textLines_two = {"PAN No.": personal_data["panCardNo"],

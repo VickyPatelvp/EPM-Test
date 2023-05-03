@@ -47,33 +47,109 @@
                 <ul class="nav justify-content-end  end-0 mb-4 mt-2">
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                           <label for="status"  style="    width: 100px;
+                           height: 40px;
+                           border-radius: 10px;
+                           text-align: center;
+                           padding-top: 9px;
+                           color: white;
+                           font-weight: bold;
+                          " id="salary_status">
+
+                           </label>
+                        </div>
+                    </li>
+                    {% if salary_status=="None" or salary_status=="Pending" %}
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Inreview')}}">
+                            <button class="btn border-1 btn-secondary " id="btn_1"type="button"  aria-haspopup="true"
                                     aria-expanded="false">
                                 Submit for Approval
                             </button>
+                            </a>    
                         </div>
                     </li>
+                    {% endif %}
+                    {% if salary_status=="Inreview" %}
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Approved')}}">
+                            <button class="btn border-1 btn-secondary " id="btn_2 "type="button" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Accept
+                            </button>
+                        </a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if salary_status=="Inreview" %}
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Pending')}}">
+                            <button class="btn border-1 btn-secondary " id="btn_3 "type="button" aria-haspopup="true"
+                                    aria-expanded="false">
+                                decline
+                            </button>
+                            </a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if salary_status=="Approved"  %}
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Paid')}}">
+                            <button class="btn border-1 btn-secondary " id=" "type="button" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Paid
+                            </button>
+                            </a>
+                        </div>
+                    </li>
+                    {% endif %}
+
+
+
+                    {% if salary_status=='Paid' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
                             <a href="{{url_for('pdf',companyname=companyname,username=username, salid=salid)}}">
-                            <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                            <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true" id="btn_4"
                                     aria-expanded="false">
                                 Download All
                             </button>
                             </a>
                         </div>
                     </li>
+                    {% endif %}
+                    {% if salary_status=='Paid' or salary_status=='Approved' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
 
                              <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal1"id="btn_5"
                                     aria-expanded="false">
                                 Generate Excelsheet
                             </button>
 
                         </div>
                     </li>
+                    {% endif %} 
+                    {% if salary_status=='Paid' %}
+                    <li class="nav-item me-4">
+                        <div class="dropdown">
+                            <a href="{{url_for('send_employee_salaryslip',companyname=companyname,username=username, salid=salid)}}">
+                            <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Send Email
+                            </button>
+                            </a>
+                        </div>
+                    </li>
+                    {% endif %} 
+
+
+
                 </ul>
             </div>
 
@@ -365,7 +441,44 @@
                     </div>
 
 
+
+
+
+
+
+
+
 <script>
+// Get the salary status value from an input element or any other source
+const salaryStatus = '{{salary_status}}'; // replace with your own value
+
+// Get the label element
+const salaryStatusLabel = document.getElementById('salary_status');
+
+// Set the background color and text based on the salary status
+if (salaryStatus === 'Paid') {
+  salaryStatusLabel.style.backgroundColor = "#28C76F";
+  salaryStatusLabel.textContent = 'Paid';
+} else if(salaryStatus==='Pending') {
+  salaryStatusLabel.style.backgroundColor = "#FF9128";
+  salaryStatusLabel.textContent = 'pending';
+}
+else if(salaryStatus==='Approved') {
+  salaryStatusLabel.style.backgroundColor = "#7367F0";
+  salaryStatusLabel.textContent = 'approved';
+}
+else if(salaryStatus==='Inreview') {
+  salaryStatusLabel.style.backgroundColor =  "#7367F0";
+  salaryStatusLabel.textContent = 'inreview';
+}else if(salaryStatus==='None') {
+  salaryStatusLabel.style.backgroundColor = '';
+  salaryStatusLabel.textContent = '';
+}
+
+
+
+
+
   function removeSelectedOption(selectElement, otherSelectIds) {
     const selectedValue = selectElement.value;
     for (let i = 0; i < otherSelectIds.length; i++) {

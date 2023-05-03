@@ -141,7 +141,10 @@
                 <td scope="col">{{ data[i]['pt'] }}</td>
                 <td scope="col">{{ data[i]['tds'] }}</td>
                 <td scope="col">{{ data[i]['netSalary'] }}</td>
-                <td scope="col " class="text-start pending"><p>STS</p></td>
+                <td scope="col" class="text-start">
+                    <label class="status-label p-1" style="border-radius: 50px; align: center;">{{salary_status[ month_dict[i[3:]] ]}}</label>
+                </td>
+
                 <td scope="col d-flex">
                     <ul class="nav ">
                         <!-- Download icon  -->
@@ -155,11 +158,6 @@
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
-                        <!-- Delete icon  -->
-                        <!--                    <li class="nav-item d-inline"><a class="nav-link" href="#">-->
-                        <!--                        <i class="fa fa-trash"></i>-->
-                        <!--                    </a>-->
-                        <!--                    </li>-->
                     </ul>
 
                 </td>
@@ -174,9 +172,35 @@
 </div>
 
 
+<!--JavaScript For Salary Status Background Color-->
+
 <script>
 
+var statusLabels = document.getElementsByClassName("status-label");
+
+for (var i = 0; i < statusLabels.length; i++) {
+  var statusLabel = statusLabels[i];
+  var status = statusLabel.textContent.trim();
+
+  if (status === "Pending") {
+    statusLabel.style.background = "#FF9128";
+  } else if (status === "Approve") {
+    statusLabel.style.background = "#7367F0";
+  } else if (status === "Paid") {
+    statusLabel.style.background = "#28C76F";
+  } else if (status === "None") {
+    statusLabel.style.background = "#DFE1E6";
+  }
+}
+
+</script>
+
+
+
 <!--JavaScript code for storage location-->
+
+<script>
+
   function setStoragePath() {
   var path = window.prompt("Enter the path where you want to store files:", "");
 
@@ -188,6 +212,8 @@
 
 </script>
 
+
+<!--JavaScript For Sorting-->
 
 <script>
 
@@ -223,9 +249,6 @@
     // re-attach the sorted rows to the table
     rows.forEach((row) => table.tBodies[0].appendChild(row));
   }
-
-
-
 
 </script>
 

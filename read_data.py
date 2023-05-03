@@ -41,7 +41,8 @@ class ExcelData():
         # Store Data into Database
         for details in all_employee_data:
             id = str(details['Employee ID'])
-
+            if id==None:
+                break
             month = datetime.datetime.now().month
 
             year = datetime.datetime.now().year

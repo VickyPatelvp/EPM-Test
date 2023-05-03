@@ -46,7 +46,7 @@ height: 100%;
                     <div class="form-outline mb-3">
                         <label class="form-label" for="form3Example4">Password</label>
                         <input type="password" id="form3Example4" class="form-control form-control-lg"
-                               placeholder="Enter password" autocomplete="off" name="password" required/>
+                               placeholder="Enter password" autocomplete="off" name="password" />
                     </div>
 
                     <label class="text-danger p-2"> {{responce}}</label>
@@ -59,15 +59,17 @@ height: 100%;
                                 Remember me
                             </label>
                         </div>
-                        <a href="#!" class="text-body">Forgot password?</a>
+<label id="set-path-btn" onclick="sendEmail()">Forgot password?</label>
+
+
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <a href="/dashboard">
+
                             <button type="submit" class="btn btn-primary btn-lg"
                                     style="padding-left: 2.5rem; padding-right: 2.5rem;">
                                 Login
                             </button>
-                        </a>
+
                         <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
                                                                                           class="link-danger">Register</a>
                         </p>
@@ -77,4 +79,23 @@ height: 100%;
         </div>
     </div>
 </section>
+
+
+<script>
+
+
+
+  function sendEmail() {
+  var email = window.prompt("Enter your email:", "");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/{{companyname}}/forgot_password");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify({ email: email }));
+}
+
+
+</script>
+
+
 {% endblock %}

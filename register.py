@@ -28,5 +28,5 @@ class Register():
             moath_data = moth_count.count(holidays)
             self.db.collection(data_dict['CompanyName']).document('month_data').set(moath_data)
             '''SEND ID PASS WORD MAIL'''
-            self.mail.register_responce_mail(companyname=data_dict['CompanyName'])
+            self.mail.register_responce_mail(companyname=data_dict['CompanyName'],email=data_dict['AdminID'])
             return True
