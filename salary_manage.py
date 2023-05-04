@@ -16,8 +16,8 @@ class Salarymanage():
 
     from concurrent.futures import ThreadPoolExecutor
 
-    def process_employee(self, emp):
-        docs = self.db.collection(u'alian_software').document(u'employee').collection('employee')
+    def process_employee(self, emp, companyname):
+        docs = self.db.collection(companyname).document(u'employee').collection('employee')
         salary_list = {}
         salary_data = docs.document(str(emp.id)).collection('salaryslips').stream()
         for doc in salary_data:
@@ -52,7 +52,7 @@ class Salarymanage():
         docs = self.db.collection(companyname).document(u'employee').collection('employee')
         employee_salary = {}
         with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(self.process_employee, emp) for emp in docs.stream()]
+            futures = [executor.submit(self.process_employee,emp, companyname) for emp in docs.stream()]
             for future in futures:
                 employee_salary.update(future.result())
 

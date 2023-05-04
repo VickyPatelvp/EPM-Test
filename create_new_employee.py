@@ -22,7 +22,20 @@ class Create():
     def result(self):
 
         ''' ADD FORM DETAILS INTO DATABASE '''
-        new_id = "EMP00" + str(int(len(self.db.collection(self.companyname).document(u'employee').collection('employee').get())))
+
+        employee_data = (self.db.collection('Utkarsh').document('employee').collection('employee').get())
+
+        last_id = int(employee_data[-1].to_dict()['userID'][3:])
+
+        new_id = ''
+
+        if last_id < 9:
+            new_id = "EMP000" + str(last_id + 1)
+        elif last_id < 99:
+            new_id = "EMP00" + str(last_id + 1)
+        elif last_id < 999:
+            new_id = "EMP0" + str(last_id + 1)
+
         if request.method == 'POST':
             file = request.files['photo']
             bucket = storage.bucket()
@@ -42,8 +55,8 @@ class Create():
                 'password':request.form.get('password'),
                 'salary': request.form.get('salary'), 'jobPosition': request.form.get('jobposition'),
                 'doj': request.form.get('doj'),
-                'currentExperience': request.form.get('currentExperience'), 'dob': request.form.get('dob'), 'gender': request.form.get('gender'),
-                'phoneNo': request.form.get('mobileno'),
+                'currentExperience': f"{request.form.get('currentExperience')} year", 'dob': request.form.get('dob'),
+                'gender': request.form.get('gender'), 'phoneNo': request.form.get('mobileno'),
                 'bankName': request.form.get('bankname'), 'accountHolderName': request.form.get('accountholdername'),
                 'accountNumber': request.form.get('accountno'), 'ifscCode': request.form.get('ifsccode'),
                 'aadharCardNo': request.form.get('aadharno'), 'panCardNo': request.form.get('panno'),

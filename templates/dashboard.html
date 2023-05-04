@@ -504,7 +504,7 @@
             data: {
                 labels: ["Fulltime", "Internship", "Trainee"],
                 datasets: [{
-                    data: [{{employee_on_probation}}, {{employee_on_internship}}, {{employee_on_training}}],
+                    data: [{{ employee_overview['Employee'] }}, {{ employee_overview['Internship'] }}, {{ employee_overview['Trainee'] }}],
                     backgroundColor: [
                         window.theme.primary,
                         window.theme.warning,
@@ -543,7 +543,7 @@
             type: "pie",
 
             data: {
-                labels: [{{ department }}],
+                labels: {{ department }},
                 datasets: [{
                     data: [2, 10, 30, 50, 5, 15, 10],
                     backgroundColor: [
@@ -593,7 +593,7 @@
                     borderColor: window.theme.primary,
                     hoverBackgroundColor: window.theme.primary,
                     hoverBorderColor: window.theme.primary,
-                    data: [54, 67, 41, 55, , 1],
+                    data: [{{ exprience_list['0 to 1'] }}, {{ exprience_list['1 to 5'] }}, {{ exprience_list['5 to 10'] }}, {{ exprience_list['Above 10'] }}],
                     barPercentage: 0.5,
                     categoryPercentage: 0.6
                 }]
