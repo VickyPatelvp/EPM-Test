@@ -27,7 +27,7 @@
 
                     <!-- CREATE DEPARTMENT MODAL -->
 
-                    <div class="modal " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div
                                 class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
@@ -36,8 +36,8 @@
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">Add New Department</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                                 </div>
 
                                 <!-- MODAL BODY -->
@@ -56,7 +56,9 @@
                                                             </td>
                                                             <td class="p-2"><input type="text" id="deptname"
                                                                                    class="form-control-sm"
-                                                                                   name="deptname" value="" required>
+                                                                                   name="deptname" value="" id="deptname" pattern="^[a-zA-Z0-9]*$" required>
+                                                                                   <div><label for="deptname-status" id="deptname-status" title="Invalid Department Name"></label></div>
+        
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -70,24 +72,24 @@
                                                         <tr>
                                                             <td id='input-cont1' class="p-1">
                                                                 <input type="text" class="form-control-sm" id="pos"
-                                                                       name="pos0" value="" required>
+                                                                       name="pos0" value="" pattern="^[a-zA-Z0-9]*$" title="Special characters are not allowed" required>
                                                             </td>
                                                             <td id='input-cont2' class="p-1">
                                                                 <input type="text" class="form-control-sm" id="sal"
-                                                                       name="sal0" value="" required>
+                                                                       name="sal0" value="" pattern="^\d*\.?\d*$" required>
                                                             </td>
                                                         </tr>
                                                         <tr>
 
                                                             <td colspan="2">
-                                                                <button type="submit">Submit</button>
+                                                       <button type="submit" class="btn border-1 mt-2" id="submit_btn">Submit</button>
                                                             </td>
                                                         </tr>
                                                         </thead>
                                                     </table>
 
                                                 </form>
-                                                <button onclick='addInput()' id="add_input">+Add input</button>
+                                                <button onclick='addInput()' class="btn border-1 mt-2" id="add_input">+Add input</button>
 
 
                                             </div>
@@ -181,6 +183,46 @@
 </div>
 
 <script>
+       const input = document.getElementById("deptname");
+  input.addEventListener("input", function(evt) {
+    const value = input.value;
+    const num = parseFloat(value);
+    if (!isNaN(num)) {
+      input.value = "";
+    }
+  });
+    const deptList = "{{data}}"
+  
+const cleanStr = deptList.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+console.log(cleanStr);
+
+    console.log(deptList)
+    const deptnameInput = document.getElementById('deptname');
+    const deptnameStatus = document.getElementById('deptname-status');
+    const submit_btn = document.getElementById('submit_btn');
+
+    const checkDeptname = () => {
+        const deptname = deptnameInput.value.trim();
+        if (deptname === '') {
+            deptnameStatus.textContent = 'Department name cannot be empty.';
+            deptnameStatus.style.color = 'red';
+        } else if (deptname.length < 2) {
+            deptnameStatus.textContent = 'Department name should be at least 2 characters long.';
+            deptnameStatus.style.color = 'orange';
+        } else if(cleanStr.includes(deptname)) {
+            deptnameStatus.textContent = ' Department  is already exist.';
+            deptnameStatus.style.color = 'red';
+            submit_btn.disabled = true;
+        }
+        else{
+            deptnameStatus.textContent = '';
+            deptnameStatus.style.color = '';
+            submit_btn.disabled = '';
+        }
+        console.log(deptname)
+    };
+    deptnameInput.addEventListener('input', checkDeptname);
+
    function open_modal(dept,pos,sal) {
     console.log(dept,pos,sal)
       var modal = document.querySelector('.modal');
@@ -232,15 +274,10 @@
     };
 
 
-
-
-
     const container1 = document.getElementById('input-cont1');
     const container2 = document.getElementById('input-cont2');
     var maxInputAllowed = 5;
     var inputCount = 0;
-
-    // Call addInput() function on button click
 
     // Call addInput() function on button click
     function addInput() {
@@ -255,28 +292,28 @@
         input.className = 'form-control-sm mt-2'
         input.id =  'pos' + inputCount
         input.name='pos'+inputCount
+        input.pattern="^[a-zA-Z0-9]*$"
+        input.required = true;
+
 
         let salinput = document.createElement('input');
         // salinput.placeholder = 'Type something';
-        salinput.className = 'form-control-sm mt-2 '
-        salinput.id = 'sal' + inputCount
-        salinput.name='sal'+inputCount
+        salinput.className = 'form-control-sm mt-2 ';
+        salinput.id = 'sal' + inputCount;
+        salinput.name='sal'+inputCount;
+        salinput.pattern="^\d*\.?\d*$";
+        salinput.required = true;
+
 
 
         container1.appendChild(input);
-
         container2.appendChild(salinput);
-
     }
 
   
 
 
 </script>
-
-
-
-
 
 
 {% endblock %}

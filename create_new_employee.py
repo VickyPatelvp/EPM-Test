@@ -22,7 +22,22 @@ class Create():
     def result(self):
 
         ''' ADD FORM DETAILS INTO DATABASE '''
-        new_id = "EMP00" + str(int(len(self.db.collection(self.companyname).document(u'employee').collection('employee').get())))
+
+        docs = self.db.collection(self.companyname).document(u'employee').collection('employee').get()
+        name = docs[-1]
+        name = name.to_dict()['userID']
+
+        num=(abs(int(name[3:])))
+        new_id=''
+        if num < 9:
+            new_id = "EMP000" + str(num + 1)
+        elif num < 99:
+            new_id = "EMP00" + str(num + 1)
+        elif num < 999:
+            new_id = "EMP0" + str(num + 1)
+        else:
+            new_id = "EMP" + str(num + 1)
+        
         if request.method == 'POST':
             file = request.files['photo']
             bucket = storage.bucket()

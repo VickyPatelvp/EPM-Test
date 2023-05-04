@@ -454,8 +454,9 @@ def salary_sheet_view(companyname, username, salid):
     salary_list = Salarymanage(db).get_all_emp_salary_data(companyname, salid)
 
     salary_status = db.collection(companyname).document('salary_status').get()
-    salary_status= salary_status.get(datetime.datetime.now().strftime("%B"))
+    salary_status= salary_status.get(datetime.date(1900,int(salid[3:]), 1).strftime('%B'))
     print(salary_status)
+    print(salary_list)
     return render_template('salary_sheet_view.html', data=salary_list, salid=salid, companyname=companyname ,username=username,salary_status=salary_status)
 
 
@@ -481,8 +482,7 @@ def salary_sheet_edit_(companyname, username, empid, salid):
 @app.route('/<companyname>/<username>/set_status/<salid>/<status>')
 def set_status(companyname, username,salid,status):
     ''' SALARY SLIP PDF GENERATION '''
-    month=datetime.datetime.now().strftime("%B")
-    status=status
+    month=datetime.date(1900,int(salid[3:]), 1).strftime('%B')
     data={month:status}
     salary_status = db.collection(companyname).document('salary_status').update(data)
     return redirect(url_for('salary_sheet_view',companyname=companyname,username=username,salid=salid))
