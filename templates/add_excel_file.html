@@ -1,0 +1,102 @@
+{% extends "base_two.html" %}
+{% block title %} Add Employees {% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+
+</style>
+
+{% endblock %}
+{% block content %}
+
+
+
+<div class="container-fluid" style="background-color: #ffffff;">
+    <div class="wrapper">
+        <div class="main">
+            <main class="content">
+                <div class="container-fluid p-1">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-sm-12 mt-2">
+                            <ul class="nav justify-content-start">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">
+                                        <h5><b>Add Employees Data</b></h5>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 mt-2">
+                            <ul class="nav justify-content-end mb-0 mt-0">
+
+                                <!-- EXCEL SHEET DOWNLOAD BUTTON -->
+                                <li class="nav-item me-2">
+                                    <div class="">
+                                        <a href="/create_excel">
+                                            <button class="btn btn-secondary border-1 " type="button"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Excel Sheet
+                                            </button>
+                                        </a>
+                                    </div>
+                                </li>
+
+
+                                <!-- IMPORT BUTTON -->
+                                <li class="nav-item me-2">
+                                    <div class="dropdown">
+
+                                    <button id="set-path-btn" class="btn border-1 btn-secondary "
+                                            onclick="setStoragePath()">Excelsheet Path</button>
+
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function setStoragePath() {
+  var path = window.prompt("Enter the path where excelsheet store:", "");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/{{companyname}}/storage-path");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify({ excel_path: path }));
+  var xhr = new XMLHttpRequest();
+  xhr.open("/{{companyname}}/{{username}}/test");
+}
+
+</script>
+
+
+
+{% endblock %}

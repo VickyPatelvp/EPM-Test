@@ -41,7 +41,7 @@ class Create():
                 'email': request.form.get('email'),
                 'password':request.form.get('password'),
                 'salary': request.form.get('salary'), 'jobPosition': request.form.get('jobposition'),
-                 'doj': request.form.get('doj'),
+                'doj': request.form.get('doj'),
                 'currentExperience': request.form.get('currentExperience'), 'dob': request.form.get('dob'), 'gender': request.form.get('gender'),
                 'phoneNo': request.form.get('mobileno'),
                 'bankName': request.form.get('bankname'), 'accountHolderName': request.form.get('accountholdername'),

@@ -15,7 +15,7 @@
     <title>{% block title %}{% endblock %} - My Webpage</title>
 
 
-    
+
 <style>
     ul li div button{
     text-decoration: none;
@@ -39,7 +39,7 @@ footer a {
 <nav class="navbar navbar-expand-md">
 <!--    HEADER  SECTION   -->
     <div class="container-fluid text-dark">
-        <a class="navbar-brand p-0" href="/{{ companyname }}/{{username}}/dashboard"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
+        <img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt="">
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -48,25 +48,9 @@ footer a {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item mt-1">
-                    <a class="navbar-brand" href="/{{ companyname }}/{{username}}/dashboard"><img    src="/static/assets/dashboard_icon.png" alt=""></a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/{{ companyname }}/{{username}}/dashboard">Dashboard</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/{{username}}/employeelist">Employees</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/{{username}}/department">Department</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/{{ companyname }}/{{username}}/salary">Salary</a>
-                </li>
             </ul>
 
 
@@ -114,6 +98,7 @@ flex-direction: column;">
                       <span>  <a class="p-2" style="text-decoration: none;" href="https://aliansoftware.com/">AdminKit - Alian Software ©</a> </span>
                     </div>
                 </div>
+
             </div>
         </section>
     </footer>
