@@ -9,6 +9,8 @@ class Update_information():
         data_dict = {}
         for key, value in data.items():
             if value != '':
+                if key=='salary':
+                    value=float(value)
                 data_dict.update({key: value})
         a = self.db.collection(companyname).document('employee').collection('employee').document(id).update(data_dict)
         print(a)

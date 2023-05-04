@@ -36,7 +36,7 @@
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">Add New Department</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <button type="button" class="btn-close close-button" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                                 </div>
 
@@ -100,7 +100,7 @@
                                 <!-- MODAL FOOTER -->
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">
                                         Close
                                     </button>
                                 </div>
@@ -183,6 +183,8 @@
 </div>
 
 <script>
+
+
        const input = document.getElementById("deptname");
   input.addEventListener("input", function(evt) {
     const value = input.value;
@@ -249,9 +251,9 @@ console.log(cleanStr);
       modalInstance.show();
     };
 
-
-    function add_modal() {
     
+
+    function add_modal() {    
       var modal = document.querySelector('.modal');
       var modalInput = document.getElementById('deptname');
       var positionInput= document.getElementById('pos');
@@ -273,6 +275,8 @@ console.log(cleanStr);
       modalInstance.show();
     };
 
+    
+  
 
     const container1 = document.getElementById('input-cont1');
     const container2 = document.getElementById('input-cont2');
@@ -303,17 +307,13 @@ console.log(cleanStr);
         salinput.name='sal'+inputCount;
         salinput.pattern="^\d*\.?\d*$";
         salinput.required = true;
-
-
-
         container1.appendChild(input);
         container2.appendChild(salinput);
     }
 
-  
-
 
 </script>
+
 
 
 {% endblock %}

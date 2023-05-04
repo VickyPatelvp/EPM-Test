@@ -71,7 +71,7 @@
                         </div>
                     </li>
                     {% endif %}
-                    {% if salary_status=="Inreview" %}
+                    {% if salary_status=="Inreview" and username=='Admin' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
                             <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Approved')}}">
@@ -83,7 +83,7 @@
                         </div>
                     </li>
                     {% endif %}
-                    {% if salary_status=="Inreview" %}
+                    {% if salary_status=="Inreview" and username=='Admin' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
                             <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Pending')}}">
@@ -95,7 +95,7 @@
                         </div>
                     </li>
                     {% endif %}
-                    {% if salary_status=="Approved"  %}
+                    {% if salary_status=="Approved" and username=='Admin'  %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
                             <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Paid')}}">
