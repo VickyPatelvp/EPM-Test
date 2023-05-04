@@ -1739,9 +1739,11 @@ element.style {
                                 <!-- IMPORT BUTTON -->
                                 <li class="nav-item me-2">
                                     <div class="dropdown">
-
-                                    <button id="set-path-btn" class="btn border-1 btn-secondary "
+                                        <a href="/{{companyname}}/{{username}}/dashboard">
+                                    <button id="set-path-btn" class="btn border-1 btn-secondary" type="submit"
                                             onclick="setStoragePath()">Excelsheet Path</button>
+                                        </a>
+
 
                                     </div>
                                 </li>
@@ -1901,7 +1903,7 @@ function setStoragePath() {
   var path = window.prompt("Enter the path where excelsheet store:", "");
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/{{companyname}}/storage-path");
+  xhr.open("POST", "/{{companyname}}/{{username}}/storage-path");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify({ excel_path: path }));
 }

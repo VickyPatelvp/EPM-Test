@@ -29,7 +29,7 @@ from concurrent.futures import ThreadPoolExecutor
 from generate_excel import create_excel_file
 import pandas as pd
 from read_data import ExcelData
-
+import os
 
 # FLASK APP
 app = Flask(__name__)
@@ -53,7 +53,7 @@ mail_obj = Mail()
 
 # Testing path
 # C:/Users/alian/Desktop/Testing
-# C:/Users/alian/Downloads/my_file.xlsx
+        # C:/Users/alian/Downloads/my_file.xlsx
 
 
 @app.route('/<companyname>/login/', methods=["POST", "GET"])
@@ -129,6 +129,7 @@ def register():
 
 @app.route('/<companyname>/<username>/dashboard', methods=['GET', 'POST'])
 def dashboard(companyname, username):
+    print('sfgasdfvhfvhvfhv')
     session.pop('excel_path', default=None)
 
     if request.method == 'POST':
@@ -143,7 +144,7 @@ def dashboard(companyname, username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 1:
+    if datetime.datetime.now().day == 4:
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
@@ -176,27 +177,13 @@ def dashboard(companyname, username):
                            moath_data=moath_data, companyname=companyname, holidays=holidays, username=username,dashboard_data=dashboard_data)
 
 
-@app.route("/<companyname>/storage-path", methods=["POST"])
-def excel_sheet_path(companyname):
-    if 'excel_path' in session:
-        excel_path = session['excel_path']
-        print(excel_path)
-        excel = ExcelData(db)
-        excel.store_excel_data(companyname, excel_path)
-    else:
-        excel_path = request.json["excel_path"]
-        session["excel_path"] = excel_path
-        return excel_path
 
 
 @app.route('/<companyname>/<username>/employeelist', methods=['GET', 'POST'])
 def employee_list(companyname, username):
-    print(username)
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
-        print(employee_mail)
         auth_data = db.collection(companyname).document('admin').get().to_dict()
-        print(auth_data)
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
         mail_obj.new_employee_mail(employee_mail, companyname, company_mail, auth_password)
@@ -225,6 +212,14 @@ def employee_list(companyname, username):
                            username=username)
 
 
+@app.route("/<companyname>/<username>/storage-path", methods=["POST"])
+def excel_sheet_path(companyname, username):
+    excel_path = request.json["excel_path"]
+    excel = ExcelData(db)
+    excel.store_excel_data(companyname, excel_path)
+    return redirect(url_for('dashboard', companyname=companyname, username=username))
+
+
 @app.route('/<companyname>/<username>/result', methods=['POST', 'GET'])
 def add(companyname, username):
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
@@ -232,7 +227,6 @@ def add(companyname, username):
     create.result()
     employee_mail = request.form.get('email')
     auth_data = db.collection(companyname).document('admin').get().to_dict()
-    print(auth_data)
     company_mail = auth_data['AdminID']
     auth_password = auth_data['auth_password']
     mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
@@ -253,7 +247,6 @@ def employee_register_by_mail(companyname):
         create.result()
         email = request.form.get('email')
         auth_data = db.collection(companyname).document('admin').get().to_dict()
-        print(auth_data)
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
         mail_obj.employee_registered_mail(email, companyname, company_mail, auth_password)
@@ -303,8 +296,6 @@ def upload_file(companyname):
             data = []
             for row in worksheet.iter_rows(values_only=True):
                 data.append(row)
-            print(data)
-            print('svnsfvnsfv565444')
             return redirect(url_for('employee_list', companyname=companyname))
     return redirect(url_for('employee_list', companyname=companyname))
 
@@ -389,7 +380,6 @@ def department(companyname, username):
     if request.method == 'POST':
         ''' Add New DEPARTMENT '''
         result = request.form
-        print(result)
         dept.add_department(companyname, result)
     doc_ref = db.collection(str(companyname)).document(u'department')
     data = doc_ref.get().to_dict()
@@ -408,12 +398,12 @@ def delete_department(companyname, username, dep, pos):
     return redirect(url_for('department', companyname=companyname, username=username))
 
 
-@app.route("/set-storage-path", methods=["POST"])
-def set_storage_path():
+@app.route("/<companyname>/<username>/set-storage-path/<salid>", methods=["POST"])
+def set_storage_path(companyname,username,salid):
     path = request.json["path"]
-    session["storage_path"] = path
-    print(session['storage_path'])
-    return path
+    salary = SalarySlip(db)
+    salary.salary_slip(companyname, salid, path)
+    return redirect(url_for('salary', companyname=companyname, username=username, salid=salid))
 
 
 
@@ -466,11 +456,8 @@ def salary_sheet_view(companyname, username, salid):
         fields = {}
         for key, value in form.items():
             fields.update({key: value})
-        print(fields)
-        if 'storage_path' in session:
-            path = session["storage_path"]
-            print(path)
-            print(path)
+
+        path = get_download_folder()
         salary_excel = SalaryData(db)
         salary_excel.add_data(companyname=companyname, salid=salid, fields=fields, path=path)
 
@@ -479,7 +466,7 @@ def salary_sheet_view(companyname, username, salid):
 
     salary_status = db.collection(companyname).document('salary_status').get()
     salary_status = salary_status.get(datetime.date(1900, int(salid[4:]), 1).strftime('%B'))
-    print(salary_status)
+    # print(salary_status)
     return render_template('salary_sheet_view.html', data=salary_list, salid=salid, companyname=companyname,
                            username=username, salary_status=salary_status)
 
@@ -505,17 +492,35 @@ def salary_sheet_edit_(companyname, username, empid, salid):
 @app.route('/<companyname>/<username>/set_status/<salid>/<status>')
 def set_status(companyname, username, salid, status):
     ''' SALARY SLIP PDF GENERATION '''
-    month = datetime.date(1900, int(salid[4:]), 1).strftime('%B')
+    month = datetime.date(1900, int(salid[3:]), 1).strftime('%B')
     status = status
     data = {month: status}
     salary_status = db.collection(companyname).document('salary_status').update(data)
     return redirect(url_for('salary_sheet_view', companyname=companyname, username=username, salid=salid))
 
 
+
+
+
+
+def get_download_folder():
+    if os.name == 'nt':  # for Windows
+        import winreg
+        sub_key = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
+        downloads_guid = '{374DE290-123F-4565-9164-39C4925E467B}'
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, sub_key) as key:
+            location = winreg.QueryValueEx(key, downloads_guid)[0]
+    elif os.name == 'darwin':  # for macOS
+        location = os.path.expanduser('~/Downloads')
+    else:  # for Linux/Unix
+        location = os.path.expanduser('~/Downloads')
+    return location
+
 @app.route('/<companyname>/<username>/pdf/<salid>')
 def pdf(companyname, username, salid):
     ''' SALARY SLIP PDF GENERATION '''
-    path = request.json["path"]
+
+    path = get_download_folder()
     salary = SalarySlip(db)
     salary.salary_slip(companyname, salid, path)
     return redirect(url_for('salary', companyname=companyname, username=username, salid=salid))
@@ -553,7 +558,7 @@ def testing(companyname, username):
 def send_employee_salaryslip(companyname, username, salid):
     ''' GENERATE EXCELSHEET FOR BANK '''
     if 'storage_path' in session:
-        path = session["storage_path"]
+        path = get_download_folder()
         auth_data = db.collection(companyname).document('admin').get().to_dict()
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
@@ -563,7 +568,8 @@ def send_employee_salaryslip(companyname, username, salid):
             employee_list.update({doc.id: doc.to_dict()})
         for key, value in employee_list.items():
             data = value
-            mail_obj.send_employee_pdf(company_mail=company_mail, data=data, companyname=companyname,
+            print(data)
+            mail_obj.send_employee_pdf(company_mail=company_mail, data=data,
                                        auth_password=auth_password, path=path)
     return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname, username=username))
 

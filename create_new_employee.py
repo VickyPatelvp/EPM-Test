@@ -23,7 +23,7 @@ class Create():
 
         ''' ADD FORM DETAILS INTO DATABASE '''
 
-        employee_data = (self.db.collection('Utkarsh').document('employee').collection('employee').get())
+        employee_data = (self.db.collection(self.companyname).document('employee').collection('employee').get())
 
         last_id = int(employee_data[-1].to_dict()['userID'][3:])
 

@@ -162,6 +162,147 @@
                                                                                                           id="form1">
                                                                                                         <div class="col-12">
                                                                                                             <div class="container">
+
+                                                                                                                <!-- Personal Details -->
+
+
+                                                                                                                <div class="row mt-3">
+                                                                                                                    <div class="col-12">
+                                                                                                                        <h3 style="color:black;">
+                                                                                                                            Personal
+                                                                                                                            Details</h3>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-6">
+                                                                                                                        <table class="table table-striped">
+                                                                                                                            <thead>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Name
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="name"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["employeeName"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Department
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="department"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["department"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Designation
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="designation"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["designation"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Date
+                                                                                                                                    of
+                                                                                                                                    Birth
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="dob"
+                                                                                                                                            type="date"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["dob"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                        </table>
+
+                                                                                                                    </div>
+                                                                                                                    <div class="col-6">
+
+                                                                                                                        <table class="table table-striped">
+                                                                                                                            <thead>
+
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Job Position
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="jobPosition"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["jobPosition"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Current Experience
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="currentExperience"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["currentExperience"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Manager
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            class="form-control"
+                                                                                                                                            name="manager"
+                                                                                                                                            type="text"
+                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                                            placeholder='{{ data["personal_data"]["manager"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="col-3">
+                                                                                                                                    Gender
+                                                                                                                                </th>
+                                                                                                                                <td class="col-4">
+                                                                                                                                    <input
+                                                                                                                                            name="gender"
+                                                                                                                                            class="form-control"pattern="[A-Za-z]+"
+                                                                                                                                            style="background-color: #FFFFFF"
+
+                                                                                                                                            placeholder='{{ data["personal_data"]["gender"] }}'>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                        </table>
+                                                                                                                    </div>
+
+                                                                                                                </div>
+
+                                                                                                                <hr
+                                                                                                                        style="width:100%;text-align:left;margin-left:0;color:black;">
+
+
+<!--                                                                                                                Salary Data-->
                                                                                                                     <div class="row mt-3">
                                                                                                                     <div class="col-12">
                                                                                                                         <h3 style="color:black;">
@@ -213,68 +354,6 @@
 
                                                                                                                 <hr
                                                                                                                         style="width:100%;text-align:left;margin-left:0;color:black;">
-
-                                                                                                                <!-- Personal Details -->
-
-
-                                                                                                                <div class="row mt-3">
-                                                                                                                    <div class="col-12">
-                                                                                                                        <h3 style="color:black;">
-                                                                                                                            Personal
-                                                                                                                            Details</h3>
-                                                                                                                    </div>
-                                                                                                                    <div class="col-6">
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Date
-                                                                                                                                    of
-                                                                                                                                    Birth
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="dob"
-                                                                                                                                            type="date"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["dob"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
-
-                                                                                                                    </div>
-                                                                                                                    <div class="col-6">
-
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Gender
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            name="gender"
-                                                                                                                                            class="form-control"pattern="[A-Za-z]+"
-                                                                                                                                            style="background-color: #FFFFFF"
-
-                                                                                                                                            placeholder='{{ data["personal_data"]["gender"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
-                                                                                                                    </div>
-
-                                                                                                                </div>
-
-                                                                                                                <hr
-                                                                                                                        style="width:100%;text-align:left;margin-left:0;color:black;">
-
-
-
 
                                                                                                                 <!-- Contact Details -->
 
@@ -1409,6 +1488,12 @@
                                                                     <th class="col-3">Department</th>
                                                                     <td class="col-3">{{
                                                                         data["personal_data"]["department"] }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="col-3">Designation</th>
+                                                                    <td class="col-3">{{
+                                                                        data["personal_data"]["designation"] }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>

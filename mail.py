@@ -163,7 +163,18 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def send_employee_pdf(self, data, companyname, company_mail, auth_password, path):
+    def send_employee_pdf(self, data,path, company_mail,auth_password):
+        # Set up the connection to the SMTP server
+        smtp_server = 'smtp.gmail.com'
+        smtp_port = 587  # or 587 for SSL/TLS
+        if "@gmail.com" in company_mail:
+            smtp_server = 'smtp.gmail.com'
+            smtp_port = 587  # or 587 for SSL/TLS
+        elif "@yahoo.com" in company_mail:
+            smtp_server = 'smtp.mail.yahoo.com'
+            smtp_port = 587  # or 587 for SSL/TLS
+        # sending as mail
+
 
         # sending as mail
         MY_EMAIL = company_mail
@@ -213,7 +224,7 @@ class Mail():
         message.attach(payload)
 
         # use gmail with port
-        session = smtplib.SMTP('smtp.gmail.com', 587)
+        session = smtplib.SMTP(smtp_server, smtp_port)
 
         # enable security
         session.starttls()
@@ -225,5 +236,4 @@ class Mail():
         session.sendmail(MY_PASSWORD, TO_EMAIL, text)
         session.quit()
         print('Mail Sent')
-
 
