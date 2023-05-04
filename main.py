@@ -22,13 +22,14 @@ from register import Register
 from login import Login
 from moth_days import Month_count
 from mail import Mail
-
+import concurrent.futures
 from salary_calculation import SalaryCalculation
 from openpyxl import load_workbook
-
+from concurrent.futures import ThreadPoolExecutor
 from generate_excel import create_excel_file
 import pandas as pd
 from read_data import ExcelData
+
 
 # FLASK APP
 app = Flask(__name__)
@@ -124,6 +125,8 @@ def register():
     return render_template('register.html', responce=responce)
 
 
+
+
 @app.route('/<companyname>/<username>/dashboard', methods=['GET', 'POST'])
 def dashboard(companyname, username):
     session.pop('excel_path', default=None)
@@ -145,64 +148,32 @@ def dashboard(companyname, username):
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
         leaveobj.leave_reset(companyname)
-    total_employees = str(int(len(db.collection(companyname).document(u'employee').collection('employee').get())))
-    employee_on_internship = str(int(len(
-        db.collection(companyname).document(u'employee').collection('employee').where('designation', '==',
-                                                                                      'Intern').get())))
-    employee_on_training = str(int(len(
-        db.collection(companyname).document(u'employee').collection('employee').where('designation', '==',
-                                                                                      'Trainee').get())))
-    employee_on_probation = str(int(len(
-        db.collection(companyname).document(u'employee').collection('employee').where('designation', '==',
-                                                                                      'Employee').get())))
-    employee_overview = {
-        'Internship': int(len(db.collection(companyname).document(u'employee').collection('employee').where('designation', '==', 'Intern').get())),
-        'Trainee': int(len(db.collection(companyname).document(u'employee').collection('employee').where('designation', '==', 'Trainee').get())),
-        'Employee': int(len(db.collection(companyname).document(u'employee').collection('employee').where('designation', '==', 'Employee').get()))
-    }
 
-    exprience_list = \
-        {'0 to 1': int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==','0 year').get())) +
-                   int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '1 year').get())),
-         '1 to 5': (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '2 year').get()))) +
-                   (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '3 year').get()))) +
-                   (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '4 year').get()))) +
-                   (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '5 year').get()))),
-         '5 to 10': (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '6 year').get()))) +
-                    (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '7 year').get()))) +
-                    (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '8 year').get()))) +
-                    (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '9 year').get()))) +
-                    (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '10 year').get()))),
-         'Above 10': (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '11 year').get()))) +
-                     (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '12 year').get()))) +
-                     (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '13 year').get()))) +
-                     (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '14 year').get()))) +
-                     (int(len(db.collection(companyname).document(u'employee').collection('employee').where('currentExperience', '==', '15 year').get())))
-         }
-
-    department = db.collection(companyname).document(u'department').get().to_dict()
-    department_wise_emp = {}
-    for dept in department:
-        num_emp =  str(int(len(db.collection(companyname).document(u'employee').collection('employee').where('department', '==', dept).get())))
-        department_wise_emp.update({dept: num_emp})
-
-    print(department_wise_emp)
-
-
-    total_training_emp = int(employee_on_training) + int(employee_on_internship)
 
     ''' DISPLAY DASHBOARD '''
-
+    dashboard_data=dashboard_obj.all_data(companyname)
     holidays = moth_count.get_holidays(holidays)
-    employee_on_leave, total_leaves, employee_birthday, employee_anniversary = dashboard_obj.Dashboard_data(companyname)
+
+    employee_data = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        users_ref = db.collection(companyname).document('employee').collection('employee')
+        for emp_doc in users_ref.stream():
+            employee_data.append(executor.submit(dashboard_obj._get_employee_data, emp_doc))
+
+    employee_on_leave, total_leaves, employee_birthday, employee_anniversary = {}, {}, {}, {}
+    for future in concurrent.futures.as_completed(employee_data):
+        result = future.result()
+        if 'birthday' in result:
+            employee_birthday[result['name']] = result['birthday']
+        if 'anniversary' in result:
+            employee_anniversary[result['name']] = result['anniversary']
+        if result['leaves']:
+            employee_on_leave[result['name']] = result['leaves']
+        total_leaves[result['name']] = result['total_leaves']
+
     return render_template('dashboard.html', employee_on_leave=employee_on_leave, total_leaves=total_leaves,
                            employee_birthday=employee_birthday, employee_anniversary=employee_anniversary,
-                           moath_data=moath_data, companyname=companyname, holidays=holidays, username=username,
-                           total_employees=total_employees, employee_on_training=employee_on_training,
-                           employee_on_probation=employee_on_probation, department=department,
-                           employee_on_internship=employee_on_internship, total_training_emp=total_training_emp,
-                           exprience_list=exprience_list, department_wise_emp=department_wise_emp,
-                           employee_overview=employee_overview)
+                           moath_data=moath_data, companyname=companyname, holidays=holidays, username=username,dashboard_data=dashboard_data)
 
 
 @app.route("/<companyname>/storage-path", methods=["POST"])
@@ -338,6 +309,8 @@ def upload_file(companyname):
     return redirect(url_for('employee_list', companyname=companyname))
 
 
+
+
 @app.route('/<companyname>/<username>/employeeprofile/<id>', methods=['GET', 'POST'])
 def employee_profile(companyname, username, id):
     ''' DISPLAY EMPLOYEE DETAILS '''
@@ -379,6 +352,7 @@ def employee_profile(companyname, username, id):
     return render_template('employee_profile.html', leave=leave_status, data=data, total_leave=total_leave,
                            leave_list=leave_list, companyname=companyname, leave_date=leave_status_date,
                            username=username)
+
 
 
 @app.route('/<companyname>/<username>/pdf/<id>/<salid>')
@@ -442,6 +416,9 @@ def set_storage_path():
     return path
 
 
+
+
+
 @app.route('/<companyname>/<username>/salary', methods=['GET', 'POST'])
 def salary(companyname, username):
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
@@ -458,11 +435,25 @@ def salary(companyname, username):
             db.collection(companyname).document('salary_calc').set(data_dict)
         else:
             db.collection(companyname).document('salary_calc').update(data_dict)
-    salary_criteria = db.collection(str(companyname)).document('salary_calc').get().to_dict()
-    salary_list = Salarymanage(db).get_all_month_salary_data(companyname)
-    salary_status = db.collection(companyname).document('salary_status').get().to_dict()
-    print(salary_status)
-    print(salary_status)
+
+    def get_salary_criteria():
+        return db.collection(str(companyname)).document('salary_calc').get().to_dict()
+
+    def get_all_month_salary_data():
+        return Salarymanage(db).get_all_month_salary_data(companyname)
+
+    def get_salary_status():
+        return db.collection(companyname).document('salary_status').get().to_dict()
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        salary_criteria_future = executor.submit(get_salary_criteria)
+        salary_list_future = executor.submit(get_all_month_salary_data)
+        salary_status_future = executor.submit(get_salary_status)
+
+    salary_criteria = salary_criteria_future.result()
+    salary_list = salary_list_future.result()
+    salary_status = salary_status_future.result()
+
     return render_template('salary_sheet_month.html', data=salary_list, salary_criteria=salary_criteria,
                            companyname=companyname, username=username, salary_status=salary_status)
 
@@ -514,7 +505,7 @@ def salary_sheet_edit_(companyname, username, empid, salid):
 @app.route('/<companyname>/<username>/set_status/<salid>/<status>')
 def set_status(companyname, username, salid, status):
     ''' SALARY SLIP PDF GENERATION '''
-    month = datetime.datetime.now().strftime("%B")
+    month = datetime.date(1900, int(salid[4:]), 1).strftime('%B')
     status = status
     data = {month: status}
     salary_status = db.collection(companyname).document('salary_status').update(data)
@@ -524,11 +515,10 @@ def set_status(companyname, username, salid, status):
 @app.route('/<companyname>/<username>/pdf/<salid>')
 def pdf(companyname, username, salid):
     ''' SALARY SLIP PDF GENERATION '''
-    if 'storage_path' in session:
-        path = session["storage_path"]
-        salary = SalarySlip(db)
-        salary.salary_slip(companyname, salid, path)
-        return redirect(url_for('salary', companyname=companyname, username=username, salid=salid))
+    path = request.json["path"]
+    salary = SalarySlip(db)
+    salary.salary_slip(companyname, salid, path)
+    return redirect(url_for('salary', companyname=companyname, username=username, salid=salid))
 
 
 # @app.route('/<companyname>/<username>/excel/<salid>')
