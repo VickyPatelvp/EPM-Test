@@ -120,7 +120,7 @@ class Mail():
         from_email = company_mail
         to_email = email
         subject = 'Employee Registation Successfull'
-        body = f'''This mail is for Company Successsfully registered,
+        body = f'''This mail is for Employee Successsfully registered,
                 Now you can use following url to access your company login
                http://127.0.0.1:300/{companyname}/login
               Congratulation, Thank you so much..'''

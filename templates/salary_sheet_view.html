@@ -89,7 +89,7 @@
                             <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Pending')}}">
                             <button class="btn border-1 btn-secondary " id="btn_3 "type="button" aria-haspopup="true"
                                     aria-expanded="false">
-                                decline
+                                Decline
                             </button>
                             </a>
                         </div>
@@ -465,11 +465,11 @@ if (salaryStatus === 'Paid') {
 }
 else if(salaryStatus==='Approved') {
   salaryStatusLabel.style.backgroundColor = "#7367F0";
-  salaryStatusLabel.textContent = 'approved';
+  salaryStatusLabel.textContent = 'Approved';
 }
 else if(salaryStatus==='Inreview') {
   salaryStatusLabel.style.backgroundColor =  "#7367F0";
-  salaryStatusLabel.textContent = 'inreview';
+  salaryStatusLabel.textContent = 'Inreview';
 }else if(salaryStatus==='None') {
   salaryStatusLabel.style.backgroundColor = '';
   salaryStatusLabel.textContent = '';

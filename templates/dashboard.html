@@ -157,7 +157,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Total Employees</h4>
                                                         <br>
-                                                        <h1 class="mt-1">560</h1>
+                                                        <h1 class="mt-1">{{ total_employees }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-1">560</h1>-->
@@ -180,7 +180,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Employees on Probation</h4>
                                                         <br>
-                                                        <h1 class="mt-1 ">12</h1>
+                                                        <h1 class="mt-1 ">{{ employee_on_probation }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-1 ">12</h1>-->
@@ -201,7 +201,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Employees on Training</h4>
                                                         <br>
-                                                        <h1 class="mt-0">7</h1>
+                                                        <h1 class="mt-0">{{ total_training_emp }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-0">7</h1>-->
@@ -277,51 +277,53 @@
                                                     <table class="table mt-3" style="font-size: 20px;">
                                                         <ul>
                                                             <tbody>
+                                                            {% for dept in department %}
                                                                 <tr>
                                                                     <td class="text-end">
-                                                                        <li style="color:#0d6efd;"></li>
+                                                                        <li style="color:black;"></li>
                                                                     </td>
-                                                                    <td class="ms-1 text-start">Account Department</td>
+                                                                    <td class="ms-1 text-start">{{ dept }}</td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td class="text-end">
-                                                                        <li style="color:#dc3545;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">UI/UX Design</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-end">
-                                                                        <li style="color:#0d6efd;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">Development Department
-                                                                    </td>
-                                                                </tr>
-                                                                <tr class="mt-2">
-                                                                    <td class="text-end">
-                                                                        <li style="color:#0dcaf0;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">HR Department</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-end">
-                                                                        <li style="color:#6c757d;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">Marketing Department
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-end">
-                                                                        <li style="color:#20c997;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">Testing Department</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-end">
-                                                                        <li style="color:#ffc107;"></li>
-                                                                    </td>
-                                                                    <td class="ms-1 text-start">Android and IOS App
-                                                                        Developer</td>
-                                                                </tr>
+                                                            {% endfor %}
+<!--                                                                <tr>-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#dc3545;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">UI/UX Design</td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#0d6efd;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">Development Department-->
+<!--                                                                    </td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr class="mt-2">-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#0dcaf0;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">HR Department</td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#6c757d;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">Marketing Department-->
+<!--                                                                    </td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#20c997;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">Testing Department</td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td class="text-end">-->
+<!--                                                                        <li style="color:#ffc107;"></li>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td class="ms-1 text-start">Android and IOS App-->
+<!--                                                                        Developer</td>-->
+<!--                                                                </tr>-->
                                                             </tbody>
                                                         </ul>
                                                     </table>
@@ -500,9 +502,9 @@
         new Chart(document.getElementById("chartjs-dashboard-pie"), {
             type: "pie",
             data: {
-                labels: ["fulltime", "internship", "trainee"],
+                labels: ["Fulltime", "Internship", "Trainee"],
                 datasets: [{
-                    data: [150, 100, 30],
+                    data: [{{ employee_overview['Employee'] }}, {{ employee_overview['Internship'] }}, {{ employee_overview['Trainee'] }}],
                     backgroundColor: [
                         window.theme.primary,
                         window.theme.warning,
@@ -541,7 +543,7 @@
             type: "pie",
 
             data: {
-                labels: ["Accountant", "Android and IOS App Developer", "UI/UX Design Dept", "devlopment Dept.", "Hr Dept.", "Marketing Dept.", "testing Dept."],
+                labels: {{ department }},
                 datasets: [{
                     data: [2, 10, 30, 50, 5, 15, 10],
                     backgroundColor: [
@@ -591,7 +593,7 @@
                     borderColor: window.theme.primary,
                     hoverBackgroundColor: window.theme.primary,
                     hoverBorderColor: window.theme.primary,
-                    data: [54, 67, 41, 55, , 1],
+                    data: [{{ exprience_list['0 to 1'] }}, {{ exprience_list['1 to 5'] }}, {{ exprience_list['5 to 10'] }}, {{ exprience_list['Above 10'] }}],
                     barPercentage: 0.5,
                     categoryPercentage: 0.6
                 }]

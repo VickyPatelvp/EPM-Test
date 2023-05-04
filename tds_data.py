@@ -6,7 +6,7 @@ class TDSData():
     def __init__(self, db):
         self.db = db
 
-    def deduction(self, id,companyname):
+    def deduction(self, id,companyname, epfo):
 
         ''' Calculate TDS '''
 
@@ -37,11 +37,11 @@ class TDSData():
         # EPFO Data from previous Salaryslip
 
         if current_month == 1:
-            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{12-current_month}').get().to_dict())["epfo"]) * 12
+            annual_pf = float(epfo) * 12
         elif current_month == 2:
-            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{13-current_month}').get().to_dict())["epfo"]) * 12
+            annual_pf = float(epfo) * 12
         else:
-            annual_pf = float((users_ref.collection('salaryslips').document(f'sal00{current_month-2}').get().to_dict())["epfo"]) * 12
+            annual_pf = float(epfo) * 12
 
         # 80C (1,50,000 Limit)
 

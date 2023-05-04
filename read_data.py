@@ -1,5 +1,6 @@
 import openpyxl
 import datetime
+import re
 
 
 class ExcelData():
@@ -41,49 +42,61 @@ class ExcelData():
         # Store Data into Database
         for details in all_employee_data:
             id = str(details['Employee ID'])
-            if id==None:
-                break
-            month = datetime.datetime.now().month
 
-            year = datetime.datetime.now().year
+            if id == 'None':
+                pass
 
-            personal_data = {
-                'photo': 'photo',
-                'employeeName': details['Employee Full Name'], 'userID': details['Employee ID'],
-                'password': details['Password'], 'department': details['Department'],
-                'email': details['Email'], 'salary': details['Salary'], 'jobPosition': details['Job Position'],
-                'manager': details['Manager'], 'doj': details['Date of Joining'],
-                'currentExperience': details['Current Experience'], 'dob': details['Date of Birth'],
-                'gender': details['Gender'], 'phoneNo': details['Phone No'],
-                'bankName': details['Bank Name'], 'accountHolderName': details['Account Holder Name'],
-                'accountNumber': details['Account Number'], 'ifscCode': details['IFSC Code'],
-                'aadharCardNo': details['Aadhar Card Number'], 'panCardNo': details['PAN Card No'],
-                'passportNo': details['Passport No'],
-                'pfAccountNo': details['PF Account No'], 'uanNo': details['UAN No'], 'esicNo': details['ESIC No']
-            }
+            else:
 
-            self.db.collection(companyname).document(u'employee').collection('employee').document(id).set(personal_data)
+                month = datetime.datetime.now().month
 
-            total_leaves = {'CL': details['CL'], 'PL': details['PL'], 'SL': details['SL'], 'LWP': details['LWP']}
+                year = datetime.datetime.now().year
 
-            self.db.collection(companyname).document(u'employee').collection('employee').document(id).collection(
-                "leaveMST").document("total_leaves").set(total_leaves)
+                doj = details['Date of Joining'].date()
 
-            salary_slip_data = {
-                'employeeName': details['Employee Full Name'], 'userID': details['Employee ID'],
-                'slip_id': f'sal00{month}', 'lwp': details['LWP'], 'basic': details['Basic'], 'da': details['DA'],
-                'hra': details['HRA'], 'otherAllowance': details['Other Allowance'],
-                'incentive': details['Incentive'], 'grsOutstandingAdjustment': details['Grs Outstanding Adjustment'],
-                'arrears': details['Arrears'], 'statutoryBonus': details['Statutory Bonus'],
-                'grossSalary': details['Gross Salary'], 'epfo': details['EPFO'],
-                'dedOutstandingAdjustment': details['Ded Outstanding Adjustment'], 'pt': details['PT'],
-                'tds': details['TDS'], 'otherDeduction': details['Other Deduction'],
-                'leaveDeduction': details['Leave Deduction'], 'netSalary': details['Net Salary'], 'month': month,
-                'year': year,
-            }
+                dob = details['Date of Birth'].date()
 
-            self.db.collection(companyname).document('employee').collection('employee').document(id).collection(
-                'salaryslips').document("sal00" + str({month})).set(salary_slip_data)
+                print(dob)
+                print(doj)
+
+                personal_data = {
+                    'photo': 'photo',
+                    'employeeName': details['Employee Full Name'], 'userID': details['Employee ID'],
+                    'password': details['Password'], 'department': details['Department'],
+                    'email': details['Email'], 'salary': details['Salary'], 'jobPosition': details['Job Position'],
+                    'manager': details['Manager'], 'doj': f'{doj}',
+                    'currentExperience': details['Current Experience'], 'dob': f'{dob}',
+                    'gender': details['Gender'], 'phoneNo': details['Phone No'],
+                    'bankName': details['Bank Name'], 'accountHolderName': details['Account Holder Name'],
+                    'accountNumber': details['Account Number'], 'ifscCode': details['IFSC Code'],
+                    'aadharCardNo': details['Aadhar Card Number'], 'panCardNo': details['PAN Card No'],
+                    'passportNo': details['Passport No'],
+                    'pfAccountNo': details['PF Account No'], 'uanNo': details['UAN No'], 'esicNo': details['ESIC No']
+                }
+
+                self.db.collection(companyname).document(u'employee').collection('employee').document(id).set(personal_data)
+
+                total_leaves = {'CL': details['CL'], 'PL': details['PL'], 'SL': details['SL'], 'LWP': details['LWP']}
+
+                self.db.collection(companyname).document(u'employee').collection('employee').document(id).collection(
+                    "leaveMST").document("total_leaves").set(total_leaves)
+
+                salary_slip_data = {
+                    'employeeName': details['Employee Full Name'], 'userID': details['Employee ID'],
+                    'slip_id': f'sal00{month}', 'lwp': details['LWP'], 'basic': details['Basic'], 'da': details['DA'],
+                    'hra': details['HRA'], 'otherAllowance': details['Other Allowance'],
+                    'incentive': details['Incentive'],
+                    'grsOutstandingAdjustment': details['Grs Outstanding Adjustment'],
+                    'arrears': details['Arrears'], 'statutoryBonus': details['Statutory Bonus'],
+                    'grossSalary': details['Gross Salary'], 'epfo': details['EPFO'],
+                    'dedOutstandingAdjustment': details['Ded Outstanding Adjustment'], 'pt': details['PT'],
+                    'tds': details['TDS'], 'otherDeduction': details['Other Deduction'],
+                    'leaveDeduction': details['Leave Deduction'], 'netSalary': details['Net Salary'], 'month': month,
+                    'year': year,
+                }
+
+                # self.db.collection(companyname).document('employee').collection('employee').document(id).collection(
+                #     'salaryslips').document("sal00" + str({month})).set(salary_slip_data)
 
             tds_detail = {
                 'hlapplicationno': details['Home Loan Application No'],

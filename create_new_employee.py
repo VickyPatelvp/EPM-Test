@@ -27,8 +27,8 @@ class Create():
         name = docs[-1]
         name = name.to_dict()['userID']
 
-        num=(abs(int(name[3:])))
-        new_id=''
+        num = (abs(int(name[3:])))
+        new_id = ''
         if num < 9:
             new_id = "EMP000" + str(num + 1)
         elif num < 99:
@@ -37,7 +37,7 @@ class Create():
             new_id = "EMP0" + str(num + 1)
         else:
             new_id = "EMP" + str(num + 1)
-        
+
         if request.method == 'POST':
             file = request.files['photo']
             bucket = storage.bucket()
@@ -56,9 +56,9 @@ class Create():
                 'email': request.form.get('email'),
                 'password':request.form.get('password'),
                 'salary': request.form.get('salary'), 'jobPosition': request.form.get('jobposition'),
-                 'doj': request.form.get('doj'),
-                'currentExperience': request.form.get('currentExperience'), 'dob': request.form.get('dob'), 'gender': request.form.get('gender'),
-                'phoneNo': request.form.get('mobileno'),
+                'doj': request.form.get('doj'),
+                'currentExperience': f"{request.form.get('currentExperience')} year", 'dob': request.form.get('dob'),
+                'gender': request.form.get('gender'), 'phoneNo': request.form.get('mobileno'),
                 'bankName': request.form.get('bankname'), 'accountHolderName': request.form.get('accountholdername'),
                 'accountNumber': request.form.get('accountno'), 'ifscCode': request.form.get('ifsccode'),
                 'aadharCardNo': request.form.get('aadharno'), 'panCardNo': request.form.get('panno'),

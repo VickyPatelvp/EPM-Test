@@ -1,5 +1,6 @@
 import datetime
 from tds_data import TDSData
+import calendar
 
 
 class SalaryCalculation():
@@ -11,20 +12,16 @@ class SalaryCalculation():
 
         working_days = workingday
 
-        # current_month = datetime.datetime.now().month
+        current_month = datetime.datetime.now().month
 
-        current_month = 5
+        current_year = datetime.datetime.now().year
 
         if current_month == 1:
             month = 13 - current_month
+            year = current_year - 1
         else:
             month = current_month - 1
-
-        year = datetime.datetime.now().year
-        if current_month == 1:
-            year = year - 1
-        else:
-            year=year
+            year = current_year
 
         salary_percentage = (self.db.collection(companyname).document('salary_calc').get()).to_dict()
 
@@ -35,7 +32,7 @@ class SalaryCalculation():
         for doc in employee_data:
             employee_list.update({doc.id: doc.to_dict()})
 
-        for key,value in employee_list.items():
+        for key, value in employee_list.items():
 
             empid = key
 
@@ -44,8 +41,6 @@ class SalaryCalculation():
             emp_name = emp_data['employeeName']
 
             emp_salary = emp_data['salary']
-
-            # emp_salary = 50000
 
             lwp = 0
 
@@ -79,7 +74,7 @@ class SalaryCalculation():
 
             pt = 200
 
-            tds = TDSData(db=self.db).deduction(empid,companyname)
+            tds = TDSData(db=self.db).deduction(empid,companyname, epfo)
 
             other_deduction = 0
 
@@ -102,14 +97,19 @@ class SalaryCalculation():
                 'netSalary': net_salary, 'month': month, 'year': year
                             }
 
-            users_ref = self.db.collection(u'alian_software').document('employee').collection('employee').document(empid)
+            users_ref = self.db.collection(companyname).document('employee').collection('employee').document(empid)
 
-            if current_month == 1:
-                users_ref.collection('salaryslips').document(f'sal00{month}').set(salary_slip_data)
-            else:
-                users_ref.collection('salaryslips').document(f'sal00{month}').set(salary_slip_data)
+            users_ref.collection('salaryslips').document(f'sal00{month}').set(salary_slip_data)
 
-            # print(salary_slip_data)
+            month_name = calendar.month_name[month]
+
+            salary_status = {month_name: 'None'}
+
+            self.db.collection(companyname).document('salary_status').set(salary_status)
+
+            print(salary_slip_data)
+
+            print(f'sal00{month}')
 
 
 
