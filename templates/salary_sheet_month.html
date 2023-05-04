@@ -149,13 +149,13 @@
                     <ul class="nav ">
                         <!-- Download icon  -->
                         <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',companyname=companyname,username=username, salid=i)}}">
-                            <i class="fa fa-download"></i>
+                            <i class="fa fa-download" onclick="setStoragePath()"></i>
                         </a>
                         </li>
                         <!-- Eye icon  -->
                         <li class="nav-item  d-inline"><a class="nav-link"
                                                           href="{{url_for('salary_sheet_view',companyname=companyname,username=username, salid=i)}}">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <i class="fa fa-eye" aria-hidden="true" ></i>
                         </a>
                         </li>
                     </ul>
@@ -190,6 +190,8 @@ for (var i = 0; i < statusLabels.length; i++) {
     statusLabel.style.background = "#28C76F";
   } else if (status === "None") {
     statusLabel.style.background = "#DFE1E6";
+  } else if (status === "Inreview") {
+    statusLabel.style.background = "#7367F0";
   }
 }
 
