@@ -60,3 +60,66 @@ class Dashboard():
         return employee_on_leave, total_leaves, employee_birthday, employee_anniversary
 
 
+    def all_data(self, companyname):
+        user_ref = self.db.collection(companyname).document(u'employee').collection('employee')
+        all_employees = {
+            'total_employees': int(len(user_ref.get())),
+            'emp_on_probation': int(len(user_ref.where('designation', '==','Employee').get())),
+            'emp_on_training': int(len(user_ref.where('designation', '==','Intern').get())) +
+                               int(len(user_ref.where('designation', '==', 'Trainee').get()))
+        }
+
+        employee_overview = {
+            'Internship': int(len(user_ref.where('designation', '==','Intern').get())),
+            'Trainee': int(len(user_ref.where('designation', '==','Trainee').get())),
+            'Employee': int(len(user_ref.where('designation', '==','Employee').get()))
+        }
+
+        exprience_list = {
+            '0 to 1': int(len(user_ref.where('currentExperience','==','0 year').get())) +
+                      int(len(user_ref.where('currentExperience', '==', '1 year').get())),
+            '1 to 5': (int(len(user_ref.where('currentExperience', '==','2 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '3 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '4 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '5 year').get()))),
+            '5 to 10': (int(len(user_ref.where('currentExperience', '==','6 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '7 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '8 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '9 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '10 year').get()))),
+            'Above 10': (int(len(user_ref.where('currentExperience', '==','11 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '12 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '13 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '14 year').get()))) +
+                      (int(len(user_ref.where('currentExperience', '==', '15 year').get())))
+        }
+
+        department = self.db.collection(companyname).document(u'department').get().to_dict()
+
+        department_wise_emp = {}
+
+        for dept in department:
+            num_emp =  str(int(len(user_ref.where('department', '==', dept).get())))
+            department_wise_emp.update({dept: num_emp})
+
+        salary_wise_emp = {
+            '0 to 20 K': int(len(user_ref.where('salary', '<', 20000).get())),
+            '20 to 50 K': int(len(user_ref.where('salary', '<=', 50000).where('salary', '>', 20000).get())),
+            '50 to 80 K': int(len(user_ref.where('salary', '<=', 80000).where('salary', '>', 50000).get())),
+            '80 to 100 K': int(len(user_ref.where('salary', '<=', 100000).where('salary', '>', 80000).get())),
+            '100 K +': int(len(user_ref.where('salary', '>', 100000).get()))
+        }
+
+        all_data_dashboard = {
+            'all_employees': all_employees,
+            'employee_overview': employee_overview,
+            'exprience_list': exprience_list,
+            'department': department,
+            'department_wise_emp': department_wise_emp,
+            'salary_wise_emp': salary_wise_emp
+        }
+
+        return all_data_dashboard
+
+
+

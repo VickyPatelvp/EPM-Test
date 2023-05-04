@@ -157,7 +157,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Total Employees</h4>
                                                         <br>
-                                                        <h1 class="mt-1">{{ total_employees }}</h1>
+                                                        <h1 class="mt-1">{{ dashboard_data['all_employees']['total_employees'] }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-1">560</h1>-->
@@ -180,7 +180,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Employees on Probation</h4>
                                                         <br>
-                                                        <h1 class="mt-1 ">{{ employee_on_probation }}</h1>
+                                                        <h1 class="mt-1 ">{{ dashboard_data['all_employees']['emp_on_probation'] }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-1 ">12</h1>-->
@@ -201,7 +201,7 @@
                                                     <div class="col-8 mt-1 text-center">
                                                         <h4 class="card-title">Employees on Training</h4>
                                                         <br>
-                                                        <h1 class="mt-0">{{ total_training_emp }}</h1>
+                                                        <h1 class="mt-0">{{ dashboard_data['all_employees']['emp_on_training'] }}</h1>
                                                     </div>
                                                 </div>
                                                 <!--                                                <h1 class="mt-0">7</h1>-->
@@ -229,21 +229,21 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td class="text-end">
-                                                                        <li style="color:#0d6efd;"></li>
+                                                                        <li style="color:black;"></li>
                                                                     </td>
                                                                     <td class="ms-1 text-start">Fulltime</td>
                                                                 <tr>
                                                                 <tr>
                                                                     <td class="text-end">
-                                                                        <li style="color:#dc3545;"></li>
+                                                                        <li style="color:black;"></li>
                                                                     </td>
-                                                                    <td class="ms-1 text-start">Internship</td>
+                                                                    <td class="ms-1 text-start">Trainee</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-end">
-                                                                        <li style="color:#ffc107;"></li>
+                                                                        <li style="color:black;"></li>
                                                                     </td>
-                                                                    <td class="ms-1 text-start">Trainee</td>
+                                                                    <td class="ms-1 text-start">Internship</td>
                                                                 </tr>
 
 
@@ -277,53 +277,14 @@
                                                     <table class="table mt-3" style="font-size: 20px;">
                                                         <ul>
                                                             <tbody>
-                                                            {% for dept in department %}
+                                                            {% for dept in dashboard_data['department'] %}
                                                                 <tr>
                                                                     <td class="text-end">
                                                                         <li style="color:black;"></li>
                                                                     </td>
-                                                                    <td class="ms-1 text-start">{{ dept }}</td>
+                                                                    <td class="ms-1 text-start">{{ dept }} Department</td>
                                                                 </tr>
                                                             {% endfor %}
-<!--                                                                <tr>-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#dc3545;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">UI/UX Design</td>-->
-<!--                                                                </tr>-->
-<!--                                                                <tr>-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#0d6efd;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">Development Department-->
-<!--                                                                    </td>-->
-<!--                                                                </tr>-->
-<!--                                                                <tr class="mt-2">-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#0dcaf0;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">HR Department</td>-->
-<!--                                                                </tr>-->
-<!--                                                                <tr>-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#6c757d;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">Marketing Department-->
-<!--                                                                    </td>-->
-<!--                                                                </tr>-->
-<!--                                                                <tr>-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#20c997;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">Testing Department</td>-->
-<!--                                                                </tr>-->
-<!--                                                                <tr>-->
-<!--                                                                    <td class="text-end">-->
-<!--                                                                        <li style="color:#ffc107;"></li>-->
-<!--                                                                    </td>-->
-<!--                                                                    <td class="ms-1 text-start">Android and IOS App-->
-<!--                                                                        Developer</td>-->
-<!--                                                                </tr>-->
                                                             </tbody>
                                                         </ul>
                                                     </table>
@@ -504,7 +465,7 @@
             data: {
                 labels: ["Fulltime", "Internship", "Trainee"],
                 datasets: [{
-                    data: [{{ employee_overview['Employee'] }}, {{ employee_overview['Internship'] }}, {{ employee_overview['Trainee'] }}],
+                    data: [{{ dashboard_data['employee_overview']['Employee'] }}, {{ dashboard_data['employee_overview']['Internship'] }}, {{ dashboard_data['employee_overview']['Trainee'] }}],
                     backgroundColor: [
                         window.theme.primary,
                         window.theme.warning,
@@ -539,13 +500,16 @@
     document.addEventListener("DOMContentLoaded", function () {
         // Pie chart
 
+        var department_wise_emp = {{ dashboard_data['department_wise_emp']|tojson }}
+
         new Chart(document.getElementById("chartjs-dashboard-pie2"), {
             type: "pie",
 
+
             data: {
-                labels: {{ department }},
+                labels: Object.keys( department_wise_emp ),
                 datasets: [{
-                    data: [2, 10, 30, 50, 5, 15, 10],
+                    data: Object.values( department_wise_emp ),
                     backgroundColor: [
                         window.theme.primary,
                         window.theme.warning,
@@ -571,14 +535,6 @@
         });
     });
 
-
-
-
-
-
-
-
-
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -586,14 +542,14 @@
         new Chart(document.getElementById("chartjs-dashboard-bar"), {
             type: "bar",
             data: {
-                labels: ["0 to 1 year", "1 to 5 year", "5 to 10 year", "10 or more",],
+                labels: ["0 to 1 year", "1 to 5 year", "5 to 10 year", "10 Above",],
                 datasets: [{
                     label: "This year",
                     backgroundColor: window.theme.primary,
                     borderColor: window.theme.primary,
                     hoverBackgroundColor: window.theme.primary,
                     hoverBorderColor: window.theme.primary,
-                    data: [{{ exprience_list['0 to 1'] }}, {{ exprience_list['1 to 5'] }}, {{ exprience_list['5 to 10'] }}, {{ exprience_list['Above 10'] }}],
+                    data: [{{ dashboard_data['exprience_list']['0 to 1'] }}, {{ dashboard_data['exprience_list']['1 to 5'] }}, {{ dashboard_data['exprience_list']['5 to 10'] }}, {{ dashboard_data['exprience_list']['Above 10'] }}],
                     barPercentage: 0.5,
                     categoryPercentage: 0.6
                 }]
@@ -641,24 +597,15 @@
         new Chart(document.getElementById("chartjs-dashboard-bar1"), {
             type: "bar",
             data: {
-                labels: ["0 to 20k ", "20k to 50k", "50k to 80k", "80k to 100k", "100k +"],
+                labels: ["0 to 20 k", "20 to 50 k", "50 to 80 k", "80 to 100 k", "100 k+"],
                 datasets: [{
-                    label: "Last year",
-                    backgroundColor: window.theme.primary,
-                    borderColor: window.theme.primary,
-                    hoverBackgroundColor: window.theme.primary,
-                    hoverBorderColor: window.theme.primary,
-                    data: [54, 67, 41, 55, 62,],
-                    barPercentage: .75,
-                    categoryPercentage: 0.6
-                }, {
                     label: "This year",
                     backgroundColor: "#d224e6",
                     borderColor: "#dee2e6",
-                    hoverBackgroundColor: "#dee2e6",
+                    hoverBackgroundColor: "#d224e6",
                     hoverBorderColor: "#dee2e6",
-                    data: [69, 66, 24, 48, 52,],
-                    barPercentage: .75,
+                    data: [{{ dashboard_data['salary_wise_emp']['0 to 20 K'] }}, {{ dashboard_data['salary_wise_emp']['20 to 50 K'] }}, {{ dashboard_data['salary_wise_emp']['50 to 80 K']}}, {{ dashboard_data['salary_wise_emp']['80 to 100 K']}}, {{ dashboard_data['salary_wise_emp']['100 K +']}}],
+                    barPercentage: .45,
                     categoryPercentage: 0.6
                 }]
             },

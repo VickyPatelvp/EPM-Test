@@ -140,7 +140,7 @@ def dashboard(companyname, username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 4:
+    if datetime.datetime.now().day == 1:
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
@@ -221,7 +221,6 @@ def excel_sheet_path(companyname):
 @app.route('/<companyname>/<username>/employeelist', methods=['GET', 'POST'])
 def employee_list(companyname, username):
     print(username)
-    t1 = datetime.datetime.now()
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
         print(employee_mail)
@@ -230,16 +229,7 @@ def employee_list(companyname, username):
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
         mail_obj.new_employee_mail(employee_mail, companyname, company_mail, auth_password)
-    elif 'excel_path' in session:
-        t1 = datetime.datetime.now()
-        print(t1)
-        excel_path = session['excel_path']
-        # print(excel_path)
-        excel = ExcelData(db)
-        excel.store_excel_data(companyname, excel_path)
-    session.pop('excel_path', default=None)
-    t2 = datetime.datetime.now()
-    print(t2-t1)
+
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
 
     def get_employee_data():
@@ -399,7 +389,6 @@ def pdf_personal(companyname, username, id, salid):
         salary = SalarySlip(db)
         salary.salary_slip_personal(companyname, id, salid, path)
         return redirect(url_for('employee_profile', companyname=companyname, id=id, salid=salid, username=username))
-    return
 
 
 @app.route('/<companyname>/<username>/personal_data_update/<id>', methods=['GET', 'POST'])
@@ -498,7 +487,7 @@ def salary_sheet_view(companyname, username, salid):
     salary_list = Salarymanage(db).get_all_emp_salary_data(companyname, salid)
 
     salary_status = db.collection(companyname).document('salary_status').get()
-    salary_status= salary_status.get(datetime.date(1900,int(salid[3:]), 1).strftime('%B'))
+    salary_status = salary_status.get(datetime.date(1900, int(salid[4:]), 1).strftime('%B'))
     print(salary_status)
     return render_template('salary_sheet_view.html', data=salary_list, salid=salid, companyname=companyname,
                            username=username, salary_status=salary_status)
@@ -525,8 +514,9 @@ def salary_sheet_edit_(companyname, username, empid, salid):
 @app.route('/<companyname>/<username>/set_status/<salid>/<status>')
 def set_status(companyname, username, salid, status):
     ''' SALARY SLIP PDF GENERATION '''
-    month=datetime.date(1900,int(salid[3:]), 1).strftime('%B')
-    data={month:status}
+    month = datetime.datetime.now().strftime("%B")
+    status = status
+    data = {month: status}
     salary_status = db.collection(companyname).document('salary_status').update(data)
     return redirect(url_for('salary_sheet_view', companyname=companyname, username=username, salid=salid))
 

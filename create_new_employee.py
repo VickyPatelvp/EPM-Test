@@ -23,20 +23,18 @@ class Create():
 
         ''' ADD FORM DETAILS INTO DATABASE '''
 
-        docs = self.db.collection(self.companyname).document(u'employee').collection('employee').get()
-        name = docs[-1]
-        name = name.to_dict()['userID']
+        employee_data = (self.db.collection('Utkarsh').document('employee').collection('employee').get())
 
-        num = (abs(int(name[3:])))
+        last_id = int(employee_data[-1].to_dict()['userID'][3:])
+
         new_id = ''
-        if num < 9:
-            new_id = "EMP000" + str(num + 1)
-        elif num < 99:
-            new_id = "EMP00" + str(num + 1)
-        elif num < 999:
-            new_id = "EMP0" + str(num + 1)
-        else:
-            new_id = "EMP" + str(num + 1)
+
+        if last_id < 9:
+            new_id = "EMP000" + str(last_id + 1)
+        elif last_id < 99:
+            new_id = "EMP00" + str(last_id + 1)
+        elif last_id < 999:
+            new_id = "EMP0" + str(last_id + 1)
 
         if request.method == 'POST':
             file = request.files['photo']

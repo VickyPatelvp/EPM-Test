@@ -8,6 +8,8 @@ class Update_information():
     def update_personal_info(self, companyname, data, id):
         data_dict = {}
         for key, value in data.items():
+            if key == 'salary':
+                value = float(value)
             if value != '':
                 if key=='salary':
                     value=float(value)

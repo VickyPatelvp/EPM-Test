@@ -18,7 +18,7 @@ class Profile:
 
     # PERSONAL DATA
     def personal_data(self):
-        print(self.companyname,self.id)
+        # print(self.companyname,self.id)
         users_ref = self.db.collection(self.companyname).document('employee').collection('employee').document(self.id).get()
         return users_ref.to_dict()
 
