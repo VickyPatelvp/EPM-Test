@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_two.html" %}
 {% block title %} Login page {% endblock %}
 {% block head %}
 {{ super() }}
@@ -35,44 +35,53 @@ height: 100%;
             </div>
             <div class="col-md-8 col-lg-6 col-xl-3 offset-xl-1">
                 <form action="{{url}}" method="POST">
+
                     <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example3">Email address</label>
-                        <input type="email" id="form3Example3" class="form-control form-control-lg"
+                    <div class="form-outline mb-4 pt-2">
+                        <label class="form-label fw-bold" for="companyname">Select Your Company Name</label>
+                        <div class="col-sm-12">
+                            <select name="companyname" id="companyname"
+                                    class="form-control">
+                                <option value="">
+                                    Select
+                                </option>
+                                {% if company_list != None%}
+                                {% for i in company_list %}
+                                <option>{{ i }}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4 pt-2">
+                        <label class="form-label fw-bold" for="email">Email address</label>
+                        <input type="email" id="email" class="form-control form-control-lg"
                                placeholder="Enter a valid email address" autocomplete="off" name="email" required/>
                     </div>
 
                     <!-- Password input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label" for="form3Example4">Password</label>
-                        <input type="password" id="form3Example4" class="form-control form-control-lg"
+                    <div class="form-outline mb-4  pt-2 ">
+                        <label class="form-label fw-bold" for="password">Password</label>
+                        <input type="password" id="password" class="form-control form-control-lg"
                                placeholder="Enter password" autocomplete="off" name="password" />
                     </div>
 
-                    <label class="text-danger p-2"> {{responce}}</label>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Checkbox -->
-                        <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3"/>
-                            <label class="form-check-label" for="form2Example3">
-                                Remember me
-                            </label>
-                        </div>
-<label id="set-path-btn" onclick="sendEmail()">Forgot password?</label>
-
-
-                    </div>
-                    <div class="text-center text-lg-start mt-4 pt-2">
+                    <div class="text-center text-lg-start mb-4 pt-2">
 
                             <button type="submit" class="btn btn-primary btn-lg"
                                     style="padding-left: 2.5rem; padding-right: 2.5rem;">
                                 Login
                             </button>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
 
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
-                                                                                          class="link-danger">Register</a>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? &nbsp;  <a href="/" class="link-danger">Register</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label id="set-path-btn" onclick="sendEmail()">Forgot password?</label>
                         </p>
+
                     </div>
                 </form>
             </div>

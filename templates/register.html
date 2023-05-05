@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_two.html" %}
 {% block title %} Register Page {% endblock %}
 {% block head %}
 {{ super() }}
@@ -37,64 +37,51 @@ height: 100%;
                     <label class="text-danger pb-2">{{responce}}</label>
 
                     <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example1">Company Name</label>
+                    <div class="form-outline  mb-4 pt-2">
+                        <label class="form-label fw-bold" for="form3Example1">Company Name</label>
                         <input type="text" id="form3Example1" class="form-control form-control-lg"
                                placeholder="Enter Company Name" name="CompanyName" Required/>
                     </div>
 
                     <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example2">Email address</label>
+                    <div class="form-outline  mb-4 pt-2">
+                        <label class="form-label fw-bold" for="form3Example2">Email Address</label>
                         <input type="email" id="form3Example2" class="form-control form-control-lg"
                                placeholder="Enter a valid email address" name="AdminID" Required/>
                     </div>
 
                     <!-- Password input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label" >Password</label>
+                    <div class="form-outline mb-4 pt-2">
+                        <label class="form-label fw-bold" >Password</label>
                         <input type="password" id="password" class="form-control form-control-lg"
                                placeholder="Enter password" name="password" Required/>
                     </div>
 
                     <!-- Password input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label">Confirm your password</label>
+                    <div class="form-outline mb-4 pt-2">
+                        <label class="form-label fw-bold">Confirm Your Password</label>
                         <input type="password" id="confirm_password" onblur="checkPassword()" class="form-control form-control-lg"
                                placeholder="Enter password"  Required/>
-                               <label id=></label>
                                <div id="password_error" class="text-danger"></div>
                     </div>
 
-                    <div class="form-outline mb-3">
-                        <label class="form-label">Email authenticate password</label>
+                    <div class="form-outline mb-4 pt-2">
+                        <label class="form-label fw-bold">Email Authenticate Password</label>
                         <input type="password" id="authenticate" onblur="checkPassword()" class="form-control form-control-lg"
                                placeholder="abcd-efgh-abcd-efgh" name="auth_password" Required/>
-                               <label id=></label>
-                               <div id="" class="text-danger"></div>
+                               <div class="text-danger"></div>
                     </div>
 
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Checkbox -->
-                        <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" Required/>
-                            <label class="form-check-label" for="form2Example3">
-                                I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="text-center text-lg-start mt-4 pt-2">
+                    <div class="text-center text-lg-start mb-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg" id="submit_btn"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Register
                         </button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Request to send mailn for company Registration
-                            <a href="#" class="link-black">Get Mail</a>
-                        </p>
-                        <!-- <p class="small fw-bold mt-2 pt-1 mb-0">Have already an account?
+                    </div>
+                    <div class="text-center text-lg-start mb-4 pt-2">
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Already have an Account? &nbsp;
                             <a href="/login" class="link-black">Login</a>
-                        </p> -->
+                        </p>
                     </div>
 
                 </form>

@@ -222,14 +222,8 @@ class Mail():
             message.attach(pdf_part)
         # Convert message to string
         text = message.as_string()
-
-        # Login to SMTP server and send email
-        with smtplib.SMTP("smtp.mail.yahoo.com", 587) as server:
-            server.ehlo()
-            server.starttls()
-            server.login(MY_EMAIL, MY_PASSWORD)
-            server.sendmail(MY_EMAIL, TO_EMAIL, text)
-
-        print("Email sent successfully")
+        session.sendmail(MY_EMAIL, TO_EMAIL, text)
+        session.quit()
+        print('Mail Sent')
 
 
