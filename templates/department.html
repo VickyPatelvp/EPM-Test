@@ -194,7 +194,7 @@
     }
   });
     const deptList = "{{data}}"
-  
+
 const cleanStr = deptList.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 console.log(cleanStr);
 
@@ -231,10 +231,10 @@ console.log(cleanStr);
       var modalInput = document.getElementById('deptname');
       var positionInput= document.getElementById('pos');
       var salaryInput = document.getElementById('sal');
-      
+
       var add_input = document.getElementById('add_input');
-      
-      
+
+
       // Set the value of the input element when the modal opens
       modal.addEventListener('show.bs.modal', function () {
           add_input.style.display= "none";
@@ -243,40 +243,20 @@ console.log(cleanStr);
         positionInput.value= pos;
 
         salaryInput.value= sal;
-        
+
       });
-      
+
       // Show the modal
       var modalInstance = new bootstrap.Modal(modal);
       modalInstance.show();
     };
 
-    
 
-    function add_modal() {    
-      var modal = document.querySelector('.modal');
-      var modalInput = document.getElementById('deptname');
-      var positionInput= document.getElementById('pos');
-      var salaryInput = document.getElementById('sal');
-      var add_input = document.getElementById('add_input');
-      
-      
-      // Set the value of the input element when the modal opens
-      modal.addEventListener('show.bs.modal', function () {
-          add_input.style.display= 'block';
-        modalInput.value = '';
-        positionInput.value= '';
-        salaryInput.value= '';
-        
-      });
-      
-      // Show the modal
-      var modalInstance = new bootstrap.Modal(modal);
-      modalInstance.show();
-    };
 
-    
-  
+
+
+
+
 
     const container1 = document.getElementById('input-cont1');
     const container2 = document.getElementById('input-cont2');
@@ -305,7 +285,7 @@ console.log(cleanStr);
         salinput.className = 'form-control-sm mt-2 ';
         salinput.id = 'sal' + inputCount;
         salinput.name='sal'+inputCount;
-        salinput.pattern="^\d*\.?\d*$";
+        salinput.pattern="[1-9][0-9]{0,3}";
         salinput.required = true;
         container1.appendChild(input);
         container2.appendChild(salinput);

@@ -21,7 +21,8 @@ class Register():
             self.db.collection(data_dict['CompanyName']).document('department').set({})
             self.db.collection(data_dict['CompanyName']).document('employee').set({})
             self.db.collection(data_dict['CompanyName']).document('month_data').set({})
-            self.db.collection(data_dict['CompanyName']).document('salary_calc').set({})
+            data={'dapercentage':30,'deductionpercentage':1,'hrapercentage':50}
+            self.db.collection(data_dict['CompanyName']).document('salary_calc').set(data)
             self.db.collection(data_dict['CompanyName']).document('holidays').set({})
             self.db.collection(data_dict['CompanyName']).document('salary_status').set({})
             holidays = self.db.collection(data_dict['CompanyName']).document('holidays').get().to_dict()

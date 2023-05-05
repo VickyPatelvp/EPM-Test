@@ -118,8 +118,10 @@ def register():
     if request.method == 'POST':
         data = request.form
         responce = register_obj.register(data)
+        companyname=data.to_dict()['companyname']
+        print(companyname)
         if responce == True:
-            return redirect(url_for('success'))
+            return redirect(url_for('login',companyname=companyname))
 
     ''' REGISTER PAGE '''
     return render_template('register.html', responce=responce)
@@ -144,8 +146,10 @@ def dashboard(companyname, username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 4:
+    if datetime.datetime.now().day == 5:
+        print('hello')
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
+        print('done')
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
         leaveobj.leave_reset(companyname)
@@ -543,12 +547,18 @@ def pdf(companyname, username, salid):
 #     employee_tds_data = {'personal_data': profile.personal_data(), 'tds_data': profile.tds_data()}
 #     return render_template('tds_test.html', data=employee_tds_data, companyname=companyname)
 
-@app.route('/<companyname>/<username>/add_data')
-def testing(companyname, username):
-    if 'excel_path' in session:
-        excel_path = session['excel_path']
+@app.route('/<companyname>/<username>/add_data', methods=['POST','GET'])
+def add_data(companyname, username):
+    print('Hello')
+    if request.method=='POST':
+        data=request.form
+        print(data)
+        data=data.to_dict()
+        print(data)
+        excel_path = data['path']
         print(excel_path)
         excel = ExcelData(db)
+
         excel.store_excel_data(companyname, excel_path)
         return redirect(url_for('dashboard', username=username, companyname=companyname))
     return render_template('add_excel_file.html', companyname=companyname, username=username)
@@ -557,20 +567,19 @@ def testing(companyname, username):
 @app.route('/<companyname>/<username>/send_email/<salid>')
 def send_employee_salaryslip(companyname, username, salid):
     ''' GENERATE EXCELSHEET FOR BANK '''
-    if 'storage_path' in session:
-        path = get_download_folder()
-        auth_data = db.collection(companyname).document('admin').get().to_dict()
-        company_mail = auth_data['AdminID']
-        auth_password = auth_data['auth_password']
-        docs = db.collection(companyname).document(u'employee').collection('employee').stream()
-        employee_list = {}
-        for doc in docs:
-            employee_list.update({doc.id: doc.to_dict()})
-        for key, value in employee_list.items():
-            data = value
-            print(data)
-            mail_obj.send_employee_pdf(company_mail=company_mail, data=data,
-                                       auth_password=auth_password, path=path)
+
+    path = get_download_folder()
+    auth_data = db.collection(companyname).document('admin').get().to_dict()
+    company_mail = auth_data['AdminID']
+    auth_password = auth_data['auth_password']
+    docs = db.collection(companyname).document(u'employee').collection('employee').stream()
+    employee_list = {}
+    for doc in docs:
+        employee_list.update({doc.id: doc.to_dict()})
+    for key, value in employee_list.items():
+        data = value
+        print(data)
+        mail_obj.send_employee_pdf(company_mail=company_mail, data=data,auth_password=auth_password, path=path)
     return redirect(url_for('salary_sheet_view', salid=salid, companyname=companyname, username=username))
 
 

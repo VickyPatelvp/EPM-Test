@@ -1,5 +1,6 @@
 import datetime
 import calendar
+from email.mime.application import MIMEApplication
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -57,6 +58,10 @@ class Mail():
         subject = 'Yor Company Account'
         body = f'''This mail is for Company Successsfully registered,
                 Now you can use following url to access your company login
+                this link is for new company register and insert data you have to open this link first 
+                http://127.0.0.1:300/{companyname}/Admin/add_data
+                \n\n
+                once you have added company data then use this link:
                 http://127.0.0.1:300/{companyname}/login
               Congratulation, Thank you so much..'''
         message = f"Subject: {subject}\n\n{body}"
@@ -180,22 +185,6 @@ class Mail():
         MY_EMAIL = company_mail
         MY_PASSWORD = auth_password
         TO_EMAIL = data['email']
-
-        # Setup the MIME
-        message = MIMEMultipart()
-        message['From'] = MY_EMAIL
-        message['To'] = MY_PASSWORD
-        message['Subject'] = 'This email has an attachment, a pdf file'
-
-        # message in mail
-        body = '''Dear Employee,
-
-        This is computer generated slip
-        In case of any concern please
-        connect with HR department.'''
-
-        message.attach(MIMEText(body, 'plain'))
-
         current_month = int(datetime.datetime.today().month)
 
         if current_month == 1:
@@ -210,30 +199,37 @@ class Mail():
 
         pdfname = f'{path}/Salaryslips/{month_name}/{empid}_{salid}.pdf'
 
-        # open the file in bynary
-        binary_pdf = open(pdfname, 'rb')
+        # Create a multipart message and set headers
+        # Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = MY_EMAIL
+        message['To'] = MY_PASSWORD
+        message['Subject'] = 'This email has an attachment, a pdf file'
 
-        payload = MIMEBase('application', 'octate-stream', Name=pdfname)
-        payload.set_payload(binary_pdf.read())
+        # message in mail
+        body = '''Dear Employee,
 
-        # encoding the binary into base64
-        encoders.encode_base64(payload)
+               This is computer generated slip
+               In case of any concern please
+               connect with HR department.'''
 
-        # add header with pdf name
-        payload.add_header('Content-Decomposition', 'attachment', filename=pdfname)
-        message.attach(payload)
-
-        # use gmail with port
-        session = smtplib.SMTP(smtp_server, smtp_port)
-
-        # enable security
-        session.starttls()
-
-        # login with mail_id and password
-        session.login(MY_EMAIL, MY_PASSWORD)
-
+        # Open PDF file in binary mode
+        with open(pdfname, "rb") as attachment:
+            # Add file as application/octet-stream
+            # Email clients can usually download this automatically as attachment
+            pdf_part = MIMEApplication(attachment.read(), _subtype="pdf")
+            pdf_part.add_header('Content-Disposition', 'attachment', filename=pdfname)
+            message.attach(pdf_part)
+        # Convert message to string
         text = message.as_string()
-        session.sendmail(MY_PASSWORD, TO_EMAIL, text)
-        session.quit()
-        print('Mail Sent')
+
+        # Login to SMTP server and send email
+        with smtplib.SMTP("smtp.mail.yahoo.com", 587) as server:
+            server.ehlo()
+            server.starttls()
+            server.login(MY_EMAIL, MY_PASSWORD)
+            server.sendmail(MY_EMAIL, TO_EMAIL, text)
+
+        print("Email sent successfully")
+
 

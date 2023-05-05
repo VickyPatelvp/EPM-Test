@@ -2905,54 +2905,54 @@ document.addEventListener("DOMContentLoaded", function() {
 <!--Script For Update detail -->
 <script>
 
-var user = "{{ username }}";
-  console.log(user);
-  if (user === "Admin"){
-    edit_btn.style.display = block;
-    add_leave.style.display = block;
-  }
-   else if (!user.includes("HR")) {
-    var add_leave = document.getElementById("add_leave");
+    var user = "{{ username }}";
     var edit_btn = document.getElementById("edit_btn");
-    edit_btn.style.display = "none";
-    add_leave.style.display = "none";
-  }
+    var add_leave = document.getElementById("add_leave");
+    console.log(user);
+    if (user === "Admin") {
+        edit_btn.style.display = "block";
+        add_leave.style.display = "block";
+    } else if (!user.includes("HR")) {
+        edit_btn.style.display = "none";
+        add_leave.style.display = "none";
+    }
 
-    // Take action on perticular form submit
+    // Take action on particular form submit
     function submitForm(formId) {
-        const form = document.getElementById(`${formId}`);
-            console.log(formId)
-            let id = '{{ data["personal_data"]["userID"] }}'
-            let username = '{{ username }}'
-            let companyname = '{{companyname}}'
-            form.addEventListener('submit', function (event) {
-                event.preventDefault(); // prevent form submission
-                const formData = new FormData(form);
-                const data = {};
-                for (let [key, value] of formData.entries()) {
-                    data[key] = value;
-                }
-                console.log(data); // do something with the form data
-                var url = document.getElementById(formId).action;
-                console.log(url)
-                var xhr = new XMLHttpRequest();
-                console.log(url)
-                var fData = JSON.stringify(data)
-                console.log(fData);
-                xhr.open('POST', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.addEventListener('readystatechange', function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
+        const form = document.getElementById(formId);
+        console.log(formId);
+        let id = '{{ data["personal_data"]["userID"] }}';
+        let username = '{{ username }}';
+        let companyname = '{{ companyname }}';
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // prevent form submission
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            console.log(data); // do something with the form data
+            var url = form.action;
+            console.log(url);
+            var xhr = new XMLHttpRequest();
+            var fData = JSON.stringify(data);
+            console.log(fData);
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.addEventListener('readystatechange', function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
                         window.location.href = `http://127.0.0.1:300/${companyname}/${username}/tds_data_update/${id}`;
-                    } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                    } else {
                         console.error(xhr.responseText); // Handle error response
                     }
-                });
-                xhr.send(fData);
-          })
-        }
-
+                }
+            });
+            xhr.send(fData);
+        });
+    }
 
 </script>
+
 
 {% endblock %}

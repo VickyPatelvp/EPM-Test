@@ -76,14 +76,7 @@
                                     </div>
                                 </li>
 
-                                <li class="nav-item me-2">
-                                  <div class="dropdown">
-
-                                    <button id="set-path-btn" class="btn border-1 btn-secondary "
-                                            onclick="setStoragePath()">Set Storage Path</button>
-
-                                    </div>
-                                </li>
+                               
 
 
                             </ul>
@@ -142,7 +135,8 @@
                 <td scope="col">{{ data[i]['tds'] }}</td>
                 <td scope="col">{{ data[i]['netSalary'] }}</td>
                 <td scope="col" class="text-start">
-                    <label class="status-label p-1" style="border-radius: 50px; align: center;">{{salary_status[ month_dict[i[3:]] ]}}</label>
+                    <label class="status-label p-1" style="border-radius: 50px; align: center;     width: 100px;
+    text-align: center;">{{salary_status[ month_dict[i[3:]] ]}}</label>
                 </td>
 
                 <td scope="col d-flex">
@@ -187,11 +181,20 @@ for (var i = 0; i < statusLabels.length; i++) {
 
   if (status === "Pending") {
     statusLabel.style.background = "#FF9128";
+    statusLabel.style.color = "#FFF";
   } else if (status === "Approved") {
     statusLabel.style.background = "#7367F0";
+    statusLabel.style.color = "#FFF";
+
   } else if (status === "Paid") {
     statusLabel.style.background = "#28C76F";
-  } else if (status === "None") {
+    statusLabel.style.color = "#FFF";
+
+  }else if (status === "Inreview") {
+    statusLabel.style.background = "#7367F0";
+    statusLabel.style.color = "#FFF";
+  }
+   else if (status === "None") {
     statusLabel.style.background = "#DFE1E6";
   }
 }
