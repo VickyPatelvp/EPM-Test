@@ -5,16 +5,17 @@ from tds_data import TDSData
 
 class SalaryCalculation():
 
-    def __init__(self,db):
+    def __init__(self,db,companyname):
         self.db = db
+        self.companyname=companyname
 
-    def generate_salary(self, companyname, workingday):
+    def generate_salary(self, workingday):
 
         working_days = workingday
 
-        current_month = datetime.datetime.now().month
+        # current_month = datetime.datetime.now().month
 
-        # current_month =
+        current_month =12
 
         if current_month == 1:
             month = 13 - current_month
@@ -27,11 +28,11 @@ class SalaryCalculation():
         else:
             year=year
 
-        salary_percentage = (self.db.collection(companyname).document('salary_calc').get()).to_dict()
+        salary_percentage = (self.db.collection(self.companyname).document('salary_calc').get()).to_dict()
 
         employee_list = {}
 
-        employee_data = (self.db.collection(companyname).document('employee').collection('employee').stream())
+        employee_data = (self.db.collection(self.companyname).document('employee').collection('employee').stream())
 
         for doc in employee_data:
             employee_list.update({doc.id: doc.to_dict()})
@@ -78,7 +79,7 @@ class SalaryCalculation():
 
             pt = 200
 
-            tds = TDSData(db=self.db).deduction(id=empid, companyname=companyname, epfo=epfo)
+            tds = TDSData(db=self.db).deduction(id=empid,epfo=epfo,companyname=self.companyname)
 
             other_deduction = 0
 
@@ -101,7 +102,7 @@ class SalaryCalculation():
                 'netSalary': net_salary, 'month': month, 'year': year
                             }
 
-            users_ref = self.db.collection(companyname).document('employee').collection('employee').document(empid)
+            users_ref = self.db.collection(self.companyname).document('employee').collection('employee').document(empid)
 
             if current_month == 1:
                 users_ref.collection('salaryslips').document(f'sal00{month}').set(salary_slip_data)
@@ -113,7 +114,7 @@ class SalaryCalculation():
 
             salary_status = {month_name: 'None'}
 
-            self.db.collection(companyname).document('salary_status').update(salary_status)
+            self.db.collection(self.companyname).document('salary_status').update(salary_status)
 
             # print(salary_slip_data)
 

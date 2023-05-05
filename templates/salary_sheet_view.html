@@ -62,7 +62,7 @@
                     {% if salary_status=="None" or salary_status=="Pending" %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Inreview')}}">
+                            <a href="{{url_for('set_status', username=username, salid=salid, status='Inreview')}}">
                             <button class="btn border-1 btn-secondary " id="btn_1"type="button"  aria-haspopup="true"
                                     aria-expanded="false">
                                 Submit for Approval
@@ -74,7 +74,7 @@
                     {% if salary_status=="Inreview" and username=='Admin' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Approved')}}">
+                            <a href="{{url_for('set_status', username=username, salid=salid, status='Approved')}}">
                             <button class="btn border-1 btn-secondary " id="btn_2 "type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Accept
@@ -86,7 +86,7 @@
                     {% if salary_status=="Inreview" and username=='Admin' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Pending')}}">
+                            <a href="{{url_for('set_status', username=username, salid=salid, status='Pending')}}">
                             <button class="btn border-1 btn-secondary " id="btn_3 "type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Decline
@@ -98,7 +98,7 @@
                     {% if salary_status=="Approved" and username=='Admin'  %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('set_status',companyname=companyname,username=username, salid=salid, status='Paid')}}">
+                            <a href="{{url_for('set_status', username=username, salid=salid, status='Paid')}}">
                             <button class="btn border-1 btn-secondary " id=" "type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Paid
@@ -113,7 +113,7 @@
                     {% if salary_status=='Paid' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('pdf',companyname=companyname,username=username, salid=salid)}}">
+                            <a href="{{url_for('pdf', username=username, salid=salid)}}">
                             <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true" id="btn_4"
                                     aria-expanded="false">
                                 Download All
@@ -138,7 +138,7 @@
                     {% if salary_status=='Paid' %}
                     <li class="nav-item me-4">
                         <div class="dropdown">
-                            <a href="{{url_for('send_employee_salaryslip',companyname=companyname,username=username, salid=salid)}}">
+                            <a href="{{url_for('send_employee_salaryslip', username=username, salid=salid)}}">
                             <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
                                     aria-expanded="false">
                                 Send Email
@@ -214,7 +214,7 @@
                     <td scope="col">
 
                         <!-- Edit Button  -->
-                         <a href="{{url_for('salary_sheet_edit_',companyname=companyname,username=username,empid=data[i]['userID'],salid=salid)}}">
+                         <a href="{{url_for('salary_sheet_edit_', username=username,empid=data[i]['userID'],salid=salid)}}">
                         <button class="btn border-1 btn-secondary" type="button" aria-haspopup="true"
                                 aria-expanded="false"
                                 style="color:#2F3990; border-color:#2F3990; background-color: #FFFFFF">
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="container">
 
-                                <form action="{{url_for('salary_sheet_view',companyname=companyname,username=username,salid=salid)}}"
+                                <form action="{{url_for('salary_sheet_view', username=username,salid=salid)}}"
                                       method="POST"
                                       id="salarydata">
                                     <div class="modal-body inline">

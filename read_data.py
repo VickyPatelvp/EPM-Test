@@ -118,4 +118,5 @@ class ExcelData():
         # Process employee data using a thread pool
         with ThreadPoolExecutor() as executor:
             for details in all_employee_data:
+                print(details)
                 executor.submit(self.process_employee_data, companyname, details)

@@ -34,7 +34,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form action="{{url_for('salary', companyname=companyname,username=username)}}" method="POST" id="salarydata">
+                                            <form action="{{url_for('salary', username=username)}}" method="POST" id="salarydata">
                                                 <div class="modal-body inline">
                                                     <label for="hrapercentage" class="col-3">HRA</label>
                                                     <input type="text" name="hrapercentage" id="hrapercentage" value=""
@@ -144,13 +144,13 @@
                    
                         <!-- Eye icon  -->
                         <li class="nav-item  d-inline"><a class="nav-link"
-                                                          href="{{url_for('salary_sheet_view',companyname=companyname,username=username, salid=i)}}">
+                                                          href="{{url_for('salary_sheet_view', username=username, salid=i)}}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
                              <!-- Download icon  -->
                         {% if salary_status[ month_dict[i[3:]] ]=='Paid' %}
-                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf',companyname=companyname,username=username, salid=i)}}">
+                        <li class="nav-item d-inline"><a class="nav-link" href="{{url_for('pdf', username=username, salid=i)}}">
                             <i class="fa fa-download"></i>
                         </a>
                         </li>

@@ -55,7 +55,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="container">
-                                            <form action="{{url_for('dashboard',companyname=companyname,username=username)}}" method="POST"
+                                            <form action="{{url_for('dashboard', username=username)}}" method="POST"
                                             id="monthdata" class="pb-4">
 
                                             <h6 class="modal-title pt-4" id="exampleModalLabel">ADD Holidays</h6>
@@ -511,7 +511,7 @@
                 datasets: [{
                     data: Object.values( department_wise_emp ),
                     backgroundColor: [
-                        window.theme.primary,
+                
                         window.theme.warning,
                         window.theme.danger,
                         window.theme.primary,
@@ -536,20 +536,21 @@
     });
 
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Bar chart
         new Chart(document.getElementById("chartjs-dashboard-bar"), {
             type: "bar",
             data: {
-                labels: ["0 to 1 year", "1 to 5 year", "5 to 10 year", "10 Above",],
+                labels: ["0 to 1 year", "1 to 3 year", "3 to 5 year", "5 to 10 year", "10 Above",],
                 datasets: [{
                     label: "This year",
                     backgroundColor: window.theme.primary,
                     borderColor: window.theme.primary,
                     hoverBackgroundColor: window.theme.primary,
                     hoverBorderColor: window.theme.primary,
-                    data: [{{ dashboard_data['exprience_list']['0 to 1'] }}, {{ dashboard_data['exprience_list']['1 to 5'] }}, {{ dashboard_data['exprience_list']['5 to 10'] }}, {{ dashboard_data['exprience_list']['Above 10'] }}],
+                    data: [{{ dashboard_data['exprience_list']['0 to 1'] }},{{ dashboard_data['exprience_list']['1 to 3'] }}, {{ dashboard_data['exprience_list']['3 to 5'] }}, {{ dashboard_data['exprience_list']['5 to 10'] }}, {{ dashboard_data['exprience_list']['Above 10'] }}],
                     barPercentage: 0.5,
                     categoryPercentage: 0.6
                 }]
@@ -567,7 +568,7 @@
                         stacked: false,
                         ticks: {
 
-                            stepSize: 10
+                            stepSize: 2
                         }
                     }],
                     xAxes: [{
@@ -615,7 +616,11 @@
                         gridLines: {
                             display: false
                         },
-                        stacked: false
+                        stacked: false,
+                          ticks: {
+
+                            stepSize: 2
+                        }
                     }],
                     xAxes: [{
                         stacked: false,

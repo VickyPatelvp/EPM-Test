@@ -86,7 +86,7 @@ class Dashboard():
             return int(len(user_ref.where('salary', '<=', end).where('salary', '>', start).get()))
 
         with ThreadPool(processes=6) as pool:
-            results = pool.starmap_async(count_employees_by_experience_range, [(0, 1), (2, 5), (6, 10), (11, 15)])
+            results = pool.starmap_async(count_employees_by_experience_range, [(0, 1), (2, 3), (4, 5), (6, 10), (11, 20)])
             experience_counts = results.get()
 
             results = pool.map_async(count_employees_by_department,
@@ -111,10 +111,12 @@ class Dashboard():
         }
         exprience_list = {
             '0 to 1': experience_counts[0],
-            '1 to 5': experience_counts[1],
-            '5 to 10': experience_counts[2],
-            'Above 10': experience_counts[3]
+            '1 to 3': experience_counts[1],
+            '3 to 5': experience_counts[2],
+            '5 to 10': experience_counts[3],
+            'Above 10': experience_counts[4]
         }
+        print(exprience_list)
         department_wise_emp = {}
         for dept, count in zip(self.db.collection(companyname).document(u'department').get().to_dict().keys(), department_counts):
             department_wise_emp.update({dept: count})

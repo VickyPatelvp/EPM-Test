@@ -410,7 +410,7 @@
 #     def salary_slip(self, companyname, salid, path):
 #         ''' CREATE SALARYSLIP PDF '''
 #
-#         salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
+#         salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, )
 #         for i in salary_list:
 #
 #             empid = salary_list[i]["userID"]
@@ -846,7 +846,7 @@
 #                 print(f"Exception generated: {exc}")
 #
 # if __name__ == "__main__":
-#     salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
+#     salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, )
 #     generate_salary_slips(salary_list, path)
 #
 #
@@ -895,7 +895,7 @@ class SalarySlip():
     def salary_slip(self, companyname, salid, path):
         ''' CREATE SALARYSLIP PDF '''
 
-        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
+        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, )
         for i in salary_list:
 
             empid = salary_list[i]["userID"]
@@ -1017,7 +1017,7 @@ class SalarySlip():
 
     def salary_slip(self, companyname, salid, path):
         ''' CREATE SALARYSLIP PDF '''
-        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
+        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, )
         threads = []
         for i in salary_list:
             empid = salary_list[i]["userID"]
@@ -1097,7 +1097,7 @@ class SalarySlip():
     def salary_slip(self, companyname, salid, path):
         ''' CREATE SALARYSLIP PDF '''
 
-        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, companyname=companyname)
+        salary_list = Salarymanage(self.db).get_all_emp_salary_data(salid=salid, )
 
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []

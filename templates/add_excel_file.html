@@ -93,7 +93,7 @@ height: 100%;
                                         <h5 class="modal-title" id="exampleModalLabel">Excelsheet Path</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{url_for('add_data',companyname=companyname,username=username)}}" method="POST" id="Admin" >
+                                        <form action="{{url_for('add_data', username=username)}}" method="POST" id="Admin" >
                                         <div class="modal-body">
                                             <label for="new_email">Enter Email</label>
                                             <input type="text" name="path" id="new_email" value="" class="form-control">

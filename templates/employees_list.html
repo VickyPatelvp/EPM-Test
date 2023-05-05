@@ -230,7 +230,7 @@ element.style {
                                      tabindex="-1"
                                      aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
-                                    <form form-inline action="{{url_for('add', companyname=companyname ,username=username)}}" method="POST" id="createform" enctype="multipart/form-data">
+                                    <form form-inline action="{{url_for('add',username=username)}}" method="POST" id="createform" enctype="multipart/form-data">
 
                                         <div class="modal-dialog modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
                                             <div class="modal-content">
@@ -1697,7 +1697,7 @@ element.style {
                                         <h5 class="modal-title" id="exampleModalLabel">Mail to New Employee Create</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{url_for('employee_list',companyname=companyname,username=username)}}" method="POST" id="newemployee" >
+                                        <form action="{{url_for('employee_list', username=username)}}" method="POST" id="newemployee" >
                                         <div class="modal-body">
                                             <label for="new_email">Enter Email</label>
                                             <input type="email" name="new_email" id="new_email" value="" class="form-control">
@@ -1726,14 +1726,13 @@ element.style {
 
 
                                 <!-- IMPORT BUTTON -->
-                                <li class="nav-item me-2">
+                                 <li class="nav-item me-2">
                                     <div class="dropdown">
-                                        <a href="/{{companyname}}/{{username}}/dashboard">
-                                    <button id="set-path-btn" class="btn border-1 btn-secondary" type="submit"
-                                            onclick="setStoragePath()">Excelsheet Path</button>
-                                        </a>
-
-
+                                        <button class="btn btn-secondary border-1 " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                         Excelsheet Path
+                                        </button>
                                     </div>
                                 </li>
                                  <!-- HTML code -->
@@ -1789,11 +1788,11 @@ element.style {
                 <td scope="col d-flex">
                     <ul class="nav ">
 
-                        <li class="nav-item  d-inline"><a class="nav-link" href="/{{companyname}}/{{username}}/employeeprofile/{{ id }}" id="{{ data[id] }}">
+                        <li class="nav-item  d-inline"><a class="nav-link" href="/{{username}}/employeeprofile/{{ id }}" id="{{ data[id] }}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                         </li>
-                        <li class="nav-item  d-inline"><a type="btn" class="btn" href="/{{companyname}}/{{username}}/{{ id }}/delete">
+                        <li class="nav-item  d-inline"><a type="btn" class="btn" href="/{{username}}/{{ id }}/delete">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                         </li>
@@ -1812,6 +1811,28 @@ element.style {
 
 
 
+- Modal -->
+                                <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel1">Excelsheet Path</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{url_for('add_data', username=username)}}" method="POST" id="Admin" >
+                                        <div class="modal-body">
+                                            <label for="new_email">Enter Email</label>
+                                            <input type="text" name="path" id="path" value="" class="form-control">
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" value="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
 
 
 
@@ -1892,10 +1913,19 @@ function setStoragePath() {
   var path = window.prompt("Enter the path where excelsheet store:", "");
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/{{companyname}}/{{username}}/storage-path");
+  xhr.open("POST", "/{{username}}/add_data");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify({ excel_path: path }));
 }
+
+
+
+
+
+
+
+
+
 
 </script>
 

@@ -24,9 +24,9 @@ class TDSData():
 
         else:
 
-            current_month = float(datetime.date.today().month)
+            # current_month = float(datetime.date.today().month)
 
-            # current_month = 9
+            current_month = 12
 
             # Annual Salary of Employee
 
@@ -119,7 +119,7 @@ class TDSData():
                 new_total_6 = 0
 
             # Previous Month TDS and remaining Months
-            no_of_remaining_month = 0
+
 
             if (users_ref.collection('salaryslips').document(f'sal00{str(current_month - 2)}').get().to_dict()) != None:
 
@@ -138,15 +138,22 @@ class TDSData():
 
             else:
                 tds_deducted_till_now = 0
+                if current_month <= 4:
+                    no_of_remaining_month = (12 - 9 - current_month) + 2
+                elif current_month == 5:
+                    no_of_remaining_month = 12
+                    tds_deducted_till_now = 0
+                else:
+                    no_of_remaining_month = (12 - current_month) + 5
 
 
 
             # TDS Calculate
 
             if no_of_remaining_month == 0:
-                tds = abs(new_total_6)
+                tds = round(abs(new_total_6), 2)
             else:
-                tds = abs((new_total_6 - tds_deducted_till_now) / no_of_remaining_month)
+                tds = round(abs((new_total_6 - tds_deducted_till_now) / no_of_remaining_month), 2)
 
             return tds
 
