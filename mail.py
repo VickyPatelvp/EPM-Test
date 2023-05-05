@@ -222,7 +222,7 @@ class Mail():
         session.login(MY_EMAIL, MY_PASSWORD)
 
         text = message.as_string()
-        session.sendmail(MY_PASSWORD, TO_EMAIL, text)
+        session.sendmail(MY_EMAIL, TO_EMAIL, text)
         session.quit()
         print('Mail Sent')
 

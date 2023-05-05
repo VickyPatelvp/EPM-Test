@@ -55,15 +55,18 @@ mail_obj = Mail()
         # C:/Users/alian/Downloads/my_file.xlsx
 
 
-@app.route('/<companyname>/login/', methods=["POST", "GET"])
-def login(companyname):
+@app.route('/login', methods=["POST", "GET"])
+def login():
     responce = ''
     if request.method == 'POST':
         data = request.form
+        result = {}
+        for key, value in data.items():
+            result[key] = value
+        companyname = result['companyname']
         responce = login_obj.login(data, companyname)
 
         if responce == 'Admin':
-            # session['companyname']=companyname
             return redirect(url_for('dashboard', companyname=companyname, username=responce))
         elif responce != False:
             if responce['type'] == 'HR':
@@ -73,9 +76,14 @@ def login(companyname):
                                         id=responce['empid']))
         else:
             responce = 'Inavalid Id and Password'
+    company_list = []
+    collections = db.collections()
+    for collection in collections:
+        company_list.append(collection.id)
+
     ''' LOGIN PAGE '''
-    url = f'/{companyname}/login'
-    return render_template('login.html', responce=responce, url=url, companyname=companyname)
+    url = f'/login'
+    return render_template('login.html', responce=responce, url=url, company_list=company_list)
 
 
 @app.route('/<companyname>/forgot_password', methods=["POST", "GET"])
@@ -116,9 +124,10 @@ def register():
     responce = ''
     if request.method == 'POST':
         data = request.form
+        companyname = data["CompanyName"]
         responce = register_obj.register(data)
         if responce == True:
-            return redirect(url_for('success'))
+            return redirect(url_for('login', companyname=companyname))
 
     ''' REGISTER PAGE '''
     return render_template('register.html', responce=responce)
@@ -141,7 +150,7 @@ def dashboard(companyname, username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 1:
+    if datetime.datetime.now().day == 5:
         SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
@@ -387,6 +396,13 @@ def set_storage_path():
 @app.route('/<companyname>/<username>/salary', methods=['GET', 'POST'])
 def salary(companyname, username):
     ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
+    holidays = db.collection(companyname).document('holidays').get().to_dict()
+    moath_data = moth_count.count(holidays)
+    working_days = moath_data['workingDays']
+    if datetime.datetime.now().day == 5:
+        SalaryCalculation(db).generate_salary(companyname=companyname, workingday=working_days)
+        leaveobj.leave_add(companyname)
+
     if request.method == 'POST':
         form = request.form
         data_dict = {}
