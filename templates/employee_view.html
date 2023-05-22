@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <!-- <link rel="stylesheet" href="/static/css/style.css"/> -->
     <script src="https://kit.fontawesome.com/0928e77e31.js" crossorigin="anonymous"></script>
-    <title> - My Profile</title>
+    <title>  My Profile</title>
 
 
 
@@ -33,49 +33,40 @@ footer a {
 }
 </style>
 
-
-
-<nav class="navbar navbar-expand-md">
-<!--    HEADER  SECTION   -->
-    <div class="container-fluid text-dark">
-        <a class="navbar-brand p-0" href="#"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
-
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-            </ul>
-
-
-            <form class="d-flex">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!-- COMPANY NAME -->
-                    <li class="nav-item">
-                        <a class="nav-link disabled">{{ companyname }}</a>
-                    </li>
-                    <!-- USER PROFILE -->
-                    <li class="nav-item">
-                        <a class="navbar-brand" href="/register"> {{ username }}
-                            <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
-                    </li>
-                </ul>
-            </form>
-        </div>
-    </div>
-</nav>
-
-
-
 </head>
 <body style="    margin: 0;
 padding: 0;
 min-height: 100vh;
 display: flex;
 flex-direction: column;">
+<nav class="navbar navbar-expand-md">
+<!--    HEADER  SECTION   -->
+    <div class="container-fluid text-dark">
+        <a class="navbar-brand p-0" href="#"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <!-- USER PROFILE -->
+                    <li class="nav-item ">
+                        <a class="navbar-brand" href="/register"> {{ username }}
+                            <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
+                    </li>
+                          <li class="nav-item ">
+                    <a class="nav-link navbar-brand active" aria-current="page" href="/">Logout
+                    </a>
+                </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</nav>
 <!-- Header Section  -->
 <div class="container-fluid" style="background-color: #FFFFFF;">
     <div class="row mt-2">
@@ -97,6 +88,7 @@ flex-direction: column;">
                         <h5><b>{{ data["personal_data"]["employeeName"] }}</b></h5>
                     </b>
                 </li>
+
             </ol>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -1483,26 +1475,14 @@ flex-direction: column;">
                         </div>
                     </li>
 
-                    <!-- Back Button -->
-                    <li class="nav-item me-2">
-                        <div class="">
-                            <a href="/{{username}}/employeelist">
-                                <button class="btn btn-secondary border-1 " type="button"
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                    Back
-                                </button>
-                            </a>
-                        </div>
-                    </li>
+
+
                 </ul>
             </nav>
         </div>
     </div>
 </div>
-
 <!-- Display Data  -->
-
 <div class="container-fluid" style="background-color: #E7E7E7;">
     <div class="wrapper">
         <div class="main">
@@ -2915,9 +2895,7 @@ flex-direction: column;">
         </div>
     </div>
 </div>
-
 </div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const fromdateInput = document.querySelector("[name='fromdate']");
@@ -2967,10 +2945,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
   </script>
-
-
-
-
 <!--Script For Update detail -->
 <script>
 
@@ -3022,10 +2996,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

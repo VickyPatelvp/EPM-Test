@@ -112,6 +112,7 @@
 
                     <li class="nav-item">
                         <div class="dropdown">
+                            
                             <button class="btn border-1 btn-secondary " type="button"
                                     onclick="add_modal()" data-bs-target="#staticBackdrop"
                                     aria-haspopup="true"
@@ -231,26 +232,51 @@ console.log(cleanStr);
       var modalInput = document.getElementById('deptname');
       var positionInput= document.getElementById('pos');
       var salaryInput = document.getElementById('sal');
-
+      var submit_btn = document.getElementById('submit_btn');
       var add_input = document.getElementById('add_input');
 
 
       // Set the value of the input element when the modal opens
       modal.addEventListener('show.bs.modal', function () {
           add_input.style.display= "none";
+          modalInput.value='';
         modalInput.value = dept;
 
         positionInput.value= pos;
-
+     
         salaryInput.value= sal;
-
+  
       });
+        // Clear the input values when the modal is closed
+      modal.addEventListener('hidden.bs.modal', function () {
+    modalInput.value = '';
+    positionInput.value = '';
+    salaryInput.value = '';
+  });
 
       // Show the modal
       var modalInstance = new bootstrap.Modal(modal);
       modalInstance.show();
     };
 
+    function add_modal(){
+    var modal = document.querySelector('.modal');
+      var modalInput = document.getElementById('deptname');
+      var positionInput= document.getElementById('pos');
+      var salaryInput = document.getElementById('sal');
+
+      var add_input = document.getElementById('add_input');
+      modal.addEventListener('show.bs.modal', function () {
+          add_input.style.display= "block";
+        modalInput.value = '';
+
+        positionInput.value= '';
+
+        salaryInput.value= '';
+      });
+
+
+    }
 
 
 
@@ -265,6 +291,7 @@ console.log(cleanStr);
 
     // Call addInput() function on button click
     function addInput() {
+        
         inputCount++; // Increment input count by one
         if (inputCount > 5) {
             alert('You can add maximum 5 input fields.');
@@ -285,7 +312,7 @@ console.log(cleanStr);
         salinput.className = 'form-control-sm mt-2 ';
         salinput.id = 'sal' + inputCount;
         salinput.name='sal'+inputCount;
-        salinput.pattern="[1-9][0-9]{0,3}";
+        salinput.pattern="[1-9][0-9]{0,10}";
         salinput.required = true;
         container1.appendChild(input);
         container2.appendChild(salinput);

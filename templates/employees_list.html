@@ -165,7 +165,10 @@ element.style {
     cursor: inherit;
     display: block;
 }
+
 </style>
+
+
 
 <!-- Google icon -->
 <script>
@@ -193,6 +196,16 @@ element.style {
           max-width: 800px; /* New width for default modal */
         }
     }
+    .error {
+      color: red;
+    }
+.required::after {
+    content: "   * ";
+    font-size: 25px;
+    color: red;
+    position: absolute;
+}
+
 </style>
 
 
@@ -261,15 +274,7 @@ element.style {
                                                                                     <!-- SAVE BUTTON -->
                                                                                     <li class="nav-item me-2">
                                                                                         <div class="dropdown">
-                                                                                            <button class="btn btn-secondary border-1 "
-                                                                                                    type="submit"
-                                                                                                    value="submit"
-                                                                                                    id="save"
-                                                                                                    data-bs-dismiss="modal"
-                                                                                                    aria-haspopup="true"
-                                                                                                    aria-expanded="false">
-                                                                                                Save
-                                                                                            </button>
+                                                                                            <button type="submit" value="submit" id="submitButton" class="btn btn-primary" disabled >Save</button>
                                                                                         </div>
                                                                                     </li>
 
@@ -366,31 +371,31 @@ element.style {
                                                                                                                     <div class="col-12 col-sm-12 col-md-10">
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-md-4 col-sm-4"
-                                                                                                                                   for="name"><b>Name</b></label>
+                                                                                                                                   for="name"><b>Name<span class="required" id="nameLabel"></span> </b></label>
                                                                                                                             <div class="col-sm-8 col-md-8">
                                                                                                                                 <input type="text"
                                                                                                                                        class="form-control"
                                                                                                                                        name="name"
                                                                                                                                        id="name"
                                                                                                                                        value="" 
-                                                                                                                                       placeholder="Enter Text" >
+                                                                                                                                       placeholder="Enter Text" required>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label ">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
-                                                                                                                                   for="department"><b>Department</b></label>
+                                                                                                                                   for="department"><b>Department</b><span class="required" id="departmentLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <select name="department"
                                                                                                                                         id="department"
-                                                                                                                                        class="form-control" >
+                                                                                                                                        class="form-control" required>
                                                                                                                                     <option value="">
                                                                                                                                         Select
                                                                                                                                     </option>
                                                                                                                                     {% if department != None %}
                                                                                                                                     {% for i in department%}
-                                                                                                                                    <option>{{ i }}</option>
+                                                                                                                                    <option value="{{i}}">{{ i }}</option>
                                                                                                                                     {% endfor %}
                                                                                                                                     {% endif %}
                                                                                                                                 </select>
@@ -401,25 +406,15 @@ element.style {
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
                                                                                                                                    for="jobposition"><b>Job
-                                                                                                                                Position</b></label>
+                                                                                                                                Position</b><span class="required" id="jobpositionLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <select name="jobposition"
                                                                                                                                         id="jobposition"
-                                                                                                                                        class="form-control" >
-                                                                                                                                    <option>
+                                                                                                                                        class="form-control" required>
+                                                                                                                                   <option value="">
                                                                                                                                         Select
-                                                                                                                                    </option>
-                                                                                                                                    {% if department != None %}
-                                                                                                                                    {% for key,value in department.items()%}
+                                                                                                                                    </option >
                                                                                                                                     
-                                                                                                                                    {%for i,j in value.items()%}
-                                                                                                                                    <option> {{ i }}
-                                                                                                                                    </option>
-                                                                                                                                    {%
-                                                                                                                                    endfor
-                                                                                                                                    %}
-                                                                                                                                    {%endfor%}
-                                                                                                                                    {% endif %}
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
@@ -427,14 +422,14 @@ element.style {
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
-                                                                                                                                   for="doj"><b>DOJ</b></label>
+                                                                                                                                   for="doj"><b>DOJ</b><span class="required" id="dojLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <input type="date"
                                                                                                                                        class="form-control"
                                                                                                                                        name="doj"
                                                                                                                                        id="doj"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Select">
+                                                                                                                                       placeholder="Select" required>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -447,35 +442,36 @@ element.style {
                                                                                                                     <div class="col-12 col-sm-12 col-md-10">
 
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
-                                                                                                                            <label class="col-form-label control-label col-sm-4"
-                                                                                                                                   ><b>Password</b></label>
+                                                                                                                            <label class="col-form-label control-label col-sm-4" for="password"
+                                                                                                                                   ><b>Password</b><span class="required" id="passwordLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <input type="text"
                                                                                                                                        class="form-control"
                                                                                                                                        name="password"
                                                                                                                                        id="password"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="Enter Amount">
+                                                                                                                                       placeholder="Enter password" required>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
-                                                                                                                                   for="designation"><b>Designation</b></label>
+                                                                                                                                   for="designation"><b>Designation</b><span class="required" id="designationLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <select name="designation"
                                                                                                                                         id="designation"
-                                                                                                                                        class="form-control">
-                                                                                                                                     <option>
+                                                                                                                                        class="form-control" required>
+                                                                                                                                     <option value="">
                                                                                                                                         Select
-                                                                                                                                    </option>
-                                                                                                                                    <option>
+                                                                                                                                    </option >
+                                                                                                                                    <option value="Employee">
                                                                                                                                         Employee
-                                                                                                                                    <option>
+                                                                                                                                    </option>
+                                                                                                                                    <option value="Trainee">
                                                                                                                                         Trainee
                                                                                                                                     </option>
-                                                                                                                                    <option>
+                                                                                                                                    <option value="Interns">
                                                                                                                                         Interns
                                                                                                                                     </option>
                                                                                                                                 </select>
@@ -485,15 +481,14 @@ element.style {
                                                                                                                         <br>
                                                                                                                       <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-sm-4"
-                                                                                                                                   ><b>Salary</b></label>
+                                                                                                                                   ><b>Salary</b><span class="required" id="salaryLabel"></span></label>
                                                                                                                             <div class="col-sm-8">
                                                                                                                                 <input type="text"
-
                                                                                                                                        class="form-control"
                                                                                                                                        name="salary"
                                                                                                                                        id="salary"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="25,000" >
+                                                                                                                                       placeholder="" required>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -508,7 +503,7 @@ element.style {
                                                                                                                                        name="currentExperience"
                                                                                                                                        id="currentExperience"
                                                                                                                                        value=""
-                                                                                                                                       placeholder="In Year">
+                                                                                                                                       placeholder="In Year" >
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -559,14 +554,14 @@ element.style {
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
                                                                                                                                                for="dob"><b>Date
                                                                                                                                             of
-                                                                                                                                            Birth</b></label>
+                                                                                                                                            Birth</b><span class="required" id="dobLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
                                                                                                                                             <input type="date"
                                                                                                                                                    class="form-control"
                                                                                                                                                    name="dob"
                                                                                                                                                    value=""
                                                                                                                                                    id="dob"
-                                                                                                                                                   placeholder="Select">
+                                                                                                                                                   placeholder="Select" required>
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -578,7 +573,7 @@ element.style {
                                                                                                                                         <div class="col-sm-5">
                                                                                                                                             <select name="gender"
                                                                                                                                                     id="gender"
-                                                                                                                                                    class="form-control">
+                                                                                                                                                    class="form-control" >
                                                                                                                                                 <option>
                                                                                                                                                     Select
                                                                                                                                                 </option>
@@ -614,14 +609,14 @@ element.style {
                                                                                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                                                                                     <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
-                                                                                                                                               for="email"><b>Email</b></label>
+                                                                                                                                               for="email"><b>Email</b><span class="required" id="emailLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
-                                                                                                                                            <input type="text"
+                                                                                                                                            <input type="email"
                                                                                                                                                    class="form-control"
                                                                                                                                                    name="email"
                                                                                                                                                    id="email"
                                                                                                                                                    value=""
-                                                                                                                                                   placeholder="Enter Text">
+                                                                                                                                                   placeholder="Enter Text" required>
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -630,14 +625,9 @@ element.style {
                                                                                                                                     <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
                                                                                                                                                for="mobileno"><b>Mobile
-                                                                                                                                            No</b></label>
+                                                                                                                                            No</b><span class="required" id="mobilenoLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
-                                                                                                                                            <input type="text"
-                                                                                                                                                   class="form-control"
-                                                                                                                                                   name="mobileno"
-                                                                                                                                                   value=""
-                                                                                                                                                   id="mobileno"
-                                                                                                                                                   placeholder="Enter Text">
+                                                                                                                                            <input type="tel" id="mobileno" class="form-control" name="mobileno" pattern="[0-9]{10}" placeholder="Enter your 10-digit mobile number" required>
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -799,9 +789,7 @@ element.style {
 
                                                                                                         <div class="accordion"
                                                                                                              id="tdsdata">
-
                                                                                                             <!-- TDS Data -->
-
                                                                                                             <div class="accordion-item">
                                                                                                                 <h2 class="accordion-header"
                                                                                                                     id="tdsdata-headingOne">
@@ -820,9 +808,7 @@ element.style {
                                                                                                                      class="accordion-collapse collapse show"
                                                                                                                      aria-labelledby="tdsdata-headingOne">
                                                                                                                     <div class="accordion-body">
-
                                                                                                                         <!-- Principal on Home loan-->
-
                                                                                                                         <div class="details-tab pt-3">
                                                                                                                             <h3 class="card-title"
                                                                                                                                 style="color:black">
@@ -916,11 +902,8 @@ element.style {
                                                                                                                             </div>
                                                                                                                             <br>
                                                                                                                         </div>
-
                                                                                                                         <hr>
-
                                                                                                                         <!-- Premium on Insurance-->
-
                                                                                                                         <div class="details-tab pt-3">
                                                                                                                             <h3 class="card-title  pt-3"
                                                                                                                                 style="color:black">
@@ -1811,7 +1794,7 @@ element.style {
 
 
 
-- Modal -->
+
                                 <div class="modal fade" id="exampleModal1" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -1822,7 +1805,7 @@ element.style {
                                         </div>
                                         <form action="{{url_for('add_data', username=username)}}" method="POST" id="Admin" >
                                         <div class="modal-body">
-                                            <label for="new_email">Enter Email</label>
+                                            <label for="new_email">Excel Sheet Path</label>
                                             <input type="text" name="path" id="path" value="" class="form-control">
                                         </div>
                                         <div class="modal-footer">
@@ -1836,15 +1819,49 @@ element.style {
 
 
 
-    
+<script>
+  const departmentDropdown = document.getElementById("department");
+  const jobpositionDropdown = document.getElementById("jobposition");
+  const salaryInput = document.getElementById("salary");
 
+  // Create a map of jobpositions by department using a for loop
+  const jobpositionsByDepartment = {};
+  {% for key, value in department.items() %}
+    jobpositionsByDepartment["{{ key }}"] = [
+      {% for i, j in value.items() %}
+        { name: "{{ i }}", salary: {{ j }} },
+      {% endfor %}
+    ];
+  {% endfor %}
+  // Add event listener for the department dropdown
+  departmentDropdown.addEventListener("change", function() {
+    const selectedDepartment = departmentDropdown.value;
+    // Remove all options from the jobposition dropdown except the first one
+    for (let i = jobpositionDropdown.options.length - 1; i > 0; i--) {
+      jobpositionDropdown.remove(i);
+    }
+    // If a department is selected, populate the jobposition dropdown with jobpositions for that department
+    if (selectedDepartment) {
+      const jobpositions = jobpositionsByDepartment[selectedDepartment];
+      for (const jobposition of jobpositions) {
+        const option = document.createElement("option");
+        option.value = jobposition.salary;
+        option.text = jobposition.name;
+        jobpositionDropdown.add(option);
+      }
+    }
 
+    // Hide the salary text box
+    salaryInput.style.display = "none";
+  });
 
-   
-
-
-
-
+  // Add event listener for the jobposition dropdown
+  jobpositionDropdown.addEventListener("change", function() {
+    const selectedSalary = jobpositionDropdown.value;
+    salaryInput.value = selectedSalary;
+    salaryInput.style.display = "block";
+  });
+</script>
 
 <script>
       const imageInput = document.getElementById('photo');
@@ -1861,16 +1878,64 @@ element.style {
         reader.readAsDataURL(file);
       });
 
-
-
-
-
-
-
-
 </script>
 
+<!-- Check All required Fields are submitted are not then display Submit button-->
+   <script>
+    // Get references to the form and submit button
+    var form = document.getElementById("createform");
+    var submitButton = document.getElementById("submitButton");
 
+
+
+    // Add input and change event listeners to the form elements
+    var elements = form.elements;
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      if (element.required) {
+        element.addEventListener("input", updateSubmitButtonAndAsterisk);
+        element.addEventListener("change", updateSubmitButtonAndAsterisk);
+        element.addEventListener("blur", updateAsterisk);
+      }
+    }
+
+    function updateSubmitButtonAndAsterisk() {
+      var isFieldsFilled = true;
+      for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        if (element.required) {
+          if ((element.type === "text" && element.value.trim().length === 0) || (element.tagName === "SELECT" && element.value === "")|| (element.type === "date" && element.value === "")) {
+            isFieldsFilled = false;
+            showAsterisk(element);
+          } else {
+            hideAsterisk(element);
+          }
+        }
+      }
+      submitButton.disabled = !isFieldsFilled;
+    }
+
+    function updateAsterisk(event) {
+      var target = event.target;
+      if ((target.type === "text" && target.value.trim().length === 0) || (target.tagName === "SELECT" && target.value === "")|| (element.type === "date" && element.value === "")) {
+        showAsterisk(target);
+      } else {
+        hideAsterisk(target);
+      }
+    }
+
+    function showAsterisk(input) {
+        console.log(input)
+      var label = document.getElementById(input.name + "Label");
+      label.style.visibility = "visible";
+    }
+
+    function hideAsterisk(input) {
+    console.log(input)
+      var label = document.getElementById(input.name + "Label");
+      label.style.visibility = "hidden";
+    }
+  </script>
 
 
 <script>
@@ -1908,15 +1973,6 @@ function sortTable(columnIndex) {
 
 
 
-<script>
-function setStoragePath() {
-  var path = window.prompt("Enter the path where excelsheet store:", "");
-
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/{{username}}/add_data");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send(JSON.stringify({ excel_path: path }));
-}
 
 
 
@@ -1925,9 +1981,6 @@ function setStoragePath() {
 
 
 
-
-
-</script>
 
 
 {% endblock %}

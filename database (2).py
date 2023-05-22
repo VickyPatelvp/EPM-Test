@@ -1,3 +1,5 @@
+import datetime
+
 from firebase_admin import firestore
 import firebase_admin
 
@@ -13,7 +15,6 @@ db = firestore.client()
 #
 # #     ''' ADD FORM DETAILS INTO DATABASE '''
 #     company_list = ["alian_software", 'IBM', 'tatvasoft', 'codezeros', 'Amazon']
-#
 #     name_list = ["Jay", "Meet", "Parth", "Jenil", "Gautam","Jay", "Meet", "Parth", "Jenil", "Gautam","Jay", "Meet", "Parth", "Jenil", "Gautam"]
 #     for num in range(0, 1):
 #         company_name = 'VVVVV'
@@ -32,7 +33,6 @@ db = firestore.client()
 #
 #
 #             # ADD PERSONAL DATA
-#
 #             personal_data = {
 #                 'photo': 'photo',
 #                 'employeeName': name, 'userID': new_id, 'department': 'Design',
@@ -143,13 +143,60 @@ db = firestore.client()
 # result()
 
 
-num = "EMP00" + str(int(len(db.collection('alian_software').document(u'employee').collection('employee').get())))
-name = name_list[-1]
-if num < 9:
-    new_id = "EMP000" + str(num + 1)
-elif num < 99:
-    new_id = "EMP00" + str(num + 1)
-elif num < 999:
-    new_id = "EMP0" + str(num + 1)
-else:
-    new_id = "EMP" + str(num + 1)
+# num = "EMP00" + str(int(len(db.collection('alian_software').document(u'employee').collection('employee').get())))
+# name = name_list[-1]
+# if num < 9:
+#     new_id = "EMP000" + str(num + 1)
+# elif num < 99:
+#     new_id = "EMP00" + str(num + 1)
+# elif num < 999:
+#     new_id = "EMP0" + str(num + 1)
+# else:
+#     new_id = "EMP" + str(num + 1)
+
+
+''' ADD FORM DETAILS INTO DATABASE '''
+# company_list = ["alian_software", 'IBM', 'tatvasoft', 'codezeros', 'Amazon']
+# name_list = ["Jay", "Meet", "Parth", "Jenil", "Gautam","Jay", "Meet", "Parth", "Jenil", "Gautam","Jay", "Meet", "Parth", "Jenil", "Gautam"]
+# for num in range(0, 1):
+#     company_name = 'testcollection'
+#     for num in range(0, 15):
+#
+#             name = name_list[num]
+#             if num<9:
+#                 new_id = "EMP000" + str(num + 1)
+#             elif num<99:
+#                 new_id = "EMP00" + str(num + 1)
+#             elif num<999:
+#                 new_id = "EMP0" + str(num + 1)
+#             else:
+#                 new_id = "EMP" + str(num + 1)
+start=datetime.datetime.now()
+print(start)
+# for i in range(1000):
+#     personal_data = {
+#                         'photo': 'photo',
+#                         'employeeName': "name", 'userID': "new_id", 'department': 'Design',
+#                         'email': f'{"name"}123@gmail.com',
+#                         'salary': 25000, 'jobPosition': 'junior',
+#                         'password':'12345',
+#                         'manager': 'Design Manager', 'doj': '2023-04-03',
+#                         'currentExperience':'3 year', 'dob': '1999-02-04', 'gender': 'male',
+#                         'phoneNo': 35464531456,
+#                         'bankName': 'BOB', 'accountHolderName': "name",
+#                         'accountNumber': '3561654653416541341',
+#                         'ifscCode': 'BANKIFSC12',
+#                         'aadharCardNo': 6546541654464, 'panCardNo': 'BNDJC4544D',
+#                         'passportNo': 57847857878,
+#                         'pfAccountNo': 'MABAN00000640000000125', 'uanNo': 100904319456, 'esicNo': 31001234560000001
+#                     }
+doc_ref=db.collection("company_name")
+end=datetime.datetime.now()
+print(end-start)
+docs = doc_ref.stream()
+print(end-start)
+end=datetime.datetime.now()
+for doc in docs:
+   continue
+end=datetime.datetime.now()
+print(end-start)

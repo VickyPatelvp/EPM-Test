@@ -172,129 +172,148 @@
                                                                                                                             Personal
                                                                                                                             Details</h3>
                                                                                                                     </div>
-                                                                                                                    <div class="col-6">
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Name
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="name"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["employeeName"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Department
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="department"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["department"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Designation
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="designation"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["designation"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Date
-                                                                                                                                    of
-                                                                                                                                    Birth
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="dob"
-                                                                                                                                            type="date"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["dob"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
+                                                                                                                       <div class=" col-sm-12 col-lg-6 col-md-6">
+                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-md-5 col-sm-4"
+                                                                                                                                   for="name" style="color: #455056;"><b>Name</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7 ">
+                                                                                                                                <input type="text"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="name"
+                                                                                                                                       id="name"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder='{{ data["personal_data"]["employeeName"] }}' >
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1 ">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                   for="department"style="color: #455056;"><b>Department</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <select name="department"
+                                                                                                                                        id="department"
+                                                                                                                                        class="form-control" >
+                                                                                                                                    <option value=''>
+                                                                                                                                       {{data["personal_data"]["department"] }}
+                                                                                                                                    </option>
+                                                                                                                                    {% if department != None %}
+                                                                                                                                    {% for i in department%}
+                                                                                                                                    <option value="{{i}}">{{ i }}</option>
+                                                                                                                                    {% endfor %}
+                                                                                                                                    {% endif %}
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                   for="jobposition"style="color: #455056;"><b>Job
+                                                                                                                                Position</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <select name="jobposition"
+                                                                                                                                        id="jobposition"
+                                                                                                                                        class="form-control" >
+                                                                                                                                   <option value="">
+                                                                                                                                       {{ data["personal_data"]["jobPosition"] }}
+                                                                                                                                    </option >
 
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                   for="doj"style="color: #455056;"><b>DOJ</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <input type="date"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="doj"
+                                                                                                                                       id="doj"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder="Select" >
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
                                                                                                                     </div>
-                                                                                                                    <div class="col-6">
+                                                                                                                </div>
 
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
+                                                                                                                <div class=" col-sm-12 col-lg-6 col-md-6">
 
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Job Position
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="jobPosition"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["jobPosition"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Current Experience
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="currentExperience"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["currentExperience"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Manager
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="manager"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["manager"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Gender
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            name="gender"
-                                                                                                                                            class="form-control"pattern="[A-Za-z]+"
-                                                                                                                                            style="background-color: #FFFFFF"
+                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
 
-                                                                                                                                            placeholder='{{ data["personal_data"]["gender"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"  for="password"
+                                                                                                                                  style="color: #455056;" ><b>Password</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <input type="text"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="password"
+                                                                                                                                       id="password"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder='{{ data["personal_data"]["password"] }}' >
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                   for="designation"style="color: #455056;"><b>Designation</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <select name="designation"
+                                                                                                                                        id="designation"
+                                                                                                                                        class="form-control" >
+                                                                                                                                     <option value="">
+                                                                                                                                       {{ data["personal_data"]["designation"] }}
+                                                                                                                                    </option >
+                                                                                                                                    <option value="Employee">
+                                                                                                                                        Employee
+                                                                                                                                    </option>
+                                                                                                                                    <option value="Trainee">
+                                                                                                                                        Trainee
+                                                                                                                                    </option>
+                                                                                                                                    <option value="Interns">
+                                                                                                                                        Interns
+                                                                                                                                    </option>
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                      <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                  style="color: #455056;" ><b>Salary</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <input type="text"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="salary"
+                                                                                                                                       id="salary"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder='{{ data["personal_data"]["salary"] }}'>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                 style="color: #455056;"  ><b>Experience</b></label>
+                                                                                                                            <div class="col-sm-8 col-md-7">
+                                                                                                                                <input type="text"
+
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="currentExperience"
+                                                                                                                                       id="currentExperience"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder='{{ data["personal_data"]["currentExperience"] }}' >
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
                                                                                                                     </div>
+                                                                                                                </div>
 
                                                                                                                 </div>
 
@@ -2901,21 +2920,54 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+<script>
+  const departmentDropdown = document.getElementById("department");
+  const jobpositionDropdown = document.getElementById("jobposition");
+  const salaryInput = document.getElementById("salary");
+
+  // Create a map of jobpositions by department using a for loop
+  const jobpositionsByDepartment = {};
+  {% for key, value in department.items() %}
+    jobpositionsByDepartment["{{ key }}"] = [
+      {% for i, j in value.items() %}
+        { name: "{{ i }}", salary: {{ j }} },
+      {% endfor %}
+    ];
+  {% endfor %}
+  // Add event listener for the department dropdown
+  departmentDropdown.addEventListener("change", function() {
+    const selectedDepartment = departmentDropdown.value;
+    // Remove all options from the jobposition dropdown except the first one
+    for (let i = jobpositionDropdown.options.length - 1; i > 0; i--) {
+      jobpositionDropdown.remove(i);
+    }
+    // If a department is selected, populate the jobposition dropdown with jobpositions for that department
+    if (selectedDepartment) {
+      const jobpositions = jobpositionsByDepartment[selectedDepartment];
+      for (const jobposition of jobpositions) {
+        const option = document.createElement("option");
+        option.value = jobposition.salary;
+        option.text = jobposition.name;
+        jobpositionDropdown.add(option);
+      }
+    }
+
+    // Hide the salary text box
+    salaryInput.style.display = "none";
+  });
+
+  // Add event listener for the jobposition dropdown
+  jobpositionDropdown.addEventListener("change", function() {
+    const selectedSalary = jobpositionDropdown.value;
+    salaryInput.value = selectedSalary;
+    salaryInput.style.display = "block";
+  });
+</script>
 
 <!--Script For Update detail -->
 <script>
 
-    var user = "{{ username }}";
-    var edit_btn = document.getElementById("edit_btn");
-    var add_leave = document.getElementById("add_leave");
-    console.log(user);
-    if (user === "Admin") {
-        edit_btn.style.display = "block";
-        add_leave.style.display = "block";
-    } else if (!user.includes("HR")) {
-        edit_btn.style.display = "none";
-        add_leave.style.display = "none";
-    }
+
 
     // Take action on particular form submit
     function submitForm(formId) {

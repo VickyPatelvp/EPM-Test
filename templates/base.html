@@ -72,14 +72,14 @@ footer a {
             <form class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- COMPANY NAME -->
-                    <li class="nav-item">
-                        <a class="nav-link disabled">{{ companyname }}</a>
-                    </li>
+
                     <!-- USER PROFILE -->
                     <li class="nav-item">
                         <a class="navbar-brand" href="/register"> {{ username }}
                             <img src="/static/assets/profile.png" alt="" style="height: 40px; width: 40px;"></a>
                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link navbar-brand" href="/"> Logout </a></li>
                 </ul>
             </form>
         </div>
@@ -106,7 +106,7 @@ flex-direction: column;">
     width: 100%;
 ">
         <section class="p-0 pt-0">
-            <div class="row d-flex align-items-center">
+            <div class="row d-flex align-items-center" style="width:100% !important">
 
                 <div class="col-md-7 col-lg-8 text-center text-md-start">
                     <div class="p-3">

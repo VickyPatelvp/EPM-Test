@@ -1,8 +1,19 @@
-{% extends "base.html" %}
-{% block title %}Employees{% endblock %}
-{% block head %}
-{{ super() }}
-<style type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- <link rel="stylesheet" href="/static/css/style.css"/> -->
+    <script src="https://kit.fontawesome.com/0928e77e31.js" crossorigin="anonymous"></script>
+    <title>  My Profile</title>
+    <style type="text/css">
     @-webkit-keyframes chartjs-render-animation {
         from {
             opacity: 0.99
@@ -205,16 +216,7 @@
     }
 
 </style>
-
-<!-- Google icon -->
-
-<!-- Rubik Fonts -->
-<!---->
-<!-- build:remove -->
-
-<!--Admin css-->
-
-<script>
+    <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
             (i[r].q = i[r].q || []).push(arguments)
@@ -229,9 +231,48 @@
 
 <link rel="canonical" href="http://themes.propeller.in/bootstrap4/html/bootstrap4-admin-theme/add-employee.html">
 
-{% endblock %}
 
-{% block content %}
+
+<style>
+    ul li div button, div button{
+    text-decoration: none;
+    background: #2F3990;
+    background-color: #2f3990 !important;
+    color: azure !important;
+}
+footer{
+    background-color: #959595 !important;
+
+}
+footer a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+</style>
+<nav class="navbar navbar-expand-md">
+<!--    HEADER  SECTION   -->
+    <div class="container-fluid text-dark" style="    padding: 5px;
+    padding-left: 12px;">
+        <a class="navbar-brand p-0" href="#"><img style="vertical-align:baseline" src="/static/assets/alian_logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex">
+
+            </form>
+        </div>
+    </div>
+</nav>
+</head>
+<body style="    margin: 0;
+padding: 0;
+min-height: 100vh;
+display: flex;
+flex-direction: column;">
 <form form-inline action="{{url_for('employee_register_by_mail',)}}" method="POST" id="createform"
 enctype="multipart/form-data">
     <div class="row">
@@ -314,7 +355,7 @@ enctype="multipart/form-data">
                                                                     for="name"><b>Name</b></label>
                                                             <div class="col-sm-8 col-md-8">
                                                                 <input type="text" class="form-control" name="name"
-                                                                       id="name" value="" placeholder="Enter Text">
+                                                                       id="name" value="" placeholder="Enter Text" required>
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -329,9 +370,9 @@ enctype="multipart/form-data">
                                                                     <option value="">
                                                                         Select
                                                                     </option>
-                                                                    {% if department != None%}
+                                                                    {% if department != None %}
                                                                     {% for i in department%}
-                                                                    <option>{{ i }}</option>
+                                                                    <option value="{{i}}">{{ i }}</option>
                                                                     {% endfor %}
                                                                     {% endif %}
                                                                 </select>
@@ -345,19 +386,13 @@ enctype="multipart/form-data">
                                                                    for="jobposition"><b>Job
                                                                 Position</b></label>
                                                             <div class="col-sm-8">
-                                                                <select name="jobposition" id="jobposition"
-                                                                        class="form-control">
-                                                                    <option>
+                                                                <select name="jobposition"
+                                                                        id="jobposition"
+                                                                        class="form-control" required>
+                                                                   <option value="">
                                                                         Select
-                                                                    </option>
-                                                                    {% if department != None %}
-                                                                    {% for key,value in department.items()%}
-                                                                    {%for i,j in value.items()%}
-                                                                    <option> {{ i }}
-                                                                    </option>
-                                                                    {% endfor %}
-                                                                    {%endfor%}
-                                                                    {% endif %}
+                                                                    </option >
+
                                                                 </select>
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
@@ -369,7 +404,7 @@ enctype="multipart/form-data">
                                                                    for="doj"><b>DOJ</b></label>
                                                             <div class="col-sm-8">
                                                                 <input type="date" class="form-control" name="doj"
-                                                                       id="doj" value="" placeholder="Select">
+                                                                       id="doj" value="" placeholder="Select" >
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -387,7 +422,7 @@ enctype="multipart/form-data">
                                                                 for="password"><b>Password</b></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control" name="password"
-                                                                    id="password" value="" placeholder="Enter Amount">
+                                                                    id="password" value="" placeholder="Enter password" required>
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -398,7 +433,7 @@ enctype="multipart/form-data">
                                                                    for="designation"><b>Designation</b></label>
                                                             <div class="col-sm-8">
                                                                 <select name="designation" id="designation"
-                                                                        class="form-control">
+                                                                        class="form-control" required>
 
                                                                     <option>
                                                                         Select
@@ -423,7 +458,7 @@ enctype="multipart/form-data">
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control"
                                                                        name="salary" id="salary"
-                                                                       value="" placeholder="25,000">
+                                                                       value="" placeholder="25,000" required>
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -435,7 +470,7 @@ enctype="multipart/form-data">
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control"
                                                                        name="currentExperience" id="currentExperience"
-                                                                       value="" placeholder="Enter Text">
+                                                                       value="" placeholder="Enter Text" >
                                                             </div>
                                                             <span class="pmd-textfield-focused"></span>
                                                         </div>
@@ -450,7 +485,7 @@ enctype="multipart/form-data">
                                             <!-- Personal Information -->
 
                                             <div class="">
-                                               
+
                                                 <div id="personalinformation-collapseOne"
                                                      class="accordion-collapse collapse show"
                                                      aria-labelledby="personalinformation-headingOne">
@@ -477,7 +512,7 @@ enctype="multipart/form-data">
                                                                         <div class="col-sm-5">
                                                                             <input type="date" class="form-control"
                                                                                    name="dob" value="" id="dob"
-                                                                                   placeholder="Select">
+                                                                                   placeholder="Select" required>
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -490,7 +525,7 @@ enctype="multipart/form-data">
                                                                                 for="gender"><b>Gender</b></label>
                                                                         <div class="col-sm-5">
                                                                             <select name="gender" id="gender"
-                                                                                    class="form-control">
+                                                                                    class="form-control" required>
                                                                                 <option>
                                                                                     Select
                                                                                 </option>
@@ -529,9 +564,9 @@ enctype="multipart/form-data">
                                                                                 class="col-form-label control-label col-sm-4"
                                                                                 for="email"><b>Email</b></label>
                                                                         <div class="col-sm-5">
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="email" class="form-control"
                                                                                    name="email" id="email" value=""
-                                                                                   placeholder="Enter Text">
+                                                                                   placeholder="Enter Text" required>
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -544,10 +579,7 @@ enctype="multipart/form-data">
                                                                                 for="mobileno"><b>Mobile
                                                                             No</b></label>
                                                                         <div class="col-sm-5">
-                                                                            <input type="text" class="form-control"
-                                                                                   name="mobileno" value=""
-                                                                                   id="mobileno"
-                                                                                   placeholder="Enter Text">
+                                                                            <input type="tel" id="mobileno" class="form-control" name="mobileno" pattern="[0-9]{10}" placeholder="Enter your 10-digit mobile number" required>
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
@@ -694,7 +726,7 @@ enctype="multipart/form-data">
                                                                 <div class="col-lg-6 col-sm-12 mt-2">
 
                                                                     <ul class="nav justify-content-end">
-                                            
+
                                                                         <!-- SAVE BUTTON -->
                                                                         <li class="nav-item me-2">
                                                                             <div class="dropdown">
@@ -703,7 +735,7 @@ enctype="multipart/form-data">
                                                                                     Submit
                                                                                 </button>
                                                                             </div>
-                                                                        </li>                            
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -738,6 +770,51 @@ enctype="multipart/form-data">
 
 <!-- /build -->
 
+
+<script>
+  const departmentDropdown = document.getElementById("department");
+  const jobpositionDropdown = document.getElementById("jobposition");
+  const salaryInput = document.getElementById("salary");
+
+  // Create a map of jobpositions by department using a for loop
+  const jobpositionsByDepartment = {};
+  {% for key, value in department.items() %}
+    jobpositionsByDepartment["{{ key }}"] = [
+      {% for i, j in value.items() %}
+        { name: "{{ i }}", salary: {{ j }} },
+      {% endfor %}
+    ];
+  {% endfor %}
+  // Add event listener for the department dropdown
+  departmentDropdown.addEventListener("change", function() {
+    const selectedDepartment = departmentDropdown.value;
+    // Remove all options from the jobposition dropdown except the first one
+    for (let i = jobpositionDropdown.options.length - 1; i > 0; i--) {
+      jobpositionDropdown.remove(i);
+    }
+    // If a department is selected, populate the jobposition dropdown with jobpositions for that department
+    if (selectedDepartment) {
+      const jobpositions = jobpositionsByDepartment[selectedDepartment];
+      for (const jobposition of jobpositions) {
+        const option = document.createElement("option");
+        option.value = jobposition.salary;
+        option.text = jobposition.name;
+        jobpositionDropdown.add(option);
+      }
+    }
+
+    // Hide the salary text box
+    salaryInput.style.display = "none";
+  });
+
+  // Add event listener for the jobposition dropdown
+  jobpositionDropdown.addEventListener("change", function() {
+    const selectedSalary = jobpositionDropdown.value;
+    salaryInput.value = selectedSalary;
+    salaryInput.style.display = "block";
+  });
+</script>
+
 <script>
     const imageInput = document.getElementById('photo');
     const imagePreview = document.getElementById('photo-preview');
@@ -756,4 +833,5 @@ enctype="multipart/form-data">
 
 </script>
 
-{% endblock %}
+</body>
+</html>

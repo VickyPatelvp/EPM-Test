@@ -49,7 +49,7 @@ class SalaryCalculation():
 
             lwp = 0
 
-            emp_basic_salary = round(float(emp_salary) * (float(salary_percentage['hrapercentage'])/100), 2)
+            emp_basic_salary = round(float(emp_salary) , 2)
 
             emp_hra = round(emp_basic_salary * (float(salary_percentage['hrapercentage'])/100), 2)
 
@@ -116,7 +116,7 @@ class SalaryCalculation():
 
             self.db.collection(self.companyname).document('salary_status').update(salary_status)
 
-            # print(salary_slip_data)
+
 
 
 

@@ -11,10 +11,10 @@ class Register():
         data_dict = {}
         for key, value in data.items():
             data_dict.update({key: value})
-        print(data_dict)
+
         docs = self.db.collection(data_dict['CompanyName']).get()
         if len(docs) > 0:
-            print('Already Company Registered')
+
             return 'Already Company Registered'
         else:
             self.db.collection(data_dict['CompanyName']).document('admin').set(data_dict)

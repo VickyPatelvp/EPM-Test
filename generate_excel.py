@@ -27,8 +27,6 @@ def create_excel_file():
         'Rent House Landloard Address', 'Rent House Period', 'ELSS Annual Amount', 'ELSS Period',\
         'Tution Fees Annual Amount', 'Tution Fees Period'
 
-    # print(len(title_row))
-
     ws.append(title_row)
 
     alignment = Alignment(horizontal='center')

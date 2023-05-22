@@ -19,21 +19,17 @@ class Month_count():
         # holidays=holidays.keys()
         holiday=0
 
-        # print(first_day)
+
         # Get the number of days in the current month
         num_days = calendar.monthrange(year, month)[1]
 
         # Create a list of all the dates in the current month
         dates = [f"{year:04}-{month:02}-{day:02}" for day in range(1, num_days+1)]
 
-        # Print the list of dates
-        # print(dates)
 
-        # print(holidays.keys())
         data={}
         if holidays!=None:
             for day in range(1, num_days + 1):
-                # print(dates[day - 1])
 
                 if dates[day-1] in holidays :
                     holiday += 1

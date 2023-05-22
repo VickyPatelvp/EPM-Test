@@ -14,18 +14,22 @@ class Dashboard():
                          'dob': emp_doc.get('dob'),
                          'doj': emp_doc.get('doj'),
                          'leaves': {}}
+
         if employee_data['dob'] != '' or employee_data['dob'] == None:
             dob = datetime.strptime(employee_data['dob'].strip(), '%Y-%m-%d')
             if dob.month == datetime.today().month:
                 employee_data['birthday'] = employee_data['dob']
         if employee_data['doj'] != '':
-            doj = datetime.strptime(employee_data['doj'], '%Y-%m-%d')
+
+            doj = datetime.strptime(employee_data['doj'][:10], '%Y-%m-%d')
+            # doj = datetime.strptime(employee_data['doj'], '%Y-%m-%d')
             if doj.month == datetime.today().month:
                 years = datetime.today().year - doj.year
-                employee_data['anniversary'] = {
-                    'name': employee_data['name'],
-                    'date': employee_data['doj'],
-                    'years': years}
+                if years>0:
+                    employee_data['anniversary'] = {
+                        'name': employee_data['name'],
+                        'date': employee_data['doj'],
+                        'years': years}
         leaves = emp_doc.reference.collection('leaveMST')
         total_leaves = 0
         for leave in leaves.stream():
@@ -91,7 +95,7 @@ class Dashboard():
 
             results = pool.map_async(count_employees_by_department,
                                      self.db.collection(companyname).document(u'department').get().to_dict().keys())
-            print(results)
+
             department_counts = results.get()
 
             results = pool.starmap_async(count_employees_by_salary_range,
@@ -116,7 +120,7 @@ class Dashboard():
             '5 to 10': experience_counts[3],
             'Above 10': experience_counts[4]
         }
-        print(exprience_list)
+
         department_wise_emp = {}
         for dept, count in zip(self.db.collection(companyname).document(u'department').get().to_dict().keys(), department_counts):
             department_wise_emp.update({dept: count})

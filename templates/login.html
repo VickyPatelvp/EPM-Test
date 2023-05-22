@@ -49,7 +49,7 @@ height: 100%;
                 placeholder="Enter password" autocomplete="off" name="password" required/>
             </div>
   
-            <label for="" class="text-danger p-2" > {{responce}}</label>
+            <label class="text-danger p-2" > {{responce}}</label>
   
             <div class="d-flex justify-content-between align-items-center">
               <!-- Checkbox -->
@@ -59,7 +59,14 @@ height: 100%;
                   Remember me
                 </label>
               </div>
-              <a href="#!" class="text-body">Forgot password?</a>
+              <div class="dropdown">
+                                        <button class="btn btn-secondary border-1 " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                           Forgot password?
+                                        </button>
+                                    </div>
+
             </div>
             <div class="text-center text-lg-start mt-4 pt-2">
               <a href="/dashboard">
@@ -68,14 +75,37 @@ height: 100%;
                   Login
                 </button>
               </a>
-              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
-                  class="link-danger">Register</a></p>
+
             </div>
           </form>
         </div>
       </div>
     </div>
 
+
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Mail to New Employee Create</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{url_for('forgot_password')}}" method="POST" id="forgot_password" >
+                                        <div class="modal-body">
+                                            <label for="email">Enter Email</label>
+                                            <input type="email" name="email" id="email" value="" class="form-control">
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" value="submit" class="btn btn-primary">Send Mail</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
 
 <script>
 

@@ -8,13 +8,12 @@ class Update_information():
     def update_personal_info(self, companyname, data, id):
         data_dict = {}
         for key, value in data.items():
-
             if value != '':
                 if key=='salary':
                     value=float(value)
                 data_dict.update({key: value})
         a = self.db.collection(companyname).document('employee').collection('employee').document(id).update(data_dict)
-        print(a)
+
 
     def update_tds_info(self, companyname, data, id):
         data_dict = {}
@@ -29,11 +28,11 @@ class Update_information():
             futures = [executor.submit(self.update_personal_info,companyname, data, id) for data, id in data_list]
             for future in concurrent.futures.as_completed(futures):
                 result = future.result()
-                print(result)
+
 
     def update_tds_info_concurrent(self, data_list,companyname):
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = [executor.submit(self.update_tds_info, data,companyname, id) for data, id in data_list]
             for future in concurrent.futures.as_completed(futures):
                 result = future.result()
-                print(result)
+

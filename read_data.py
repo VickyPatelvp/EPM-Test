@@ -17,8 +17,7 @@ class ExcelData():
             year = datetime.datetime.now().year
             doj = details['Date of Joining'].date()
             dob = details['Date of Birth'].date()
-            print(dob)
-            print(doj)
+
             personal_data = {
                 'photo': 'photo',
                 'employeeName': details['Employee Full Name'], 'userID': details['Employee ID'],
@@ -118,5 +117,5 @@ class ExcelData():
         # Process employee data using a thread pool
         with ThreadPoolExecutor() as executor:
             for details in all_employee_data:
-                print(details)
+
                 executor.submit(self.process_employee_data, companyname, details)

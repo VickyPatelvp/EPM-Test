@@ -13,16 +13,16 @@ class Department:
         self.db = db
 
     def _process_department(self, companyname, data):
-        print('hello')
+
         doc_ref = self.db.collection(companyname).document(u'department')
-        print(data)
+
         is_available = False
 
         for key, value in doc_ref.get().to_dict().items():
             if key == data['deptname'] and value != {}:
                 is_available = True
                 break
-        print(data)
+
         if is_available == True and len(data) == 3:
             doc_ref.update({f'{data["deptname"]}.{data["pos0"]}': data['sal0']})
         else:

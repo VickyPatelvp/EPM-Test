@@ -40,7 +40,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def register_responce_mail(self, companyname,email):
+    def register_responce_mail(self,email):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -57,7 +57,7 @@ class Mail():
         subject = 'Yor Company Account'
         body = f'''This mail is for Company Successsfully registered,
                 Now you can use following url to access your company login
-                http://127.0.0.1:300/{companyname}/login
+                http://127.0.0.1:300/
               Congratulation, Thank you so much..'''
         message = f"Subject: {subject}\n\n{body}"
         # Send the email
@@ -67,7 +67,7 @@ class Mail():
 
 
 
-    def new_employee_mail(self,email, companyname, company_mail, auth_password):
+    def new_employee_mail(self,email, company_mail, auth_password):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -91,7 +91,7 @@ class Mail():
         message['Subject'] = 'Employee Registration Form'
         body = f'''This mail is for registration,
                     you can register with the following link below:
-                     http://127.0.0.1:300/{companyname}/register_employee
+                     http://127.0.0.1:300/register_employee
                     Thank you,
         '''
         message.attach(MIMEText(body, 'plain'))
@@ -125,14 +125,14 @@ class Mail():
         subject = 'Employee Registation Successfull'
         body = f'''This mail is for Employee Successsfully registered,
                 Now you can use following url to access your company login
-               http://127.0.0.1:300/{companyname}/login
+               http://127.0.0.1:300/
               Congratulation, Thank you so much..'''
         message = f"Subject: {subject}\n\n{body}"
         # Send the email
         server.sendmail(from_email, to_email, message)
         # Close the SMTP connection
         server.quit()
-    def forgot_mail(self,email, password, companyname, company_mail,auth_password):
+    def forgot_mail(self,email, password, company_mail,auth_password):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -157,7 +157,7 @@ class Mail():
                     User ID: {email}
                     Password: {password}
                     Now you can use following url to access your company login
-                    http://127.0.0.1:300/{companyname}/login
+                    http://127.0.0.1:300/
                   Congratulation, Thank you so much..'''
         message = f"Subject: {subject}\n\n{body}"
 
@@ -166,7 +166,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def send_employee_pdf(self, data, companyname, company_mail, auth_password, path):
+    def send_employee_pdf(self, data, company_mail, auth_password, path):
 
         # sending as mail
         MY_EMAIL = company_mail
@@ -227,6 +227,6 @@ class Mail():
         text = message.as_string()
         session.sendmail(MY_EMAIL, TO_EMAIL, text)
         session.quit()
-        print('Mail Sent')
+
 
 

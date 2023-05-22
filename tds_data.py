@@ -14,7 +14,7 @@ class TDSData():
 
         tds_data = users_ref.collection('tdsmst').document('tds').get().to_dict()
 
-        print(id)
+
 
         if tds_data == None or tds_data['hlamount'] == '' or tds_data['hlamount'] == None :
 
