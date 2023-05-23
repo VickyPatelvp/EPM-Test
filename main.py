@@ -417,7 +417,7 @@ def personal_data_update( username, id):
     ''' UPDATE EMPLOYEE PERSONAL DETAILS '''
     if request.method == 'POST':
         form = request.get_json()
-
+        print(form)
         update_obj.update_personal_info(companyname,form, id)
 
     return redirect(url_for('employee_profile', id=id,username=username))

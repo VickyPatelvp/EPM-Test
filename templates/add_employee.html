@@ -383,11 +383,11 @@ enctype="multipart/form-data">
                                                         <div
                                                                 class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                             <label class="col-form-label control-label col-sm-4"
-                                                                   for="jobposition"><b>Job
+                                                                   for="jobPosition"><b>Job
                                                                 Position</b></label>
                                                             <div class="col-sm-8">
-                                                                <select name="jobposition"
-                                                                        id="jobposition"
+                                                                <select name="jobPosition"
+                                                                        id="jobPosition"
                                                                         class="form-control" required>
                                                                    <option value="">
                                                                         Select
@@ -773,13 +773,13 @@ enctype="multipart/form-data">
 
 <script>
   const departmentDropdown = document.getElementById("department");
-  const jobpositionDropdown = document.getElementById("jobposition");
+  const jobPositionDropdown = document.getElementById("jobPosition");
   const salaryInput = document.getElementById("salary");
-
-  // Create a map of jobpositions by department using a for loop
-  const jobpositionsByDepartment = {};
+    var salary=0
+  // Create a map of jobPositions by department using a for loop
+  const jobPositionsByDepartment = {};
   {% for key, value in department.items() %}
-    jobpositionsByDepartment["{{ key }}"] = [
+    jobPositionsByDepartment["{{ key }}"] = [
       {% for i, j in value.items() %}
         { name: "{{ i }}", salary: {{ j }} },
       {% endfor %}
@@ -788,18 +788,19 @@ enctype="multipart/form-data">
   // Add event listener for the department dropdown
   departmentDropdown.addEventListener("change", function() {
     const selectedDepartment = departmentDropdown.value;
-    // Remove all options from the jobposition dropdown except the first one
-    for (let i = jobpositionDropdown.options.length - 1; i > 0; i--) {
-      jobpositionDropdown.remove(i);
+    // Remove all options from the jobPosition dropdown except the first one
+    for (let i = jobPositionDropdown.options.length - 1; i > 0; i--) {
+      jobPositionDropdown.remove(i);
     }
-    // If a department is selected, populate the jobposition dropdown with jobpositions for that department
+    // If a department is selected, populate the jobPosition dropdown with jobPositions for that department
     if (selectedDepartment) {
-      const jobpositions = jobpositionsByDepartment[selectedDepartment];
-      for (const jobposition of jobpositions) {
+      const jobPositions = jobPositionsByDepartment[selectedDepartment];
+      for (const jobPosition of jobPositions) {
         const option = document.createElement("option");
-        option.value = jobposition.salary;
-        option.text = jobposition.name;
-        jobpositionDropdown.add(option);
+        option.value = jobPosition.name;
+        option.text = jobPosition.name;
+        salary= jobPosition.salary;
+        jobPositionDropdown.add(option);
       }
     }
 
@@ -807,9 +808,9 @@ enctype="multipart/form-data">
     salaryInput.style.display = "none";
   });
 
-  // Add event listener for the jobposition dropdown
-  jobpositionDropdown.addEventListener("change", function() {
-    const selectedSalary = jobpositionDropdown.value;
+  // Add event listener for the jobPosition dropdown
+  jobPositionDropdown.addEventListener("change", function() {
+    const selectedSalary = salary;
     salaryInput.value = selectedSalary;
     salaryInput.style.display = "block";
   });

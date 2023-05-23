@@ -195,8 +195,8 @@
                                                                                                                                 <select name="department"
                                                                                                                                         id="department"
                                                                                                                                         class="form-control" >
-                                                                                                                                    <option value=''>
-                                                                                                                                       {{data["personal_data"]["department"] }}
+                                                                                                                                 <option value="">
+                                                                                                                                        Select
                                                                                                                                     </option>
                                                                                                                                     {% if department != None %}
                                                                                                                                     {% for i in department%}
@@ -210,15 +210,15 @@
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
                                                                                                                             <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                   for="jobposition"style="color: #455056;"><b>Job
+                                                                                                                                   for="jobPosition"style="color: #455056;"><b>Job
                                                                                                                                 Position</b></label>
                                                                                                                             <div class="col-sm-8 col-md-7">
-                                                                                                                                <select name="jobposition"
-                                                                                                                                        id="jobposition"
+                                                                                                                                <select name="jobPosition"
+                                                                                                                                        id="jobPosition"
                                                                                                                                         class="form-control" >
-                                                                                                                                   <option value="">
-                                                                                                                                       {{ data["personal_data"]["jobPosition"] }}
-                                                                                                                                    </option >
+                                                                                                                                <option value="">
+                                                                                                                                        Select
+                                                                                                                                    </option>
 
                                                                                                                                 </select>
                                                                                                                             </div>
@@ -267,9 +267,9 @@
                                                                                                                                 <select name="designation"
                                                                                                                                         id="designation"
                                                                                                                                         class="form-control" >
-                                                                                                                                     <option value="">
-                                                                                                                                       {{ data["personal_data"]["designation"] }}
-                                                                                                                                    </option >
+                                                                                                                                    <option value="">
+                                                                                                                                        Select
+                                                                                                                                    </option>
                                                                                                                                     <option value="Employee">
                                                                                                                                         Employee
                                                                                                                                     </option>
@@ -317,59 +317,9 @@
 
                                                                                                                 </div>
 
-                                                                                                                <hr
-                                                                                                                        style="width:100%;text-align:left;margin-left:0;color:black;">
 
 
-<!--                                                                                                                Salary Data-->
-                                                                                                                    <div class="row mt-3">
-                                                                                                                    <div class="col-12">
-                                                                                                                        <h3 style="color:black;">
-                                                                                                                          Salary Edit</h3>
-                                                                                                                    </div>
-                                                                                                                    <div class="col-6">
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                   Salary
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            class="form-control"
-                                                                                                                                            name="salary"pattern="^\d*\.?\d*$"
-                                                                                                                                            type="text"
-                                                                                                                                            style="background-color: #FFFFFF"
-                                                                                                                                            placeholder='{{ data["personal_data"]["salary"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
 
-                                                                                                                    </div>
-                                                                                                                    <div class="col-6">
-
-                                                                                                                        <table class="table table-striped">
-                                                                                                                            <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th class="col-3">
-                                                                                                                                    Password
-                                                                                                                                </th>
-                                                                                                                                <td class="col-4">
-                                                                                                                                    <input
-                                                                                                                                            type="text"
-                                                                                                                                            name="password"
-                                                                                                                                            class="form-control" 
-                                                                                                                                            placeholder='{{ data["personal_data"]["password"] }}'>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            </thead>
-                                                                                                                            <tbody>
-                                                                                                                        </table>
-                                                                                                                    </div>
-
-                                                                                                                </div>
 
                                                                                                                 <hr
                                                                                                                         style="width:100%;text-align:left;margin-left:0;color:black;">
@@ -1521,12 +1471,7 @@
                                                                         }}
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <th class="col-3">Salary</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
-                                                                        }}
-                                                                    </td>
-                                                                </tr>
+
                                                                 </thead>
                                                                 <tbody>
                                                             </table>
@@ -1542,9 +1487,9 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">Manager</th>
-                                                                    <td class="col-3">{{
-                                                                        data["personal_data"]["manager"] }}
+                                                                    <th class="col-3">Salary</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
+                                                                        }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -2922,13 +2867,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
   const departmentDropdown = document.getElementById("department");
-  const jobpositionDropdown = document.getElementById("jobposition");
+  const jobPositionDropdown = document.getElementById("jobPosition");
   const salaryInput = document.getElementById("salary");
-
-  // Create a map of jobpositions by department using a for loop
-  const jobpositionsByDepartment = {};
+    var salary=0
+  // Create a map of jobPositions by department using a for loop
+  const jobPositionsByDepartment = {};
   {% for key, value in department.items() %}
-    jobpositionsByDepartment["{{ key }}"] = [
+    jobPositionsByDepartment["{{ key }}"] = [
       {% for i, j in value.items() %}
         { name: "{{ i }}", salary: {{ j }} },
       {% endfor %}
@@ -2937,18 +2882,19 @@ document.addEventListener("DOMContentLoaded", function() {
   // Add event listener for the department dropdown
   departmentDropdown.addEventListener("change", function() {
     const selectedDepartment = departmentDropdown.value;
-    // Remove all options from the jobposition dropdown except the first one
-    for (let i = jobpositionDropdown.options.length - 1; i > 0; i--) {
-      jobpositionDropdown.remove(i);
+    // Remove all options from the jobPosition dropdown except the first one
+    for (let i = jobPositionDropdown.options.length - 1; i > 0; i--) {
+      jobPositionDropdown.remove(i);
     }
-    // If a department is selected, populate the jobposition dropdown with jobpositions for that department
+    // If a department is selected, populate the jobPosition dropdown with jobPositions for that department
     if (selectedDepartment) {
-      const jobpositions = jobpositionsByDepartment[selectedDepartment];
-      for (const jobposition of jobpositions) {
+      const jobPositions = jobPositionsByDepartment[selectedDepartment];
+      for (const jobPosition of jobPositions) {
         const option = document.createElement("option");
-        option.value = jobposition.salary;
-        option.text = jobposition.name;
-        jobpositionDropdown.add(option);
+        option.value = jobPosition.name;
+        option.text = jobPosition.name;
+        salary= jobPosition.salary;
+        jobPositionDropdown.add(option);
       }
     }
 
@@ -2956,9 +2902,9 @@ document.addEventListener("DOMContentLoaded", function() {
     salaryInput.style.display = "none";
   });
 
-  // Add event listener for the jobposition dropdown
-  jobpositionDropdown.addEventListener("change", function() {
-    const selectedSalary = jobpositionDropdown.value;
+  // Add event listener for the jobPosition dropdown
+  jobPositionDropdown.addEventListener("change", function() {
+    const selectedSalary = salary;
     salaryInput.value = selectedSalary;
     salaryInput.style.display = "block";
   });
@@ -2994,7 +2940,7 @@ document.addEventListener("DOMContentLoaded", function() {
             xhr.addEventListener('readystatechange', function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        window.location.href = `http://127.0.0.1:300/${companyname}/${username}/tds_data_update/${id}`;
+                        window.location.href = `http://127.0.0.1:300/${username}/tds_data_update/${id}`;
                     } else {
                         console.error(xhr.responseText); // Handle error response
                     }
