@@ -114,7 +114,8 @@
                         <div class="dropdown">
                             
                             <button class="btn border-1 btn-secondary " type="button"
-                                    onclick="add_modal()" data-bs-target="#staticBackdrop"
+                                    onclick="add_modal()"
+                                    data-bs-target="#staticBackdrop"
                                     aria-haspopup="true"
                                     data-bs-toggle="modal"
                                     aria-expanded="false">
@@ -160,7 +161,6 @@
                             <td scope="col">{{data[i][j]}}</td>
 
                             <td scope="col">
-
                                 <a type="btn" class="btn" onclick="open_modal('{{i}}','{{j}}','{{data[i][j]}}')"
                                    value="{{[i,j,data[i][j]]}}">
                                     <i class="fas fa-edit"></i>
@@ -249,6 +249,9 @@ console.log(cleanStr);
       });
         // Clear the input values when the modal is closed
       modal.addEventListener('hidden.bs.modal', function () {
+
+    add_input.style.display= "block";
+
     modalInput.value = '';
     positionInput.value = '';
     salaryInput.value = '';
@@ -257,16 +260,16 @@ console.log(cleanStr);
       // Show the modal
       var modalInstance = new bootstrap.Modal(modal);
       modalInstance.show();
+      add_modal();
     };
-
     function add_modal(){
-    var modal = document.querySelector('.modal');
-      var modalInput = document.getElementById('deptname');
+      var modal = document.querySelector('.modal');
+
+      modal.addEventListener('show.bs.modal', function () {
+          var modalInput = document.getElementById('deptname');
       var positionInput= document.getElementById('pos');
       var salaryInput = document.getElementById('sal');
-
       var add_input = document.getElementById('add_input');
-      modal.addEventListener('show.bs.modal', function () {
           add_input.style.display= "block";
         modalInput.value = '';
 
