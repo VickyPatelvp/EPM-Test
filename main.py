@@ -262,7 +262,7 @@ def employee_register_by_mail():
         auth_password = auth_data['auth_password']
         mail_obj.employee_registered_mail(email, companyname, company_mail, auth_password)
 
-        return redirect(url_for('success'))
+        return redirect(url_for('login'))
 
     def get_department_data():
         department = (db.collection(companyname).document(u'department').get()).to_dict()
