@@ -260,7 +260,8 @@ def employee_register_by_mail():
         auth_data = db.collection(companyname).document('admin').get().to_dict()
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
-        mail_obj.employee_registered_mail(email, companyname, company_mail, auth_password)
+        password = request.form.get('password')
+        mail_obj.employee_registered_mail(email,password, company_mail, auth_password)
 
         return redirect(url_for('login'))
 

@@ -102,7 +102,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def employee_registered_mail(self, email, companyname ,company_mail,auth_password ):
+    def employee_registered_mail(self, email,password, company_mail,auth_password ):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -124,6 +124,8 @@ class Mail():
         to_email = email
         subject = 'Employee Registation Successfull'
         body = f'''This mail is for Employee Successsfully registered,
+                ID: {email}
+                Password={password},
                 Now you can use following url to access your company login
                http://127.0.0.1:300/
               Congratulation, Thank you so much..'''
