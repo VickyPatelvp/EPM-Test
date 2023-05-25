@@ -1845,15 +1845,16 @@
 
                                                                                 </thead>
                                                                                 <tbody>
+                                                                                {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April', '005': 'May',
+                                                                                '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
+                                                                                '0011': 'November', '0012': 'December'} %}
                                                                                 {% for i in data["salary_data"] %}
-
                                                                                 <tr class="table-light">
-
                                                                                     <td scope="col">
                                                                                         {{i}}
                                                                                     </td>
                                                                                     <td scope="col">
-                                                                                        {{data["salary_data"][i]['month']}}
+                                                                                        {{ month_dict[i[3:]] }}
                                                                                     </td>
                                                                                     <td scope="col">
                                                                                         {{data["salary_data"][i]['year']}}

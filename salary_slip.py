@@ -126,7 +126,7 @@ class SalarySlip():
 
         # # # # # Add Company Logo # # # # #
 
-        pdf.drawImage('C:/Users/alian/Desktop/EPM-Test/static/assets/alian_logo_2.png', 380, 770, width=150, height=40)
+        pdf.drawImage('static/assets/alian_logo_2.png', 380, 770, width=150, height=40)
 
         # # # # # Employee Pay Summary # # # # #
 
@@ -359,7 +359,7 @@ class SalarySlip():
 
         # # # # # Add Company Logo # # # # #
 
-        pdf.drawImage('C:/Users/alian/Desktop/EPM-Test/static/assets/alian_logo_2.png', 380, 770, width=150, height=40)
+        pdf.drawImage('static/assets/alian_logo_2.png', 380, 770, width=150, height=40)
 
         # # # # # Employee Pay Summary # # # # #
 

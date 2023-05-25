@@ -631,7 +631,8 @@ def send_employee_salaryslip( username, salid):
     for key, value in employee_list.items():
         data = value
 
-        mail_obj.send_employee_pdf(company_mail=company_mail, data=data,auth_password=auth_password, path=path,companyname=companyname)
+        mail_obj.send_employee_pdf(company_mail=company_mail, data=data,auth_password=auth_password, path=path,
+                                   companyname=companyname)
     return redirect(url_for('salary_sheet_view', salid=salid,username=username))
 
 
