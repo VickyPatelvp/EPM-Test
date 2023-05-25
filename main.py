@@ -448,15 +448,15 @@ def department(username):
 
 
 @app.route('/<username>/delete_department/<dep> <pos>', methods=['GET', 'POST'])
-def delete_department(username, dep, pos):
-    """ DELETE DEPARTMENT """
+def delete_department( username, dep, pos):
+    ''' DELETE DEPARTMENT '''
     a = dep, pos
     pattern = r'[^a-zA-Z\d\s]'
     # Use the re.sub() function to replace all occurrences of the pattern with an empty string
     dep = re.sub(pattern, '', dep)
     pos = re.sub(pattern, '', pos)
     dept.delete_department(companyname, dep, pos)
-    return redirect(url_for('department', username=username))
+    return redirect(url_for('department',username=username))
 
 
 @app.route("/<username>/set-storage-path/<salid>", methods=["POST"])
@@ -466,18 +466,14 @@ def set_storage_path(username,salid):
     salary.salary_slip(companyname, salid, path)
     return redirect(url_for('salary',username=username, salid=salid))
 
-
 @app.route('/<username>/salary', methods=['GET', 'POST'])
-def salary(username):
-    """ DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR """
-    # GET MONTH DATA
+def salary( username):
+    ''' DISPLAY SALARY DETAILS OF ALL MONTH IN YEAR '''
     holidays = db.collection(companyname).document('holidays').get().to_dict()
-    month_data = moth_count.count_previous(holidays)
-    working_days = month_data['workingDays']
-
-    # CALCULATE SALARY AND ADD LEAVE BALANCE
+    moath_data = moth_count.count(holidays)
+    working_days = moath_data['workingDays']
     if datetime.datetime.now().day == 1:
-        SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
+        SalaryCalculation(db,companyname).generate_salary( workingday=working_days)
         leaveobj.leave_add(companyname)
 
     if request.method == 'POST':
@@ -494,15 +490,12 @@ def salary(username):
         else:
             db.collection(companyname).document('salary_calc').update(data_dict)
 
-    # GET PERCENTAGE
     def get_salary_criteria():
         return db.collection(str(companyname)).document('salary_calc').get().to_dict()
 
-    # GET ALL MONTH SALARY DATA
     def get_all_month_salary_data():
         return Salarymanage(db).get_all_month_salary_data(companyname)
 
-    # GET SALARY STATUS OF MONTH
     def get_salary_status():
         return db.collection(companyname).document('salary_status').get().to_dict()
 
@@ -514,8 +507,9 @@ def salary(username):
     salary_criteria = salary_criteria_future.result()
     salary_list = salary_list_future.result()
     salary_status = salary_status_future.result()
-    return render_template('salary_sheet_month.html', data=salary_list, salary_criteria=salary_criteria,
-                           username=username, salary_status=salary_status)
+    year=datetime.datetime.now().year
+    return render_template('salary_sheet_month.html', data=salary_list, salary_criteria=salary_criteria
+                           , username=username, salary_status=salary_status,year=year)
 
 
 @app.route('/<username>/salarysheetview/<salid>', methods=['GET', 'POST'])
@@ -541,24 +535,22 @@ def salary_sheet_view( username, salid):
     return render_template('salary_sheet_view.html', data=salary_list, salid=salid,
                            username=username, salary_status=salary_status)
 
-
 @app.route('/<username>/salarysheetedit/<empid> <salid>', methods=['GET', 'POST'])
-def salary_sheet_edit_(username, empid, salid):
-    """ EDIT SALARY DETAILS OF EMPLOYEE IN MONTH """
+def salary_sheet_edit_( username, empid, salid):
+    ''' EDIT SALARY DETAILS OF EMPLOYEE IN MONTH '''
     if request.method == 'POST':
         result = request.form
         Salarymanage(db).salary_update(companyname, empid, salid, data=result)
-        return redirect(url_for('salary_sheet_view', salid=salid, username=username))
+        return redirect(url_for('salary_sheet_view', salid=salid,username=username))
 
     holidays = db.collection(companyname).document('holidays').get().to_dict()
-    month_data = moth_count.count_previous_month(holidays, salid)
-    working_days = month_data['workingDays']
+    moath_data = moth_count.count(holidays)
+    working_days = moath_data['workingDays']
     employee_salary_data = Salarymanage(db).get_salary_data(companyname, empid, salid)
     salary_percentage = (db.collection(companyname).document('salary_calc').get()).to_dict()
-    return render_template('salary_sheet_edit_personal.html', data=employee_salary_data, id=salid,
-                           salary_data=salary_percentage, username=username,
+    return render_template('salary_sheet_edit_personal.html', data=employee_salary_data, id=salid
+                           , salary_data=salary_percentage, username=username,
                            working_days=working_days)
-
 
 @app.route('/<username>/set_status/<salid>/<status>')
 def set_status( username, salid, status):
@@ -569,24 +561,18 @@ def set_status( username, salid, status):
     salary_status = db.collection(companyname).document('salary_status').update(data)
     return redirect(url_for('salary_sheet_view',username=username, salid=salid))
 
-
 def get_download_folder():
-    """ SET DOWNLOAD PATH """
-    # FOR Windows
-    if os.name == 'nt':
+    if os.name == 'nt':  # for Windows
         import winreg
         sub_key = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
         downloads_guid = '{374DE290-123F-4565-9164-39C4925E467B}'
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, sub_key) as key:
             location = winreg.QueryValueEx(key, downloads_guid)[0]
-    # FOR macOS
-    elif os.name == 'darwin':
+    elif os.name == 'darwin':  # for macOS
         location = os.path.expanduser('~/Downloads')
-    # FOR Linux/Unix
-    else:
+    else:  # for Linux/Unix
         location = os.path.expanduser('~/Downloads')
     return location
-
 
 @app.route('/<username>/pdf/<salid>')
 def pdf( username, salid):
@@ -617,16 +603,18 @@ def pdf( username, salid):
 #     return render_template('tds_test.html', data=employee_tds_data, )
 
 @app.route('/<username>/add_data', methods=['POST','GET'])
-def add_data(username):
-    if request.method == 'POST':
-        data = request.form
-        data = data.to_dict()
+def add_data( username):
+    if request.method=='POST':
+        data=request.form
+
+        data=data.to_dict()
+
         excel_path = data['path']
+
         excel = ExcelData(db)
         excel.store_excel_data(companyname, excel_path)
         return redirect(url_for('dashboard', username=username))
-    return render_template('add_excel_file.html', username=username)
-
+    return render_template('add_excel_file.html',username=username)
 
 @app.route('/<username>/send_email/<salid>')
 def send_employee_salaryslip( username, salid):
