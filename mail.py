@@ -12,7 +12,7 @@ class Mail():
     def __init__(self):
         pass
 
-    def register_mail(self,email):
+    def register_mail(self, email):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -40,7 +40,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def register_responce_mail(self,email):
+    def register_responce_mail(self, email):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -65,9 +65,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-
-
-    def new_employee_mail(self,email, company_mail, auth_password):
+    def new_employee_mail(self, email, company_mail, auth_password):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
@@ -102,7 +100,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def employee_registered_mail(self, email,password, company_mail,auth_password ):
+    def employee_registered_mail(self, email, password, company_mail, auth_password):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
