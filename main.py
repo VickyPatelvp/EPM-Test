@@ -149,7 +149,7 @@ def dashboard(username):
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
     # Check the current date
-    if datetime.datetime.now().day == 1:
+    if datetime.datetime.now().day == 10:
         SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:

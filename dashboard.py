@@ -74,10 +74,10 @@ class Dashboard():
             return int(len(user_ref.where('designation', '==', designation).get()))
 
         def count_employees_on_probation():
-            return count_employees_by_designation('Employee')
+            return count_employees_by_designation('Probation')
 
         def count_employees_on_training():
-            return count_employees_by_designation('Intern') + count_employees_by_designation('Trainee')
+            return count_employees_by_designation('Interns')
 
         def count_employees_by_experience_range(start, end):
             return sum(
@@ -109,9 +109,10 @@ class Dashboard():
             'emp_on_training': count_employees_on_training()
         }
         employee_overview = {
-            'Internship': count_employees_by_designation('Intern'),
+            'Internship': count_employees_by_designation('Interns'),
             'Trainee': count_employees_by_designation('Trainee'),
-            'Employee': count_employees_by_designation('Employee')
+            'Employee': count_employees_by_designation('Employee'),
+            'Probation': count_employees_by_designation('Probation'),
         }
         exprience_list = {
             '0 to 1': experience_counts[0],
