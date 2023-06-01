@@ -166,8 +166,8 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def send_employee_pdf(self, data, company_mail, auth_password, path):
-
+    def send_employee_pdf(self, data, companyname, company_mail, auth_password, path):
+        """ SEND SALARY SLIP """
         # sending as mail
         MY_EMAIL = company_mail
         MY_PASSWORD = auth_password
@@ -197,33 +197,44 @@ class Mail():
 
         month_name = calendar.month_name[current_month - 1]
 
+        year = 2023
+
         empid = data['userID']
         salid = 'sal00' + str(current_month - 1)
 
-        pdfname = f'{path}/Salaryslips/{month_name}/{empid}_{salid}.pdf'
+        # FETCH PDF FILE FROM STORAGE LOCATION
+        pdfname = f'{path}/EPMS/Salaryslips/{month_name}_{year}/{empid}_{salid}.pdf'
+
 
         # open the file in bynary
-        binary_pdf = open(pdfname, 'rb')
+        binary_pdf = ''
+        try:
+            binary_pdf = open(pdfname, 'rb')
+        except:
+            print(pdfname)
+            pass
 
-        payload = MIMEBase('application', 'octate-stream', Name=pdfname)
-        payload.set_payload(binary_pdf.read())
+        # print(binary_pdf)
 
-        # encoding the binary into base64
-        encoders.encode_base64(payload)
+        if binary_pdf != '':
 
-        # add header with pdf name
-        payload.add_header('Content-Decomposition', 'attachment', filename=pdfname)
-        message.attach(payload)
+            payload = MIMEBase('application', 'octate-stream', Name=pdfname)
+            payload.set_payload(binary_pdf.read())
 
-        # use gmail with port
-        session = smtplib.SMTP('smtp.gmail.com', 587)
+            # encoding the binary into base64
+            encoders.encode_base64(payload)
 
-        # enable security
-        session.starttls()
+            # add header with pdf name
+            payload.add_header('Content-Decomposition', 'attachment', filename=pdfname)
+            message.attach(payload)
 
-        # login with mail_id and password
-        session.login(MY_EMAIL, MY_PASSWORD)
+            # use gmail with port
+            session = smtplib.SMTP('smtp.gmail.com', 587)
 
+            # enable security
+            session.starttls()
+            # login with mail_id and password
+            session.login(MY_EMAIL, MY_PASSWORD)
         text = message.as_string()
         session.sendmail(MY_EMAIL, TO_EMAIL, text)
         session.quit()
