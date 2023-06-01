@@ -471,6 +471,9 @@ element.style {
                                                                                                                                     <option value="Trainee">
                                                                                                                                         Trainee
                                                                                                                                     </option>
+                                                                                                                                    <option value="Probation">
+                                                                                                                                        Probation
+                                                                                                                                    </option>
                                                                                                                                     <option value="Interns">
                                                                                                                                         Interns
                                                                                                                                     </option>
@@ -556,11 +559,14 @@ element.style {
                                                                                                                                             of
                                                                                                                                             Birth</b><span class="required" id="dobLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
+                                                                                                                                         
+                                                                                                                                                <span id="error-msg" style="color: red; display: none;">Invalid date selected.</span>
                                                                                                                                             <input type="date"
                                                                                                                                                    class="form-control"
                                                                                                                                                    name="dob"
                                                                                                                                                    value=""
                                                                                                                                                    id="dob"
+                                                                                                                                                   max="{{ max_date }}" oninput="validateDate()"
                                                                                                                                                    placeholder="Select" required>
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
@@ -611,12 +617,17 @@ element.style {
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
                                                                                                                                                for="email"><b>Email</b><span class="required" id="emailLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
+
                                                                                                                                             <input type="email"
                                                                                                                                                    class="form-control"
                                                                                                                                                    name="email"
                                                                                                                                                    id="email"
                                                                                                                                                    value=""
-                                                                                                                                                   placeholder="Enter Text" required>
+                                                                                                                                                   placeholder="Enter Text" required onblur="checkEmail()" onfocus="clearError()">
+                                                                                                                                            <p id="error" style="color: red"></p>
+                                                                                                                                            {% if responce %}
+                                                                                                                                            <span style="color:red">{{responce}}</span>
+                                                                                                                                            {% endif %}
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
                                                                                                                                     </div>
@@ -1575,50 +1586,7 @@ element.style {
                 'max': [ 10 ]
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                                                                                     </script>
-
-
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1633,11 +1601,7 @@ element.style {
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
                                             </div>
-
                                             </div>
                                         </div>
 
@@ -1667,10 +1631,7 @@ element.style {
                                         </a>
                                     </div>
                                 </li>
-
                                 <!-- ADD New Employee -->
-                               
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1693,7 +1654,6 @@ element.style {
                                     </div>
                                     </div>
                                 </div>
-
                                 <!-- EXCEL SHEET DOWNLOAD BUTTON -->
                                 <li class="nav-item me-2">
                                     <div class="">
@@ -1706,8 +1666,6 @@ element.style {
                                         </a>
                                     </div>
                                 </li>
-
-
                                 <!-- IMPORT BUTTON -->
                                  <li class="nav-item me-2">
                                     <div class="dropdown">
@@ -1719,8 +1677,6 @@ element.style {
                                     </div>
                                 </li>
                                  <!-- HTML code -->
-                              
-
                             </ul>
                         </div>
                     </div>
@@ -1754,12 +1710,7 @@ element.style {
             {% for id in data %}
             <tr>
                 <!-- <th scope="row">1</th> -->
-                <td scope="col">
-                    <a class="navbar-brand" href="#">
-                        <img src="{{ data[id]['photo'] }}" alt="hello"
-                             style="height: 50px; width: 50px; border-radius: 50%">
-                    </a>
-                </td>
+                <td></td>
                 <td scope="col">{{ id }}</td>
                 <td scope="col">{{data[id]['employeeName']}}</td>
                 <td scope="col">{{data[id]['email']}}</td>
@@ -1767,7 +1718,6 @@ element.style {
                 <td scope="col">{{data[id]['department']}}</td>
                 <td scope="col">{{data[id]['doj']}}</td>
                 <td scope="col">{{data[id]['currentExperience']}}</td>
-
                 <td scope="col d-flex">
                     <ul class="nav ">
 
@@ -1780,10 +1730,7 @@ element.style {
                                 </a>
                         </li>
                     </ul>
-
                 </td>
-
-
             </tr>
             {% endfor%}
 
@@ -1816,6 +1763,12 @@ element.style {
                                     </div>
                                     </div>
                                 </div>
+
+
+
+
+
+
 
 
 
@@ -1974,12 +1927,49 @@ function sortTable(columnIndex) {
 
 
 
+<script>
+    function validateDate() {
+      var inputDate = new Date(document.getElementById("dob").value);
+      var maxDate = new Date();
+      maxDate.setFullYear(maxDate.getFullYear() - 15);
+
+      if (inputDate > maxDate) {
+        document.getElementById("error-msg").style.display = "inline";
+      } else {
+        document.getElementById("error-msg").style.display = "none";
+      }
+    }
+  </script>
 
 
 
 
+    <script>
+               var emailList = [
+
+        {% for id in data %}
+
+            "{{ data[id]['email'] }}"{% if not loop.last %},{% endif %}
+
+        {% endfor %}
+    ];
+            console.log(emailList)
+        function checkEmail() {
+            var email = document.getElementById("email").value;
 
 
+            if (emailList.includes(email)) {
+                document.getElementById("error").innerHTML = "Email already exists!";
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+
+        function clearError() {
+            document.getElementById("error").innerHTML = "";
+        }
+    </script>
 
 
 

@@ -32,7 +32,7 @@
                                 <li class="nav-item ">
                                     <div class="dropdown">
                                         <!-- Button trigger modal -->
-                                        <button class="btn border-1 btn-secondary " type="button" aria-haspopup="true"
+                                        <button class="btn border-1 btn-secondary " type="button"
                                             data-bs-toggle="modal" data-bs-target="#exampleModal" aria-haspopup="true"
                                             aria-expanded="false">
                                             Holidays
@@ -50,7 +50,7 @@
                                     class="modal-dialog vh-100  modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
                                     <div class="modal-content vh-100">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Manage Month Days</h5>
+                                            <h5 class="modal-title" id="managmonthdays">Manage Month Days</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -58,7 +58,7 @@
                                             <form action="{{url_for('dashboard', username=username)}}" method="POST"
                                             id="monthdata" class="pb-4">
 
-                                            <h6 class="modal-title pt-4" id="exampleModalLabel">ADD Holidays</h6>
+                                            <h6 class="modal-title pt-4" id="addholidays">ADD Holidays</h6>
 
                                             <div class="modal-body inline">
 
@@ -199,7 +199,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-8 mt-1 text-center">
-                                                        <h4 class="card-title">Employees on Training</h4>
+                                                        <h4 class="card-title">Employees on Internship</h4>
                                                         <br>
                                                         <h1 class="mt-0">{{ dashboard_data['all_employees']['emp_on_training'] }}</h1>
                                                     </div>
@@ -244,6 +244,12 @@
                                                                         <li style="color:black;"></li>
                                                                     </td>
                                                                     <td class="ms-1 text-start">Internship</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-end">
+                                                                        <li style="color:black;"></li>
+                                                                    </td>
+                                                                    <td class="ms-1 text-start">Probation</td>
                                                                 </tr>
 
 
@@ -463,9 +469,9 @@
         new Chart(document.getElementById("chartjs-dashboard-pie"), {
             type: "pie",
             data: {
-                labels: ["Fulltime", "Internship", "Trainee"],
+                labels: ["Fulltime", "Internship", "Trainee", "Probation",],
                 datasets: [{
-                    data: [{{ dashboard_data['employee_overview']['Employee'] }}, {{ dashboard_data['employee_overview']['Internship'] }}, {{ dashboard_data['employee_overview']['Trainee'] }}],
+                    data: [{{ dashboard_data['employee_overview']['Employee'] }}, {{ dashboard_data['employee_overview']['Internship'] }}, {{ dashboard_data['employee_overview']['Trainee'] }}, {{ dashboard_data['employee_overview']['Probation'] }}],
                     backgroundColor: [
                         window.theme.primary,
                         window.theme.warning,
@@ -511,14 +517,24 @@
                 datasets: [{
                     data: Object.values( department_wise_emp ),
                     backgroundColor: [
-                
-                        window.theme.warning,
-                        window.theme.danger,
-                        window.theme.primary,
-                        window.theme.info,
-                        window.theme.secondary,
-                        window.theme.success,
-
+                    window.theme.primary,
+                    window.theme.secondary,
+                    window.theme.dark,
+                    window.theme.muted,
+                    window.theme.accent,
+                    window.theme.highlight,
+                    window.theme.neutral,
+                    window.theme.crimson,
+                    window.theme.gold,
+                    window.theme.emerald,
+                    window.theme.sapphire,
+                    window.theme.coral,
+                    window.theme.lime,
+                    window.theme.amethyst,
+                    window.theme.turquoise,
+                    window.theme.warning,
+                    window.theme.danger,
+                    window.theme.success,
 
                     ],
                     borderWidth: 5

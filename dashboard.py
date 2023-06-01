@@ -37,7 +37,7 @@ class Dashboard():
                 dt2 = datetime.today().date()
                 dt1 = datetime.strptime(leave.id, '%Y-%m-%d')
                 diff = (dt2.year - dt1.year) * 12 + (dt2.month - dt1.month)
-                if diff < 2:
+                if diff < 1:
                     employee_data['leaves'] = leave.get('fromdate')
             if leave.id != 'total_leaves':
                 total_leaves += int(leave.get('days'))
@@ -62,7 +62,7 @@ class Dashboard():
             total_leaves[result['name']] = result['total_leaves']
         return employee_on_leave, total_leaves, employee_birthday, employee_anniversary
 
-    from multiprocessing.pool import ThreadPool
+
 
     def all_data(self, companyname):
         user_ref = self.db.collection(companyname).document(u'employee').collection('employee')
@@ -74,10 +74,10 @@ class Dashboard():
             return int(len(user_ref.where('designation', '==', designation).get()))
 
         def count_employees_on_probation():
-            return count_employees_by_designation('Employee')
+            return count_employees_by_designation('Probation')
 
         def count_employees_on_training():
-            return count_employees_by_designation('Intern') + count_employees_by_designation('Trainee')
+            return count_employees_by_designation('Interns')
 
         def count_employees_by_experience_range(start, end):
             return sum(
@@ -109,9 +109,10 @@ class Dashboard():
             'emp_on_training': count_employees_on_training()
         }
         employee_overview = {
-            'Internship': count_employees_by_designation('Intern'),
+            'Internship': count_employees_by_designation('Interns'),
             'Trainee': count_employees_by_designation('Trainee'),
-            'Employee': count_employees_by_designation('Employee')
+            'Employee': count_employees_by_designation('Employee'),
+            'Probation': count_employees_by_designation('Probation'),
         }
         exprience_list = {
             '0 to 1': experience_counts[0],

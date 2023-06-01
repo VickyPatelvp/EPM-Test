@@ -32,11 +32,10 @@ import os
 app = Flask(__name__)
 app.secret_key = 'tO$&!|0wkamvVia0?n$NqIRVWOG'
 app.config['SESSION_TYPE'] = 'filesystem'
-
+app.permanent_session_lifetime = datetime.timedelta(hours=24)
 # USE A SERVICE ACCOUNT
 cred = credentials.Certificate('empoyee-payroll-system-firebase-adminsdk-5h89d-1602329ca8.json')
 db = firestore.client()
-
 leaveobj = Leavemanage(db)
 dept = Department(db)
 update_obj = Update_information(db)
@@ -46,11 +45,9 @@ login_obj = Login(db)
 moth_count = MonthCount()
 mail_obj = Mail()
 companyname='alian_software'
-
 # Testing path
 # C:/Users/alian/Desktop/Testing
         # C:/Users/alian/Downloads/my_file.xlsx
-
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -77,11 +74,9 @@ def login():
     collections = db.collections()
     for collection in collections:
         company_list.append(collection.id)
-
     ''' LOGIN PAGE '''
     url = f'/'
     return render_template('login.html', responce=responce, url=url, company_list=company_list)
-
 
 @app.route('/forgot_password', methods=["POST", "GET"])
 def forgot_password():
@@ -109,7 +104,6 @@ def forgot_password():
                                              company_mail=company_mail, auth_password=auth_password)
 
     return redirect(url_for('login'))
-
 
 @app.route('/success', methods=["POST", "GET"])
 def success():
@@ -148,11 +142,13 @@ def dashboard(username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    # Check the current date`
-
-    if datetime.datetime.now().day == 1 and ('token' not in session) :
-        SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
+    # Check the current date
+    if datetime.datetime.now().day == 1 and 'session_leave' not in session:
         leaveobj.leave_add(companyname)
+        session['session_leave'] = datetime.datetime.now()
+        print("create session Variable")
+
+
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
 
         leaveobj.leave_reset(companyname)
@@ -166,7 +162,6 @@ def dashboard(username):
         users_ref = db.collection(companyname).document('employee').collection('employee')
         for emp_doc in users_ref.stream():
             employee_data.append(executor.submit(dashboard_obj._get_employee_data, emp_doc))
-
     employee_on_leave, total_leaves, employee_birthday, employee_anniversary = {}, {}, {}, {}
     for future in concurrent.futures.as_completed(employee_data):
         result = future.result()
@@ -185,6 +180,11 @@ def dashboard(username):
 
     total_leaves = sorted(total_leaves.items(), key=lambda x: x[1], reverse=True)
     total_leaves = dict(total_leaves[:5])
+    print(employee_on_leave)
+    # Get current month and year
+
+    # Print the resulting dictionary
+
     return render_template('dashboard.html', employee_on_leave=employee_on_leave, total_leaves=total_leaves,
                            employee_birthday=employee_birthday, employee_anniversary=employee_anniversary,
                            moath_data=moath_data,holidays=holidays, username=username,dashboard_data=dashboard_data)
@@ -235,6 +235,12 @@ def excel_sheet_path(username):
 
 @app.route('/<username>/result', methods=['POST', 'GET'])
 def add(username):
+
+
+
+
+
+
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
     create = Create(db, companyname)
     create.result()
@@ -243,7 +249,14 @@ def add(username):
     company_mail = auth_data['AdminID']
     auth_password = auth_data['auth_password']
     mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
-    return redirect(url_for('employee_list',username=username))
+
+
+
+
+
+
+
+    return redirect(url_for('employee_list',username=username,responce=responce))
 
 
 @app.route('/<username>/<id>/delete', methods=['POST', 'GET'])
@@ -255,17 +268,26 @@ def delete_employee( username, id):
 
 @app.route('/register_employee', methods=['POST', 'GET'])
 def employee_register_by_mail():
+    responce = ''
     if request.method == 'POST':
-        create = Create(db, companyname)
-        create.result()
-        email = request.form.get('email')
-        auth_data = db.collection(companyname).document('admin').get().to_dict()
-        company_mail = auth_data['AdminID']
-        auth_password = auth_data['auth_password']
-        password = request.form.get('password')
-        mail_obj.employee_registered_mail(email,password, company_mail, auth_password)
+        data = request.form
+        email = data["email"]
 
-        return redirect(url_for('login'))
+        doc = db.collection(companyname).document("employee").collection('employee').where('email', "==", email).get()
+        if len(doc) > 0:
+            responce = 'Already Email Exist Try Different Email'
+        else:
+
+            ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
+            create = Create(db, companyname)
+            create.result()
+            employee_mail = request.form.get('email')
+            auth_data = db.collection(companyname).document('admin').get().to_dict()
+            company_mail = auth_data['AdminID']
+            auth_password = auth_data['auth_password']
+            mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
+
+            return redirect(url_for('login'))
 
     def get_department_data():
         department = (db.collection(companyname).document(u'department').get()).to_dict()
@@ -275,7 +297,7 @@ def employee_register_by_mail():
         department_data = executor.submit(get_department_data)
     department = get_department_data()
     return render_template('add_employee.html',department=department,
-                           department_data=department_data)
+                           department_data=department_data,responce=responce)
 
 @app.route('/create_excel')
 def create_excel():
@@ -473,9 +495,11 @@ def salary( username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    if datetime.datetime.now().day == 1:
-        SalaryCalculation(db,companyname).generate_salary( workingday=working_days)
+    if datetime.datetime.now().day == 1 and 'session_salary' not in session:
+        SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
         leaveobj.leave_add(companyname)
+        session['session_salary'] = datetime.datetime.now()
+        print("create session Variable")
 
     if request.method == 'POST':
         form = request.form

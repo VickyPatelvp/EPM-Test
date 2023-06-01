@@ -567,6 +567,9 @@ enctype="multipart/form-data">
                                                                             <input type="email" class="form-control"
                                                                                    name="email" id="email" value=""
                                                                                    placeholder="Enter Text" required>
+                                                                            {% if responce %}
+                                                                               <span style="color : red;"> {{responce}}</span>
+                                                                            {% endif %}
                                                                         </div>
                                                                         <span class="pmd-textfield-focused"></span>
                                                                     </div>
