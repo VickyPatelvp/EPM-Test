@@ -15,7 +15,7 @@ class SalaryCalculation():
 
         # current_month = datetime.datetime.now().month
 
-        current_month =12
+        current_month =datetime.datetime.today().month
 
         if current_month == 1:
             month = 13 - current_month

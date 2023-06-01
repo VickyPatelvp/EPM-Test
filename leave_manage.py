@@ -13,7 +13,8 @@ class Leavemanage():
             leaves_ref.set({
                 'SL':(float(leaves['SL']) + 0.5),
                 'PL': (float(leaves['PL']) + 1),
-                'CL': (float(leaves['CL']) + 0.5)
+                'CL': (float(leaves['CL']) + 0.5),
+                'LWP':0
             })
 
     def leave_reset(self, companyname):
@@ -24,7 +25,9 @@ class Leavemanage():
             leaves_ref.set({
                 'SL': 0.5,
                 'PL': 1,
-                'CL': 0.5
+                'CL': 0.5,
+                'LWP':0
+
             })
 
     def take_leave(self, ref_obj, data=None):

@@ -227,6 +227,3 @@ class Mail():
         text = message.as_string()
         session.sendmail(MY_EMAIL, TO_EMAIL, text)
         session.quit()
-
-
-

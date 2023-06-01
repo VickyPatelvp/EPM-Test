@@ -148,11 +148,13 @@ def dashboard(username):
     holidays = db.collection(companyname).document('holidays').get().to_dict()
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
-    # Check the current date
-    if datetime.datetime.now().day == 1:
+    # Check the current date`
+
+    if datetime.datetime.now().day == 1 and ('token' not in session) :
         SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
         leaveobj.leave_add(companyname)
     if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
+
         leaveobj.leave_reset(companyname)
 
     ''' DISPLAY DASHBOARD '''
@@ -274,7 +276,6 @@ def employee_register_by_mail():
     department = get_department_data()
     return render_template('add_employee.html',department=department,
                            department_data=department_data)
-
 
 @app.route('/create_excel')
 def create_excel():
