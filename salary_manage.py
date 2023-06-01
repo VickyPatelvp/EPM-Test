@@ -8,11 +8,13 @@ class Salarymanage():
         self.db = db
 
     def salary_update(self, companyname, empid, salid, data=None):
+
         data_dict = {}
         for key, value in data.items():
             data_dict.update({key: value})
         self.db.collection(companyname).document('employee').collection('employee').document(empid).collection(
             'salaryslips').document(salid).update(data_dict)
+
 
     from concurrent.futures import ThreadPoolExecutor
 

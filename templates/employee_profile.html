@@ -3,7 +3,7 @@
 {% block head %}
 {{ super() }}
 
-  
+
 {% endblock %}
 {% block content %}
 
@@ -120,8 +120,9 @@
                                                                                                 id="home2-tab"
                                                                                                 data-bs-toggle="tab"
                                                                                                 data-bs-target="#home2"
-                                                                                                type="button"style='background-color: #fff !important;'
-                                                                                                                                                                                               role="tab"
+                                                                                                type="button"
+                                                                                                style='background-color: #fff !important;'
+                                                                                                role="tab"
                                                                                                 aria-controls="home"
                                                                                                 aria-selected="true">
                                                                                             <h5> Personal
@@ -135,7 +136,8 @@
                                                                                                 id="contact2-tab"
                                                                                                 data-bs-toggle="tab"
                                                                                                 data-bs-target="#contact2"
-                                                                                                type="button"style='background-color: #fff !important;'
+                                                                                                type="button"
+                                                                                                style='background-color: #fff !important;'
                                                                                                 role="tab"
                                                                                                 aria-controls="contact"
                                                                                                 aria-selected="false">
@@ -172,156 +174,176 @@
                                                                                                                             Personal
                                                                                                                             Details</h3>
                                                                                                                     </div>
-                                                                                                                       <div class=" col-sm-12 col-lg-6 col-md-6">
-                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-md-5 col-sm-4"
-                                                                                                                                   for="name" style="color: #455056;"><b>Name</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7 ">
-                                                                                                                                <input type="text"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="name"
-                                                                                                                                       id="name"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder='{{ data["personal_data"]["employeeName"] }}' >
+                                                                                                                    <div class=" col-sm-12 col-lg-6 col-md-6">
+                                                                                                                        <div class="col-12 col-sm-12 col-md-12">
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-md-5 col-sm-4"
+                                                                                                                                       for="name"
+                                                                                                                                       style="color: #455056;"><b>Name</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7 ">
+                                                                                                                                    <input type="text"
+                                                                                                                                           class="form-control"
+                                                                                                                                           name="name"
+                                                                                                                                           id="name"
+                                                                                                                                           value=""
+                                                                                                                                           placeholder='{{ data["personal_data"]["employeeName"] }}'>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
                                                                                                                             </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1 ">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                   for="department"style="color: #455056;"><b>Department</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <select name="department"
-                                                                                                                                        id="department"
-                                                                                                                                        class="form-control" >
-                                                                                                                                 <option value="">
-                                                                                                                                        Select
-                                                                                                                                    </option>
-                                                                                                                                    {% if department != None %}
-                                                                                                                                    {% for i in department%}
-                                                                                                                                    <option value="{{i}}">{{ i }}</option>
-                                                                                                                                    {% endfor %}
-                                                                                                                                    {% endif %}
-                                                                                                                                </select>
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1 ">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       for="department"
+                                                                                                                                       style="color: #455056;"><b>Department</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <select name="department"
+                                                                                                                                            id="department"
+                                                                                                                                            class="form-control">
+                                                                                                                                        <option value="">
+                                                                                                                                            Select
+                                                                                                                                        </option>
+                                                                                                                                        {%
+                                                                                                                                        if
+                                                                                                                                        department
+                                                                                                                                        !=
+                                                                                                                                        None
+                                                                                                                                        %}
+                                                                                                                                        {%
+                                                                                                                                        for
+                                                                                                                                        i
+                                                                                                                                        in
+                                                                                                                                        department%}
+                                                                                                                                        <option value="{{i}}">
+                                                                                                                                            {{
+                                                                                                                                            i
+                                                                                                                                            }}
+                                                                                                                                        </option>
+                                                                                                                                        {%
+                                                                                                                                        endfor
+                                                                                                                                        %}
+                                                                                                                                        {%
+                                                                                                                                        endif
+                                                                                                                                        %}
+                                                                                                                                    </select>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
                                                                                                                             </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                   for="jobPosition"style="color: #455056;"><b>Job
-                                                                                                                                Position</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <select name="jobPosition"
-                                                                                                                                        id="jobPosition"
-                                                                                                                                        class="form-control" >
-                                                                                                                                <option value="">
-                                                                                                                                        Select
-                                                                                                                                    </option>
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       for="jobPosition"
+                                                                                                                                       style="color: #455056;"><b>Job
+                                                                                                                                    Position</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <select name="jobPosition"
+                                                                                                                                            id="jobPosition"
+                                                                                                                                            class="form-control">
+                                                                                                                                        <option value="">
+                                                                                                                                            Select
+                                                                                                                                        </option>
 
-                                                                                                                                </select>
+                                                                                                                                    </select>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
                                                                                                                             </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                   for="doj"style="color: #455056;"><b>DOJ</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <input type="date"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="doj"
-                                                                                                                                       id="doj"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder="Select" >
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       for="doj"
+                                                                                                                                       style="color: #455056;"><b>DOJ</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <input type="date"
+                                                                                                                                           class="form-control"
+                                                                                                                                           name="doj"
+                                                                                                                                           id="doj"
+                                                                                                                                           value=""
+                                                                                                                                           placeholder="Select">
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
                                                                                                                             </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                    </div>
-                                                                                                                </div>
-
-                                                                                                                <div class=" col-sm-12 col-lg-6 col-md-6">
-
-                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
-
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"  for="password"
-                                                                                                                                  style="color: #455056;" ><b>Password</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <input type="text"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="password"
-                                                                                                                                       id="password"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder='{{ data["personal_data"]["password"] }}' >
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                   for="designation"style="color: #455056;"><b>Designation</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <select name="designation"
-                                                                                                                                        id="designation"
-                                                                                                                                        class="form-control" >
-                                                                                                                                    <option value="">
-                                                                                                                                        Select
-                                                                                                                                    </option>
-                                                                                                                                    <option value="Employee">
-                                                                                                                                        Employee
-                                                                                                                                    </option>
-                                                                                                                                    <option value="Trainee">
-                                                                                                                                        Trainee
-                                                                                                                                    </option>
-                                                                                                                                    <option value="Interns">
-                                                                                                                                        Interns
-                                                                                                                                    </option>
-                                                                                                                                    <option value="Probation">
-                                                                                                                                        Probation
-                                                                                                                                    </option>
-                                                                                                                                </select>
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                      <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                  style="color: #455056;" ><b>Salary</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <input type="text"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="salary"
-                                                                                                                                       id="salary"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder='{{ data["personal_data"]["salary"] }}'>
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
-                                                                                                                            <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                 style="color: #455056;"  ><b>Experience</b></label>
-                                                                                                                            <div class="col-sm-8 col-md-7">
-                                                                                                                                <input type="text"
-
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="currentExperience"
-                                                                                                                                       id="currentExperience"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder='{{ data["personal_data"]["currentExperience"] }}' >
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                            <br>
                                                                                                                         </div>
                                                                                                                     </div>
-                                                                                                                </div>
+
+                                                                                                                    <div class=" col-sm-12 col-lg-6 col-md-6">
+
+                                                                                                                        <div class="col-12 col-sm-12 col-md-12">
+
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       for="password"
+                                                                                                                                       style="color: #455056;"><b>Password</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <input type="text"
+                                                                                                                                           class="form-control"
+                                                                                                                                           name="password"
+                                                                                                                                           id="password"
+                                                                                                                                           value=""
+                                                                                                                                           placeholder='{{ data["personal_data"]["password"] }}'>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
+                                                                                                                            </div>
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       for="designation"
+                                                                                                                                       style="color: #455056;"><b>Designation</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <select name="designation"
+                                                                                                                                            id="designation"
+                                                                                                                                            class="form-control">
+                                                                                                                                        <option value="">
+                                                                                                                                            Select
+                                                                                                                                        </option>
+                                                                                                                                        <option value="Employee">
+                                                                                                                                            Employee
+                                                                                                                                        </option>
+                                                                                                                                        <option value="Trainee">
+                                                                                                                                            Trainee
+                                                                                                                                        </option>
+                                                                                                                                        <option value="Interns">
+                                                                                                                                            Interns
+                                                                                                                                        </option>
+                                                                                                                                        <option value="Probation">
+                                                                                                                                            Probation
+                                                                                                                                        </option>
+                                                                                                                                    </select>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
+                                                                                                                            </div>
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       style="color: #455056;"><b>Salary</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <input type="text"
+                                                                                                                                           class="form-control"
+                                                                                                                                           name="salary"
+                                                                                                                                           id="salary"
+                                                                                                                                           value=""
+                                                                                                                                           placeholder='{{ data["personal_data"]["salary"] }}'>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
+                                                                                                                            </div>
+                                                                                                                            <br>
+                                                                                                                            <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
+                                                                                                                                <label class="col-form-label control-label col-sm-4 col-md-5"
+                                                                                                                                       style="color: #455056;"><b>Experience</b></label>
+                                                                                                                                <div class="col-sm-8 col-md-7">
+                                                                                                                                    <input type="text"
+
+                                                                                                                                           class="form-control"
+                                                                                                                                           name="currentExperience"
+                                                                                                                                           id="currentExperience"
+                                                                                                                                           value=""
+                                                                                                                                           placeholder='{{ data["personal_data"]["currentExperience"] }}'>
+                                                                                                                                </div>
+                                                                                                                                <span class="pmd-textfield-focused"></span>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
 
                                                                                                                 </div>
-
-
-
 
 
                                                                                                                 <hr
@@ -344,7 +366,7 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                    type='email'
+                                                                                                                                            type='email'
                                                                                                                                             name="email"
                                                                                                                                             class="form-control"
                                                                                                                                             style="background-color: #FFFFFF"
@@ -368,7 +390,8 @@
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
                                                                                                                                             class="form-control"
-                                                                                                                                            name="phoneNo"pattern="\d+"
+                                                                                                                                            name="phoneNo"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             placeholder="{{ data['personal_data']['phoneNo'] }}">
                                                                                                                                 </td>
@@ -401,7 +424,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="[A-Za-z]+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="[A-Za-z]+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="bankName"
                                                                                                                                             placeholder='{{ data["personal_data"]["bankName"] }}'>
@@ -415,7 +439,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="[A-Za-z]+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="[A-Za-z]+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="accountHolderName"
                                                                                                                                             placeholder='{{ data["personal_data"]["accountHolderName"] }}'>
@@ -437,7 +462,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="accountNumber"
                                                                                                                                             placeholder='{{ data["personal_data"]["accountNumber"] }}'>
@@ -472,7 +498,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="aadharCardNo"
                                                                                                                                             placeholder='{{ data["personal_data"]["aadharCardNo"] }}'>
@@ -485,7 +512,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             passportNo
                                                                                                                                             placeholder='{{ data["personal_data"]["passportNo"] }}'>
@@ -508,7 +536,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control" pattern="^[a-zA-Z0-9]*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^[a-zA-Z0-9]*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="panCardNo"
                                                                                                                                             placeholder='{{ data["personal_data"]["panCardNo"] }}'>
@@ -543,7 +572,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^[a-zA-Z0-9]*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^[a-zA-Z0-9]*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="pfAccountNo"
                                                                                                                                             placeholder='{{ data["personal_data"]["pfAccountNo"] }}'>
@@ -556,7 +586,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="esicNo"
                                                                                                                                             placeholder='{{ data["personal_data"]["esicNo"] }}'>
@@ -578,7 +609,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="uanNo"
                                                                                                                                             placeholder='{{ data["personal_data"]["uanNo"] }}'>
@@ -646,7 +678,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="\d+"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hlapplicationno"
                                                                                                                                             placeholder='{{ data["tds_data"]["hlapplicationno"] }}'>
@@ -659,7 +692,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hlamount"
                                                                                                                                             placeholder='{{ data["tds_data"]["hlamount"] }}'>
@@ -696,7 +730,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^[a-zA-Z0-9]*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^[a-zA-Z0-9]*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hlname"
                                                                                                                                             placeholder='{{ data["tds_data"]["hlname"] }}'>
@@ -833,7 +868,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hipannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["hipannual"] }}'>
@@ -919,7 +955,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hisannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["hisannual"] }}'>
@@ -1005,7 +1042,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="hifannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["hifannual"] }}'>
@@ -1078,7 +1116,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="ihlannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["ihlannual"] }}'>
@@ -1150,7 +1189,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="ahrmonth"
                                                                                                                                             placeholder='{{ data["tds_data"]["ahrmonth"] }}'>
@@ -1245,7 +1285,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="elssannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["elssannual"] }}'>
@@ -1300,7 +1341,8 @@
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
-                                                                                                                                            class="form-control"pattern="^\d*\.?\d*$"
+                                                                                                                                            class="form-control"
+                                                                                                                                            pattern="^\d*\.?\d*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="tfannual"
                                                                                                                                             placeholder='{{ data["tds_data"]["tfannual"] }}'>
@@ -1416,7 +1458,7 @@
                     <div class="pt-3">
                         <p class="p-2  error">
 
-                         <b>leave Application for </b>:   {{leave_date}}
+                            <b>leave Application for </b>: {{leave_date}}
                         </p>
 
                     </div>
@@ -1431,13 +1473,15 @@
                                     <div class="col-lg-12">
                                         <div class="card mb-4">
                                             <div class="row">
-                                                <div class="col-2">
-                                                    <div class="card-body text-start">
-                                                        <img src='{{data["personal_data"]["photo"]}}'
-                                                             alt="avatar" class="rounded-circle img-fluid"
-                                                             style="width: 150px;">
-                                                    </div>
+                                                <div class="col-1">
                                                 </div>
+                                                <!--                                                <div class="col-2">-->
+                                                <!--                                                    <div class="card-body text-start">-->
+                                                <!--                                                        <img src='{{data["personal_data"]["photo"]}}'-->
+                                                <!--                                                             alt="avatar" class="rounded-circle img-fluid"-->
+                                                <!--                                                             style="width: 150px;">-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
 
 
                                                 <!-- Basic Information -->
@@ -1469,12 +1513,12 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">Work Email</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["email"]
-                                                                        }}
+                                                                    <th class="col-3">Current Experience
+                                                                    </th>
+                                                                    <td class="col-3">{{
+                                                                        data["personal_data"]["currentExperience"] }}
                                                                     </td>
                                                                 </tr>
-
                                                                 </thead>
                                                                 <tbody>
                                                             </table>
@@ -1502,13 +1546,6 @@
                                                                         }}
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <th class="col-3">Current Experience
-                                                                    </th>
-                                                                    <td class="col-3">{{
-                                                                        data["personal_data"]["currentExperience"] }}
-                                                                    </td>
-                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
                                                             </table>
@@ -1532,7 +1569,8 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                                             data-bs-target="#home" type="button" role="tab"
-                                                            aria-controls="home" style='background-color: #fff !important;'
+                                                            aria-controls="home"
+                                                            style='background-color: #fff !important;'
                                                             aria-selected="true">
                                                         <h5> Personal Information</h5>
                                                     </button>
@@ -1541,7 +1579,8 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                                             data-bs-target="#profile" type="button" role="tab"
-                                                            aria-controls="profile"style='background-color: #fff !important;'
+                                                            aria-controls="profile"
+                                                            style='background-color: #fff !important;'
                                                             aria-selected="false">
                                                         <h5>
                                                             Payslip Information</h5>
@@ -1550,7 +1589,8 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
                                                             data-bs-target="#contact" type="button" role="tab"
-                                                            aria-controls="contact"style='background-color: #fff !important;'
+                                                            aria-controls="contact"
+                                                            style='background-color: #fff !important;'
                                                             aria-selected="false">
                                                         <h5>TDS Data</h5>
                                                     </button>
@@ -1848,9 +1888,14 @@
 
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April', '005': 'May',
-                                                                                '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
-                                                                                '0011': 'November', '0012': 'December'} %}
+                                                                                {% set month_dict = {'001': 'January',
+                                                                                '002': 'February', '003': 'March',
+                                                                                '004': 'April', '005': 'May',
+                                                                                '006': 'June', '007': 'July', '008':
+                                                                                'August', '009': 'September', '0010':
+                                                                                'October',
+                                                                                '0011': 'November', '0012': 'December'}
+                                                                                %}
                                                                                 {% for i in data["salary_data"] %}
                                                                                 <tr class="table-light">
                                                                                     <td scope="col">
@@ -1865,7 +1910,8 @@
                                                                                     <td scope="col">
                                                                                         {{data["salary_data"][i]['netSalary']}}
                                                                                     </td>
-                                                                                    <td scope="col"><a href="/{{username}}/pdf/{{ data['personal_data']['userID'] }}/{{i}}"><i
+                                                                                    <td scope="col"><a
+                                                                                            href="/{{username}}/pdf/{{ data['personal_data']['userID'] }}/{{i}}"><i
                                                                                             class="fa fa-download"></i></a>
                                                                                     </td>
                                                                                 </tr>
@@ -2442,7 +2488,8 @@
                                             <ul class="nav nav-tabs" id="myTab2" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="leave-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#leave" type="button" role="tab"style='background-color: #fff !important;'
+                                                            data-bs-target="#leave" type="button" role="tab"
+                                                            style='background-color: #fff !important;'
                                                             aria-controls="leave" aria-selected="false">
                                                         <h5>
                                                             Leave Information</h5>
@@ -2865,8 +2912,8 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-  </script>
 
+</script>
 
 
 <script>
@@ -2912,6 +2959,7 @@ document.addEventListener("DOMContentLoaded", function() {
     salaryInput.value = selectedSalary;
     salaryInput.style.display = "block";
   });
+
 </script>
 
 <!--Script For Update detail -->
@@ -2953,6 +3001,7 @@ document.addEventListener("DOMContentLoaded", function() {
             xhr.send(fData);
         });
     }
+
 
 </script>
 

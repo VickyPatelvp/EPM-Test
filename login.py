@@ -17,7 +17,7 @@ class Login():
                if (docs['AdminID'] == data_dict['email']) and str((docs['password']) == str(data_dict['password'])):
 
                    return 'Admin'
-        doc = self.db.collection(comapyname).document("employee").collection('employee').where('email', "==",data_dict['email']).where('password', "==", str(data_dict['password'])).get()
+        doc = self.db.collection(comapyname).document("employee").collection('employee').where('userID', "==",data_dict['email']).where('password', "==", str(data_dict['password'])).get()
         # docs = self.db.collection("alian_software").document("employee").collection('employee').where('email', "==", data_dict['email'] ).where('password',"==",str(data_dict['password'])).get()
 
         len(doc)

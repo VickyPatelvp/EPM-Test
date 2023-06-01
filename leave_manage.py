@@ -9,9 +9,9 @@ class Leavemanage():
         docs = self.db.collection(companyname).document(u'employee').collection('employee')
         for doc in docs.get():
             leaves_ref = docs.document(doc.id).collection('leaveMST').document('total_leaves')
-            leaves=leaves_ref.get().to_dict()
+            leaves = leaves_ref.get().to_dict()
             leaves_ref.set({
-                'SL':(float(leaves['SL']) + 0.5),
+                'SL': (float(leaves['SL']) + 0.5),
                 'PL': (float(leaves['PL']) + 1),
                 'CL': (float(leaves['CL']) + 0.5)
             })
@@ -43,7 +43,11 @@ class Leavemanage():
                 ref_obj.document('total_leaves').update({
                     'LWP': (leaves['LWP'] + int(data_dict['days']))
                 })
-            data = ref_obj.document(data_dict['applydate']).set(data_dict)
+
+            leave_id = len(ref_obj.get())
+            print(data_dict)
+            doc_name = (f'leave00{leave_id}')
+            data = ref_obj.document(doc_name).set(data_dict)
 
     def take_leave_edit(self, ref_obj, data=None):
         if data == None:
@@ -59,10 +63,15 @@ class Leavemanage():
                 ref_obj.document('total_leaves').update({
                     'LWP': (leaves['LWP'] + int(data_dict['days']))
                 })
-            data = ref_obj.document(data_dict['applydate']).set(data_dict)
+
+            leave_id = len(ref_obj.get())
+            print(data_dict)
+            doc_name = (f'leave00{leave_id}')
+            data = ref_obj.document(doc_name).set(data_dict)
 
     def get_total_leave(self, ref_obj):
-        data = ref_obj.document('total_leaves').get().to_dict()
+        data = ref_obj.document('total_leaves').get()
+        data= data.to_dict()
         return data
 
     def leave_list(self, ref_obj):
