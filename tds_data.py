@@ -24,9 +24,9 @@ class TDSData():
 
         else:
 
-            # current_month = float(datetime.date.today().month)
+            current_month = float(datetime.date.today().month)
 
-            current_month = 12
+            # current_month = 12
 
             # Annual Salary of Employee
 

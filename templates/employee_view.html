@@ -1508,13 +1508,14 @@ flex-direction: column;">
                                     <div class="col-lg-12">
                                         <div class="card mb-4">
                                             <div class="row">
-                                                <div class="col-2">
-                                                    <div class="card-body text-start">
-                                                        <img src='{{data["personal_data"]["photo"]}}'
-                                                             alt="avatar" class="rounded-circle img-fluid"
-                                                             style="width: 150px;">
-                                                    </div>
-                                                </div>
+                                                <div class="col-1"></div>
+<!--                                                <div class="col-2">-->
+<!--                                                    <div class="card-body text-start">-->
+<!--                                                        <img src='{{data["personal_data"]["photo"]}}'-->
+<!--                                                             alt="avatar" class="rounded-circle img-fluid"-->
+<!--                                                             style="width: 150px;">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
 
 
                                                 <!-- Basic Information -->
@@ -1546,15 +1547,10 @@ flex-direction: column;">
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">Work Email</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["email"]
-                                                                        }}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="col-3">Salary</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
-                                                                        }}
+                                                                    <th class="col-3">Current Experience
+                                                                    </th>
+                                                                    <td class="col-3">{{
+                                                                        data["personal_data"]["currentExperience"] }}
                                                                     </td>
                                                                 </tr>
                                                                 </thead>
@@ -1572,9 +1568,10 @@ flex-direction: column;">
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">Manager</th>
-                                                                    <td class="col-3">{{
-                                                                        data["personal_data"]["manager"] }}
+                                                                <tr>
+                                                                    <th class="col-3">Salary</th>
+                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
+                                                                        }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1582,13 +1579,6 @@ flex-direction: column;">
                                                                     </th>
                                                                     <td class="col-3">{{ data["personal_data"]["doj"]
                                                                         }}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="col-3">Current Experience
-                                                                    </th>
-                                                                    <td class="col-3">{{
-                                                                        data["personal_data"]["currentExperience"] }}
                                                                     </td>
                                                                 </tr>
                                                                 </thead>
@@ -1930,6 +1920,9 @@ flex-direction: column;">
 
                                                                                 </thead>
                                                                                 <tbody>
+                                                                                {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April',
+                    '005': 'May', '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
+                    '0011': 'November', '0012': 'December'} %}
                                                                                 {% for i in data["salary_data"] %}
 
                                                                                 <tr class="table-light">
@@ -1938,7 +1931,7 @@ flex-direction: column;">
                                                                                         {{i}}
                                                                                     </td>
                                                                                     <td scope="col">
-                                                                                        {{data["salary_data"][i]['month']}}
+                                                                                        {{ month_dict[i[3:]] }}
                                                                                     </td>
                                                                                     <td scope="col">
                                                                                         {{data["salary_data"][i]['year']}}

@@ -13,7 +13,7 @@ class SalaryCalculation():
 
         working_days = workingday
 
-        # current_month = datetime.datetime.now().month
+        current_month = datetime.datetime.now().month
 
         current_month =datetime.datetime.today().month
 
@@ -26,18 +26,31 @@ class SalaryCalculation():
         if current_month == 1:
             year = year - 1
         else:
-            year=year
+            year = year
 
         salary_percentage = (self.db.collection(self.companyname).document('salary_calc').get()).to_dict()
 
         employee_list = {}
 
-        employee_data = (self.db.collection(self.companyname).document('employee').collection('employee').stream())
+        docs = self.db.collection(self.companyname).document(u'employee').collection('employee').stream()
+        for doc in docs:
 
-        for doc in employee_data:
-            employee_list.update({doc.id: doc.to_dict()})
+            if 'user_status' not in doc.to_dict():
+                self.db.collection(self.companyname).document('employee').collection('employee').document(doc.id).collection(
+                    'salaryslips').document(f'sal00{current_month-1}').delete()
+                employee_list.update({doc.id: doc.to_dict()})
+            elif doc.to_dict()['user_status'] != 'disable':
+                self.db.collection(self.companyname).document('employee').collection('employee').document(doc.id).collection(
+                    'salaryslips').document(f'sal00{current_month-1}').delete()
+                employee_list.update({doc.id: doc.to_dict()})
+            else:
+                self.db.collection(self.companyname).document('employee').collection('employee').document(doc.id).collection(
+                    'salaryslips').document(f'sal00{current_month-1}').delete()
 
-        for key,value in employee_list.items():
+        for employee in employee_list:
+            print(employee)
+
+        for key, value in employee_list.items():
 
             empid = key
 
@@ -49,7 +62,7 @@ class SalaryCalculation():
 
             lwp = 0
 
-            emp_basic_salary = round(float(emp_salary) , 2)
+            emp_basic_salary = round(float(emp_salary), 2)
 
             emp_hra = round(emp_basic_salary * (float(salary_percentage['hrapercentage'])/100), 2)
 

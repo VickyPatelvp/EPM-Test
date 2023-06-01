@@ -25,7 +25,10 @@ class Create():
 
         employee_data = (self.db.collection(self.companyname).document('employee').collection('employee').get())
 
-        last_id = int(employee_data[-1].to_dict()['userID'][3:])
+        if employee_data == None:
+            last_id = 0
+        else:
+            last_id = int(employee_data[-1].to_dict()['userID'][3:])
 
         new_id = ''
 
