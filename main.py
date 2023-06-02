@@ -191,13 +191,14 @@ def dashboard(username):
 
 @app.route('/<username>/employeelist', methods=['GET', 'POST'])
 def employee_list(username):
+
     # SENDING EMPLOYEE MAIL FOR ADD DETAILS
     if request.method == 'POST':
         employee_mail = request.form.get('new_email')
         auth_data = db.collection(companyname).document('admin').get().to_dict()
         company_mail = auth_data['AdminID']
         auth_password = auth_data['auth_password']
-        mail_obj.new_employee_mail(employee_mail, company_mail, auth_password)
+        mail_obj.new_employee_mail(email=employee_mail, company_mail=company_mail, auth_password=auth_password)
 
     ''' DISPLAY LIST OF EMPLOYEES IN COMPANY '''
 
@@ -238,27 +239,17 @@ def excel_sheet_path(username):
 @app.route('/<username>/result', methods=['POST', 'GET'])
 def add(username):
 
-
-
-
-
-
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
     create = Create(db, companyname)
     create.result()
     employee_mail = request.form.get('email')
+    new_id = request.form.get('userID')
     auth_data = db.collection(companyname).document('admin').get().to_dict()
     company_mail = auth_data['AdminID']
     auth_password = auth_data['auth_password']
-    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
+    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password, new_id=new_id)
 
-
-
-
-
-
-
-    return redirect(url_for('employee_list',username=username,responce=responce))
+    return redirect(url_for('employee_list',username=username))
 
 
 @app.route('/<username>/<id>/delete', methods=['POST', 'GET'])
@@ -270,6 +261,21 @@ def delete_employee(username, id):
 
 @app.route('/register_employee', methods=['POST', 'GET'])
 def employee_register_by_mail():
+
+    # GET ALL EMPLOYEES DETAILS
+    def get_employee_data():
+
+        docs = db.collection(companyname).document(u'employee').collection('employee').stream()
+        employee_list = {}
+        for doc in docs:
+            if 'user_status' not in doc.to_dict():
+                employee_list.update({doc.id: doc.to_dict()})
+            elif doc.to_dict()['user_status'] != 'disable':
+                employee_list.update({doc.id: doc.to_dict()})
+        return employee_list
+
+    data = get_employee_data()
+
     responce = ''
     if request.method == 'POST':
         data = request.form
@@ -299,7 +305,7 @@ def employee_register_by_mail():
         department_data = executor.submit(get_department_data)
     department = get_department_data()
     return render_template('add_employee.html',department=department,
-                           department_data=department_data,responce=responce)
+                           department_data=department_data, responce=responce, data=data)
 
 @app.route('/create_excel')
 def create_excel():

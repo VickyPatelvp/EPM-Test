@@ -60,7 +60,10 @@ class SalaryCalculation():
 
             emp_salary = emp_data['salary']
 
-            lwp = 0
+            total_leaves = (self.db.collection(self.companyname).document('employee').collection('employee').document(
+                empid).collection('leaveMST').document('total_leaves').get()).to_dict()
+
+            lwp = total_leaves['LWP']
 
             emp_basic_salary = round(float(emp_salary), 2)
 
