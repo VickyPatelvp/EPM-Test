@@ -239,27 +239,17 @@ def excel_sheet_path(username):
 @app.route('/<username>/result', methods=['POST', 'GET'])
 def add(username):
 
-
-
-
-
-
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
     create = Create(db, companyname)
     create.result()
     employee_mail = request.form.get('email')
+    new_id = request.form.get('userID')
     auth_data = db.collection(companyname).document('admin').get().to_dict()
     company_mail = auth_data['AdminID']
     auth_password = auth_data['auth_password']
-    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password)
+    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password, new_id=new_id)
 
-
-
-
-
-
-
-    return redirect(url_for('employee_list',username=username,responce=responce))
+    return redirect(url_for('employee_list',username=username))
 
 
 @app.route('/<username>/<id>/delete', methods=['POST', 'GET'])
