@@ -2736,7 +2736,13 @@
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                         <div class="from-group text-center p-4">
+
+                                                                                                                            <p class="error-message" id="errorMessage" style="color:red"></p>
+
+                                                                                                  
+
                                                                                                                             <button type="submit"
+                                                                                                                            id="submitButton"
                                                                                                                                     class="btn"
                                                                                                                                     style=" color: #fff !important  ;
                                                                                                                             background-color: #2f3990 !important;
@@ -2861,57 +2867,101 @@
 </div>
 
 </div>
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const fromdateInput = document.querySelector("[name='fromdate']");
-  const todateInput = document.querySelector("[name='todate']");
-  const applydateInput = document.querySelector("[name='applydate']");
 
-  fromdateInput.addEventListener("change", updateDays);
-  todateInput.addEventListener("change", updateDays);
-  applydateInput.addEventListener("change", updateDays);
+var leave_data = [
 
-  const form = document.querySelector("form");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+{% for id in leave_list %}
+{% if i!= 'total_leaves'%}
+{
+    'From Date':'{{leave_list[id]["fromdate"]}}',
+    'To Date':'{{leave_list[id]["todate"]}}'
+}
+{% if not loop.last %},{% endif %}
+{% endif %}
+{% endfor %}
+];
 
-    const type = document.querySelector("[name='type']").value;
-    const days = document.querySelector("[name='days']").value;
-    const applydate = applydateInput.value;
-    const fromdate = fromdateInput.value;
-    const todate = todateInput.value;
 
-    if (!type || !days || !applydate || !fromdate || !todate) {
-      alert("Please fill out all fields.");
-    } else if (new Date(applydate) >= new Date(fromdate) || new Date(fromdate) >= new Date(todate)) {
-      alert("Please select valid dates. The apply date should be before the from date and the from date should be before the to date.");
-    } else {
-      form.submit();
-    }
-  });
+    document.addEventListener("DOMContentLoaded", function() {
+      const fromdateInput = document.querySelector("[name='fromdate']");
+      const todateInput = document.querySelector("[name='todate']");
+      const applydateInput = document.querySelector("[name='applydate']");
+      const leaveForm = document.getElementById('leaveForm');
+      const submitButton = document.getElementById('submitButton');
+      const errorMessage = document.getElementById('errorMessage');
 
-  function updateDays() {
-    const fromdate = fromdateInput.value;
-    const todate = todateInput.value;
-    const daysInput = document.querySelector("[name='days']");
+      fromdateInput.addEventListener("change", updateDays);
+      todateInput.addEventListener("change", updateDays);
+      applydateInput.addEventListener("change", updateDays);
 
-    if (fromdate && todate && applydateInput.value) {
-      if (new Date(applydateInput.value) <= new Date(fromdate) && new Date(fromdate) <= new Date(todate)) {
-        const daysDiff = (new Date(todate) - new Date(fromdate)) / (1000 * 60 * 60 * 24);
-        daysInput.value = Math.max(daysDiff + 1, 1);
-      } else {
-        alert("Please select valid dates. The apply date should be before or the same as the from date, and the from date should be before the to date.");
-        daysInput.value = '';
+      leaveForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const type = document.querySelector("[name='type']").value;
+        const days = document.querySelector("[name='days']").value;
+        const applydate = applydateInput.value;
+        const fromdate = fromdateInput.value;
+        const todate = todateInput.value;
+
+        if (!type || !days || !applydate || !fromdate || !todate) {
+          errorMessage.textContent = "Please fill out all fields.";
+          disableSubmitButton();
+        } else if (new Date(applydate) >= new Date(fromdate) || new Date(fromdate) >= new Date(todate)) {
+          errorMessage.textContent = "Please select valid dates. The apply date should be before the from date and the from date should be before the to date.";
+          disableSubmitButton();
+        } else {
+          leaveForm.submit();
+        }
+      });
+
+      function updateDays() {
+        const fromdate = fromdateInput.value;
+        const todate = todateInput.value;
+        const daysInput = document.querySelector("[name='days']");
+
+        if (fromdate && todate && applydateInput.value) {
+          if (new Date(applydateInput.value) <= new Date(fromdate) && new Date(fromdate) <= new Date(todate)) {
+            const daysDiff = (new Date(todate) - new Date(fromdate)) / (1000 * 60 * 60 * 24);
+            daysInput.value = Math.max(daysDiff + 1, 1);
+            errorMessage.textContent = "";
+            enableSubmitButton();
+          } else {
+            errorMessage.textContent = "Please select valid dates. The apply date should be before or the same as the from date, and the from date should be before the to date.";
+            daysInput.value = '';
+            disableSubmitButton();
+          }
+        } else {
+          daysInput.value = '';
+          errorMessage.textContent = "";
+          disableSubmitButton();
+        }
+
+        // Check if fromdate falls within the duration of existing leave data
+        const fromDate = new Date(fromdate);
+        const toDate = new Date(todate);
+
+        const overlappingLeaves = leave_data.filter(function(leave) {
+          const leaveFromDate = new Date(leave['From Date']);
+          const leaveToDate = new Date(leave['To Date']);
+          return fromDate >= leaveFromDate && fromDate <= leaveToDate;
+        });
+
+        if (overlappingLeaves.length > 0) {
+          errorMessage.textContent = "Selected 'fromdate' falls within the duration of an existing leave.";
+          disableSubmitButton();
+        }
       }
-    } else {
-      daysInput.value = '';
-    }
-  }
-});
-</script>
 
+      function disableSubmitButton() {
+        submitButton.disabled = true;
+      }
 
+      function enableSubmitButton() {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
 <script>
   const departmentDropdown = document.getElementById("department");
   const jobPositionDropdown = document.getElementById("jobPosition");
