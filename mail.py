@@ -65,7 +65,7 @@ class Mail():
         # Close the SMTP connection
         server.quit()
 
-    def new_employee_mail(self, email, company_mail, auth_password):
+    def new_employee_mail(self, email, company_mail, auth_password, data):
         # Set up the connection to the SMTP server
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS

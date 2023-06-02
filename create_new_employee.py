@@ -40,19 +40,19 @@ class Create():
             new_id = "EMP0" + str(last_id + 1)
 
         if request.method == 'POST':
-            file = request.files['photo']
-            bucket = storage.bucket()
-            blob = bucket.blob(f'{new_id}_{file.filename}')
-            blob.upload_from_file(file)
-            blob = bucket.blob(f'{new_id}_{file.filename}')
-            image_data = blob.download_as_bytes()
-            # Convert image bytes to base64 encoded string
-            image_b64 = base64.b64encode(image_data).decode('utf-8')
-
-            image = f"data:image/jpeg;base64,{ image_b64 }"
+            # file = request.files['photo']
+            # bucket = storage.bucket()
+            # blob = bucket.blob(f'{new_id}_{file.filename}')
+            # blob.upload_from_file(file)
+            # blob = bucket.blob(f'{new_id}_{file.filename}')
+            # image_data = blob.download_as_bytes()
+            # # Convert image bytes to base64 encoded string
+            # image_b64 = base64.b64encode(image_data).decode('utf-8')
+            #
+            # image = f"data:image/jpeg;base64,{ image_b64 }"
+            # 'photo': image,
 
             personal_data = {
-                'photo': image,
                 'employeeName': request.form.get('name'), 'userID': new_id, 'department': request.form.get('department'),
                 'email': request.form.get('email'),
                 'password':request.form.get('password'),
