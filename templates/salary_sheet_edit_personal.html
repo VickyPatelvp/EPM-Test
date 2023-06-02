@@ -129,23 +129,23 @@
 
     <script>
         // Do all your JavaScript in a separate JavaScript section
-    var basic = document.getElementById("basic");
-    var hra = document.getElementById("hra");
-    var lwp = document.getElementById("lwp");
-    var da = document.getElementById("da");
-    var otherAllowance = document.getElementById("otherAllowance");
-    var incentive = document.getElementById("incentive");
-    var arrears = document.getElementById("arrears");
-    var grsOutstandingAdjustment = document.getElementById("grsOutstandingAdjustment");
-    var statutoryBonus = document.getElementById("statutoryBonus");
-    var grossSalary = document.getElementById("grossSalary");
-    var epfo = document.getElementById("epfo");
-    var pt = document.getElementById("pt");
-    var tds = document.getElementById("tds");
-    var leaveDeduction = document.getElementById("leaveDeduction");
-    var otherDeduction = document.getElementById("otherDeduction");
-    var dedOutstandingAdjustment = document.getElementById("dedOutstandingAdjustment");
-    var netSalary = document.getElementById("netSalary");
+    var basic = (document.getElementById("basic")).toFixed(2);
+    var hra = (document.getElementById("hra")).toFixed(2);
+    var lwp = (document.getElementById("lwp")).toFixed(2);
+    var da = (document.getElementById("da")).toFixed(2);
+    var otherAllowance = (document.getElementById("otherAllowance")).toFixed(2);
+    var incentive = (document.getElementById("incentive")).toFixed(2);
+    var arrears = (document.getElementById("arrears")).toFixed(2);
+    var grsOutstandingAdjustment = (document.getElementById("grsOutstandingAdjustment")).toFixed(2);
+    var statutoryBonus = (document.getElementById("statutoryBonus")).toFixed(2);
+    var grossSalary = (document.getElementById("grossSalary")).toFixed(2);
+    var epfo = (document.getElementById("epfo")).toFixed(2);
+    var pt = (document.getElementById("pt")).toFixed(2);
+    var tds = (document.getElementById("tds")).toFixed(2);
+    var leaveDeduction = (document.getElementById("leaveDeduction")).toFixed(2);
+    var otherDeduction = (document.getElementById("otherDeduction")).toFixed(2);
+    var dedOutstandingAdjustment = (document.getElementById("dedOutstandingAdjustment")).toFixed(2);
+    var netSalary = (document.getElementById("netSalary")).toFixed(2);
 
 
 
@@ -157,13 +157,13 @@
         // Always supply the second argument to parseInt() (the radix) so you
         // dont' get non-base 10 answers.
         console.log(basic.value)
-        hra.value = parseInt(basic.value, 10)*{{salary_data['hrapercentage']}}*0.01;
-        da.value = parseInt(basic.value, 10)*{{salary_data['dapercentage']}}*0.01;
-        grossSalary.value = parseInt(basic.value, 10) +  parseInt(hra.value, 10)+ parseInt(da.value, 10)+ parseInt(otherAllowance.value, 10)
-        + parseInt(incentive.value, 10)+ parseInt(arrears.value, 10)+parseInt(grsOutstandingAdjustment.value, 10) +parseInt(statutoryBonus.value, 10)      ;
-        leaveDeduction.value=parseInt(lwp.value, 10)*( parseInt(grossSalary.value, 10) / {{ working_days}} ) * {{salary_data['deductionpercentage']}};
-        netSalary.value = parseInt(grossSalary.value, 10) - parseInt(epfo.value, 10) - parseInt(pt.value, 10) - parseInt(tds.value, 10) - parseInt(leaveDeduction.value, 10)
-        - parseInt(otherDeduction.value, 10)- parseInt(dedOutstandingAdjustment.value, 10);
+        hra.value = (parseInt(basic.value, 10)*{{salary_data['hrapercentage']}}*0.01).toFixed(2);
+        da.value = (parseInt(basic.value, 10)*{{salary_data['dapercentage']}}*0.01).toFixed(2);
+        grossSalary.value = (parseInt(basic.value, 10) +  parseInt(hra.value, 10)+ parseInt(da.value, 10)+ parseInt(otherAllowance.value, 10)
+        + parseInt(incentive.value, 10)+ parseInt(arrears.value, 10)+parseInt(grsOutstandingAdjustment.value, 10) +parseInt(statutoryBonus.value, 10)).toFixed(2);
+        leaveDeduction.value=(parseInt(lwp.value, 10)*( parseInt(grossSalary.value, 10) / {{ working_days}} ) * {{salary_data['deductionpercentage']}}).toFixed(2);
+        netSalary.value = (parseInt(grossSalary.value, 10) - parseInt(epfo.value, 10) - parseInt(pt.value, 10) - parseInt(tds.value, 10) - parseInt(leaveDeduction.value, 10)
+        - parseInt(otherDeduction.value, 10)- parseInt(dedOutstandingAdjustment.value, 10)).toFixed(2);
 
       });
     });

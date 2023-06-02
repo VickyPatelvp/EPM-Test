@@ -21,12 +21,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <div class="form-outline  text-start ">
-                    {% set month_dict = {'001': 'January', '002': 'February', '003': 'March', '004': 'April',
-                    '005': 'May', '006': 'June', '007': 'July', '008': 'August', '009': 'September', '0010': 'October',
-                    '0011': 'November', '0012': 'December'} %}
-                    <input type="text" class="form-control" id="forminput" placeholder="{{ month_dict[salid[3:]] }}" readonly/>
-                </div>
+                                    <div class="form-outline text-start">
+              {% set month_dict = {'sal001': 'January', 'sal002': 'February', 'sal003': 'March', 'sal004': 'April',
+              'sal005': 'May', 'sal006': 'June', 'sal007': 'July', 'sal008': 'August', 'sal009': 'September', 'sal0010': 'October',
+              'sal0011': 'November', 'sal0012': 'December'} %}
+                                        <input name="" id="forminput" class="form-control" readonly placeholder="{{month_dict[salid]}}">
+                                    </div>
                                 </li>
                             </ul>
                         </div>
