@@ -277,7 +277,7 @@
                                                                                                                                            name="password"
                                                                                                                                            id="password"
                                                                                                                                            value=""
-                                                                                                                                           placeholder='{{ data["personal_data"]["password"] }}'>
+pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="Password must be at least 8 characters long, contain at least one letter, one number, and one special character"                                                                                                                                           placeholder='{{ data["personal_data"]["password"] }}'>
                                                                                                                                 </div>
                                                                                                                                 <span class="pmd-textfield-focused"></span>
                                                                                                                             </div>
@@ -319,6 +319,7 @@
                                                                                                                                            name="salary"
                                                                                                                                            id="salary"
                                                                                                                                            value=""
+                                                                                                                                            pattern="[0-9][0-9]*" title="Please enter a valid salary greater than 0"
                                                                                                                                            placeholder='{{ data["personal_data"]["salary"] }}'>
                                                                                                                                 </div>
                                                                                                                                 <span class="pmd-textfield-focused"></span>
@@ -334,6 +335,7 @@
                                                                                                                                            name="currentExperience"
                                                                                                                                            id="currentExperience"
                                                                                                                                            value=""
+                                                                                                                                           pattern="[0-9]{1,2}(\.[0-9]{1,2})?" title="Please enter a valid experience value in years (up to 2 decimal places)"
                                                                                                                                            placeholder='{{ data["personal_data"]["currentExperience"] }}'>
                                                                                                                                 </div>
                                                                                                                                 <span class="pmd-textfield-focused"></span>
@@ -426,6 +428,7 @@
                                                                                                                                             pattern="[A-Za-z]+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="bankName"
+                                                                                                                                             pattern="[A-Za-z0-9\s]{1,50}" title="Please enter a valid bank name (up to 50 alphanumeric characters)"
                                                                                                                                             placeholder='{{ data["personal_data"]["bankName"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -441,6 +444,7 @@
                                                                                                                                             pattern="[A-Za-z]+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="accountHolderName"
+                                                                                                                                            pattern="[A-Za-z\s]{1,50}" title="Please enter a valid account holder name (up to 50 alphabetic characters)"
                                                                                                                                             placeholder='{{ data["personal_data"]["accountHolderName"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -464,6 +468,7 @@
                                                                                                                                             pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="accountNumber"
+                                                                                                                                            pattern="[0-9]{9,18}" title="Please enter a valid bank account number with 9 to 18 digits"
                                                                                                                                             placeholder='{{ data["personal_data"]["accountNumber"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -500,6 +505,7 @@
                                                                                                                                             pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="aadharCardNo"
+                                                                                                                                             pattern="[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}" title="Please enter a valid Aadhaar card number (e.g., 1234 5678 9012)"
                                                                                                                                             placeholder='{{ data["personal_data"]["aadharCardNo"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -513,7 +519,8 @@
                                                                                                                                             class="form-control"
                                                                                                                                             pattern="\d+"
                                                                                                                                             style="background-color: #FFFFFF"
-                                                                                                                                            passportNo
+                                                                                                                                            name="passportNo"
+                                                                                                                                            pattern="[A-PR-WYa-pr-wy][1-9]\d\s?\d{4}[1-9]" title="Please enter a valid passport number"
                                                                                                                                             placeholder='{{ data["personal_data"]["passportNo"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -538,6 +545,7 @@
                                                                                                                                             pattern="^[a-zA-Z0-9]*$"
                                                                                                                                             style="background-color: #FFFFFF"
                                                                                                                                             name="panCardNo"
+                                                                                                                                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Please enter a valid PAN card number" maxlength="10"
                                                                                                                                             placeholder='{{ data["personal_data"]["panCardNo"] }}'>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -2883,19 +2891,20 @@ var leave_data = [
 ];
 
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const fromdateInput = document.querySelector("[name='fromdate']");
-      const todateInput = document.querySelector("[name='todate']");
-      const applydateInput = document.querySelector("[name='applydate']");
-      const leaveForm = document.getElementById('leaveForm');
-      const submitButton = document.getElementById('submitButton');
-      const errorMessage = document.getElementById('errorMessage');
 
-      fromdateInput.addEventListener("change", updateDays);
-      todateInput.addEventListener("change", updateDays);
-      applydateInput.addEventListener("change", updateDays);
+document.addEventListener("DOMContentLoaded", function () {
+    const fromdateInput = document.querySelector("[name='fromdate']");
+    const todateInput = document.querySelector("[name='todate']");
+    const applydateInput = document.querySelector("[name='applydate']");
+    const leaveForm = document.getElementById('leaveForm');
+    const submitButton = document.getElementById('submitButton');
+    const errorMessage = document.getElementById('errorMessage');
 
-      leaveForm.addEventListener("submit", function(event) {
+    fromdateInput.addEventListener("change", updateDays);
+    todateInput.addEventListener("change", updateDays);
+    applydateInput.addEventListener("change", updateDays);
+
+    leaveForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
         const type = document.querySelector("[name='type']").value;
@@ -2905,63 +2914,77 @@ var leave_data = [
         const todate = todateInput.value;
 
         if (!type || !days || !applydate || !fromdate || !todate) {
-          errorMessage.textContent = "Please fill out all fields.";
-          disableSubmitButton();
-        } else if (new Date(applydate) >= new Date(fromdate) || new Date(fromdate) >= new Date(todate)) {
-          errorMessage.textContent = "Please select valid dates. The apply date should be before the from date and the from date should be before the to date.";
-          disableSubmitButton();
-        } else {
-          leaveForm.submit();
-        }
-      });
-
-      function updateDays() {
-        const fromdate = fromdateInput.value;
-        const todate = todateInput.value;
-        const daysInput = document.querySelector("[name='days']");
-
-        if (fromdate && todate && applydateInput.value) {
-          if (new Date(applydateInput.value) <= new Date(fromdate) && new Date(fromdate) <= new Date(todate)) {
-            const daysDiff = (new Date(todate) - new Date(fromdate)) / (1000 * 60 * 60 * 24);
-            daysInput.value = Math.max(daysDiff + 1, 1);
-            errorMessage.textContent = "";
-            enableSubmitButton();
-          } else {
-            errorMessage.textContent = "Please select valid dates. The apply date should be before or the same as the from date, and the from date should be before the to date.";
-            daysInput.value = '';
+            errorMessage.textContent = "Please fill out all fields.";
             disableSubmitButton();
-          }
+        } else if (new Date(applydate) >= new Date(fromdate) || new Date(fromdate) >= new Date(todate)) {
+            errorMessage.textContent = "Please select valid dates. The apply date should be before the from date and the from date should be before the to date.";
+            disableSubmitButton();
         } else {
-          daysInput.value = '';
-          errorMessage.textContent = "";
-          disableSubmitButton();
+            leaveForm.submit();
         }
-
-        // Check if fromdate falls within the duration of existing leave data
-        const fromDate = new Date(fromdate);
-        const toDate = new Date(todate);
-
-        const overlappingLeaves = leave_data.filter(function(leave) {
-          const leaveFromDate = new Date(leave['From Date']);
-          const leaveToDate = new Date(leave['To Date']);
-          return fromDate >= leaveFromDate && fromDate <= leaveToDate;
-        });
-
-        if (overlappingLeaves.length > 0) {
-          errorMessage.textContent = "Selected 'fromdate' falls within the duration of an existing leave.";
-          disableSubmitButton();
-        }
-      }
-
-      function disableSubmitButton() {
-        submitButton.disabled = true;
-      }
-
-      function enableSubmitButton() {
-        submitButton.disabled = false;
-      }
     });
-  </script>
+
+    function updateDays() {
+const fromdate = fromdateInput.value;
+const todate = todateInput.value;
+const daysInput = document.querySelector("[name='days']");
+
+if (fromdate && todate && applydateInput.value) {
+if (new Date(applydateInput.value) <= new Date(fromdate) && new Date(fromdate) <= new Date(todate)) {
+const daysDiff = getBusinessDaysDiff(new Date(fromdate), new Date(todate));
+daysInput.value = Math.max(daysDiff, 1);
+errorMessage.textContent = "";
+enableSubmitButton();
+} else {
+errorMessage.textContent = "Please select valid dates. The apply date should be before or the same as the from date, and the from date should be before the to date.";
+daysInput.value = '';
+disableSubmitButton();
+}
+} else {
+daysInput.value = '';
+errorMessage.textContent = "";
+disableSubmitButton();
+}
+
+// Check if fromdate falls within the duration of existing leave data
+const fromDate = new Date(fromdate);
+const toDate = new Date(todate);
+
+const overlappingLeaves = leave_data.filter(function(leave) {
+const leaveFromDate = new Date(leave['From Date']);
+const leaveToDate = new Date(leave['To Date']);
+return fromDate >= leaveFromDate && fromDate <= leaveToDate;
+});
+
+if (overlappingLeaves.length > 0) {
+errorMessage.textContent = "Selected 'fromdate' falls within the duration of an existing leave.";
+disableSubmitButton();
+}
+}
+
+function getBusinessDaysDiff(startDate, endDate) {
+let daysDiff = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1; // Add 1 to include both start and end dates
+const weekends = [0, 6]; // Sunday (0) and Saturday (6) are considered weekends
+
+for (let i = startDate; i <= endDate; i.setDate(i.getDate() + 1)) {
+if (weekends.includes(i.getDay())) {
+daysDiff--;
+}
+}
+
+return daysDiff;
+}
+
+
+    function disableSubmitButton() {
+        submitButton.disabled = true;
+    }
+
+    function enableSubmitButton() {
+        submitButton.disabled = false;
+    }
+});
+</script>
 <script>
   const departmentDropdown = document.getElementById("department");
   const jobPositionDropdown = document.getElementById("jobPosition");
@@ -3035,7 +3058,7 @@ var leave_data = [
             xhr.addEventListener('readystatechange', function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        window.location.href = `http://127.0.0.1:300/${username}/tds_data_update/${id}`;
+                        window.location.href = `http://192.168.0.183:3005/${username}/tds_data_update/${id}`;
                     } else {
                         console.error(xhr.responseText); // Handle error response
                     }

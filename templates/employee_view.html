@@ -2978,7 +2978,7 @@ document.addEventListener("DOMContentLoaded", function() {
             xhr.addEventListener('readystatechange', function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        window.location.href = `http://127.0.0.1:300/${companyname}/${username}/tds_data_update/${id}`;
+                        window.location.href = `http://192.168.0.183:3005/${companyname}/${username}/tds_data_update/${id}`;
                     } else {
                         console.error(xhr.responseText); // Handle error response
                     }

@@ -142,15 +142,9 @@ def dashboard(username):
     moath_data = moth_count.count(holidays)
     working_days = moath_data['workingDays']
     # Check the current date
-    if datetime.datetime.now().day == 1 and 'session_leave' not in session:
-        leaveobj.leave_add(companyname)
-        session['session_leave'] = datetime.datetime.now()
-        print("create session Variable")
 
 
-    if datetime.datetime.today().day == 1 and datetime.datetime.today().month == 1:
 
-        leaveobj.leave_reset(companyname)
 
     ''' DISPLAY DASHBOARD '''
     dashboard_data = dashboard_obj.all_data(companyname)
@@ -509,7 +503,9 @@ def salary(username):
         SalaryCalculation(db, companyname).generate_salary(workingday=working_days)
         leaveobj.leave_add(companyname)
         session['session_salary'] = datetime.datetime.now()
-        print("create session Variable")
+        leaveobj.leave_add(companyname)
+
+
 
     if request.method == 'POST':
         form = request.form
@@ -612,6 +608,23 @@ def get_download_folder():
         location = os.path.expanduser('~/Downloads')
     return location
 
+# @app.route('/download_pdf')
+# def download_pdf():
+#     # Generate the PDF content
+#     pdf_content =
+#
+#     # Create a response object with the PDF content
+#     response = make_response(pdf_content)
+#     response.headers['Content-Disposition'] = 'attachment; filename=example.pdf'
+#     response.headers['Content-Type'] = 'application/pdf'
+#
+#     return response
+
+
+
+
+
+
 
 @app.route('/<username>/pdf/<salid>')
 def pdf(username, salid):
@@ -677,5 +690,5 @@ def send_employee_salaryslip(username, salid):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=300)
-    # app.run(debug=True, host="0.0.0.0", port=3005)
+    # app.run(debug=True, port=300)
+    app.run(debug=True, host="0.0.0.0", port=3005)
