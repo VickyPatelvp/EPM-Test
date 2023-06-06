@@ -33,6 +33,61 @@ footer a {
 }
 </style>
 
+    <!-- CSS -->
+<style>
+  #tooltip {
+    display: none;
+    position: absolute;
+    left: -60px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+  #content:hover #tooltip {
+    display: inline;
+  }
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 40% 60% 50% 50%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+
 </head>
 <body style="    margin: 0;
 padding: 0;
@@ -91,6 +146,7 @@ flex-direction: column;">
 
             </ol>
         </div>
+
         <div class="col-lg-6 col-md-6 col-sm-12">
             <nav aria-label="breadcrumb" class="bg-white">
                 <ul class="nav justify-content-end">
@@ -189,7 +245,6 @@ flex-direction: column;">
                                                                                                 Information</h5>
                                                                                         </button>
                                                                                     </li>
-
                                                                                     <li class="nav-item"
                                                                                         role="presentation">
                                                                                         <button class="nav-link"
@@ -374,7 +429,7 @@ flex-direction: column;">
                                                                                                                             <thead>
                                                                                                                             <tr>
                                                                                                                                 <th class="col-3">
-                                                                                                                                   Salary
+                                                                                                                                   CTC
                                                                                                                                 </th>
                                                                                                                                 <td class="col-4">
                                                                                                                                     <input
@@ -699,6 +754,8 @@ flex-direction: column;">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+
+
 
 
                                                                                     <!--TDS Data-->
@@ -1480,6 +1537,7 @@ flex-direction: column;">
                 </ul>
             </nav>
         </div>
+
     </div>
 </div>
 <!-- Display Data  -->
@@ -1569,7 +1627,7 @@ flex-direction: column;">
                                                                 </tr>
                                                                 <tr>
                                                                 <tr>
-                                                                    <th class="col-3">Salary</th>
+                                                                    <th class="col-3">CTC</th>
                                                                     <td class="col-3">{{ data["personal_data"]["salary"]
                                                                         }}
                                                                     </td>
@@ -1609,14 +1667,21 @@ flex-direction: column;">
                                                         <h5> Personal Information</h5>
                                                     </button>
                                                 </li>
-
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="professional-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#professional" type="button" role="tab"
+                                                            aria-controls="professional"
+                                                            style='background-color: #fff !important;'
+                                                            aria-selected="false">
+                                                        <h5> Professional Information</h5>
+                                                    </button>
+                                                </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                                             data-bs-target="#profile" type="button" role="tab"
                                                             aria-controls="profile"style='background-color: #fff !important;'
                                                             aria-selected="false">
-                                                        <h5>
-                                                            Payslip Information</h5>
+                                                        <h5> Payslip Information </h5>
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
@@ -1840,7 +1905,23 @@ flex-direction: column;">
                                                                             </div>
                                                                         </div>
 
-                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Professional Information-->
+
+                                                <div class="tab-pane fade" id="professional" role="tabpanel"
+                                                     aria-labelledby="home-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="container">
 
                                                                         <!-- Other Details -->
 
@@ -1889,6 +1970,127 @@ flex-direction: column;">
                                                                             </div>
                                                                         </div>
 
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Contract Details -->
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="row">
+                                                                                <div class="col-12">
+                                                                                    <h3>Contract</h3>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="row mt-3">
+                                                                                    <div class="col-12">
+                                                                                        <table class="table">
+                                                                                            <thead class="table-secondary">
+
+                                                                                            <tr class="bg-dark">
+                                                                                                <th scope="col">Contract Date</th>
+                                                                                                <th scope="col">Contract period</th>
+                                                                                                <th scope="col">Next Contract Date</th>
+                                                                                            </tr>
+
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2021
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    1 Year
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    12 Month
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2021
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tbody>
+                                                                                        </table>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Increment Details -->
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="row">
+                                                                                <div class="col-12">
+                                                                                    <h3>Increment</h3>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="row mt-3">
+                                                                                    <div class="col-12">
+                                                                                        <table class="table">
+                                                                                            <thead class="table-secondary">
+
+                                                                                            <tr class="bg-dark">
+                                                                                                <th scope="col">Gross Salary (₹)</th>
+                                                                                                <th scope="col">Job Position</th>
+                                                                                                <th scope="col">Effective Date</th>
+                                                                                                <th scope="col">Increment</th>
+                                                                                                <th scope="col">Total (₹)</th>
+                                                                                                <th scope="col">Note</th>
+                                                                                            </tr>
+
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    53,000.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    SR.UI/UX Designer
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    16,600.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    63,600.00
+                                                                                                </td>
+                                                                                                {% set content = 'This is an information related salary increment' %}
+                                                                                                <td scope="col">
+                                                                                                  <span id="content">{{ content }}</span>
+                                                                                                  <span id="more" style="display: none;">
+                                                                                                    <span id="tooltip">...</span>
+                                                                                                    <a href="#" onclick="openModal(); return false;">Read More</a>
+                                                                                                  </span>
+                                                                                                </td>
+                                                                                                <!--Content Modal -->
+                                                                                                <div id="myModal" class="modal">
+                                                                                                  <div class="modal-content">
+                                                                                                    <span class="close" onclick="closeModal()">&times;</span>
+                                                                                                    <p>{{ content }}</p>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                            </tr>
+                                                                                            <tbody>
+                                                                                        </table>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1914,7 +2116,7 @@ flex-direction: column;">
                                                                                     <th scope="col">Reference</th>
                                                                                     <th scope="col">Month</th>
                                                                                     <th scope="col">Year</th>
-                                                                                    <th scope="col">Net Salary</th>
+                                                                                    <th scope="col">Net Salary(₹)</th>
                                                                                     <th scope="col">Action</th>
                                                                                 </tr>
 
@@ -2989,6 +3191,46 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 </script>
+
+<!--Read More Data Modal -->
+<!-- JavaScript -->
+<script>
+  var content = document.getElementById("content");
+  var tooltip = document.getElementById("tooltip");
+
+  if (content.innerText.split(" ").length > 3) {
+    var firstTwoWords = content.innerText
+      .split(" ")
+      .slice(0, 2)
+      .join(" ");
+    var remainingWords = content.innerText
+      .split(" ")
+      .slice(2)
+      .join(" ");
+
+    content.innerHTML = firstTwoWords  +  '  <a href="#" onclick="openModal(); return false;" style="color: #191970;"><b>Read More</b></a>';
+    tooltip.innerText = remainingWords;
+
+    content.onmouseover = function () {
+      tooltip.style.display = "inline";
+    };
+
+    content.onmouseout = function () {
+      tooltip.style.display = "none";
+    };
+
+    var modal = document.getElementById("myModal");
+
+    function openModal() {
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

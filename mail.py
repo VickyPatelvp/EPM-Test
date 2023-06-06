@@ -45,7 +45,7 @@ class Mail():
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # or 587 for SSL/TLS
         smtp_username = 'utkarsh.sodhaparmar.12@gmail.com'
-        smtp_password = "htadztykpjvqfwhp"
+        smtp_password = "wlcuavwqcnwjfajj"
 
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()

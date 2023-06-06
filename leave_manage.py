@@ -52,7 +52,10 @@ class Leavemanage():
             
             leave_id = len(ref_obj.get())
             print(data_dict)
-            doc_name = (f'leave00{leave_id}')
+            if leave_id < 9:
+                doc_name = f'leave00{leave_id}'
+            else:
+                doc_name = f'leave0{leave_id}'
             data = ref_obj.document(doc_name).set(data_dict)
 
     def take_leave_edit(self, ref_obj, data=None):

@@ -107,7 +107,7 @@
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["grossSalary"] }}' id="grossSalary" name="grossSalary" readonly></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["epfo"] }}' id="epfo" name="epfo" readonly></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["pt"] }}' id="pt" name="pt" readonly></td>
-                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["tds"] }}' id="tds" name="tds" readonly></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["tds"] }}' id="tds" name="tds"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["leaveDeduction"] }}' id="leaveDeduction" name="leaveDeduction"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["otherDeduction"] }}' id="otherDeduction" name="otherDeduction"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["dedOutstandingAdjustment"] }}' id="dedOutstandingAdjustment" name="dedOutstandingAdjustment"></td>
@@ -129,23 +129,23 @@
 
     <script>
         // Do all your JavaScript in a separate JavaScript section
-    var basic = document.getElementById("basic");
-    var hra = document.getElementById("hra");
-    var lwp = document.getElementById("lwp");
-    var da = document.getElementById("da");
-    var otherAllowance = document.getElementById("otherAllowance");
-    var incentive = document.getElementById("incentive");
-    var arrears = document.getElementById("arrears");
-    var grsOutstandingAdjustment = document.getElementById("grsOutstandingAdjustment");
-    var statutoryBonus = document.getElementById("statutoryBonus");
-    var grossSalary = document.getElementById("grossSalary");
-    var epfo = document.getElementById("epfo");
-    var pt = document.getElementById("pt");
-    var tds = document.getElementById("tds");
-    var leaveDeduction = document.getElementById("leaveDeduction");
-    var otherDeduction = document.getElementById("otherDeduction");
-    var dedOutstandingAdjustment = document.getElementById("dedOutstandingAdjustment");
-    var netSalary = document.getElementById("netSalary");
+    var basic = (document.getElementById("basic"));
+    var hra = (document.getElementById("hra"));
+    var lwp = (document.getElementById("lwp"));
+    var da = (document.getElementById("da"));
+    var otherAllowance = (document.getElementById("otherAllowance"));
+    var incentive = (document.getElementById("incentive"));
+    var arrears = (document.getElementById("arrears"));
+    var grsOutstandingAdjustment = (document.getElementById("grsOutstandingAdjustment"));
+    var statutoryBonus = (document.getElementById("statutoryBonus"));
+    var grossSalary = (document.getElementById("grossSalary"));
+    var epfo = (document.getElementById("epfo"));
+    var pt = (document.getElementById("pt"));
+    var tds = (document.getElementById("tds"));
+    var leaveDeduction = (document.getElementById("leaveDeduction"));
+    var otherDeduction = (document.getElementById("otherDeduction"));
+    var dedOutstandingAdjustment = (document.getElementById("dedOutstandingAdjustment"));
+    var netSalary = (document.getElementById("netSalary"));
 
 
 
@@ -157,13 +157,13 @@
         // Always supply the second argument to parseInt() (the radix) so you
         // dont' get non-base 10 answers.
         console.log(basic.value)
-        hra.value = parseInt(basic.value, 10)*{{salary_data['hrapercentage']}}*0.01;
-        da.value = parseInt(basic.value, 10)*{{salary_data['dapercentage']}}*0.01;
-        grossSalary.value = parseInt(basic.value, 10) +  parseInt(hra.value, 10)+ parseInt(da.value, 10)+ parseInt(otherAllowance.value, 10)
-        + parseInt(incentive.value, 10)+ parseInt(arrears.value, 10)+parseInt(grsOutstandingAdjustment.value, 10) +parseInt(statutoryBonus.value, 10)      ;
-        leaveDeduction.value=parseInt(lwp.value, 10)*( parseInt(grossSalary.value, 10) / {{ working_days}} ) * {{salary_data['deductionpercentage']}};
-        netSalary.value = parseInt(grossSalary.value, 10) - parseInt(epfo.value, 10) - parseInt(pt.value, 10) - parseInt(tds.value, 10) - parseInt(leaveDeduction.value, 10)
-        - parseInt(otherDeduction.value, 10)- parseInt(dedOutstandingAdjustment.value, 10);
+        hra.value = (parseInt(basic.value, 10)*{{salary_data['hrapercentage']}}*0.01).toFixed(2);
+        da.value = (parseInt(basic.value, 10)*{{salary_data['dapercentage']}}*0.01).toFixed(2);
+        grossSalary.value = (parseInt(basic.value, 10) +  parseInt(hra.value, 10)+ parseInt(da.value, 10)+ parseInt(otherAllowance.value, 10)
+        + parseInt(incentive.value, 10)+ parseInt(arrears.value, 10)+parseInt(grsOutstandingAdjustment.value, 10) +parseInt(statutoryBonus.value, 10)).toFixed(2);
+        leaveDeduction.value=(parseInt(lwp.value, 10)*( parseInt(grossSalary.value, 10) / {{ working_days}} ) * {{salary_data['deductionpercentage']}}).toFixed(2);
+        netSalary.value = (parseInt(grossSalary.value, 10) - parseInt(epfo.value, 10) - parseInt(pt.value, 10) - parseInt(tds.value, 10) - parseInt(leaveDeduction.value, 10)
+        - parseInt(otherDeduction.value, 10)- parseInt(dedOutstandingAdjustment.value, 10)).toFixed(2);
 
       });
     });

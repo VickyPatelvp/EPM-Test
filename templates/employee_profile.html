@@ -312,7 +312,7 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                                                                             <br>
                                                                                                                             <div class="form-group row pmd-textfield  pmd-textfield-floating-label ms-1">
                                                                                                                                 <label class="col-form-label control-label col-sm-4 col-md-5"
-                                                                                                                                       style="color: #455056;"><b>Salary</b></label>
+                                                                                                                                       style="color: #455056;"><b>CTC</b></label>
                                                                                                                                 <div class="col-sm-8 col-md-7">
                                                                                                                                     <input type="text"
                                                                                                                                            class="form-control"
@@ -1540,7 +1540,7 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="col-3">Salary</th>
+                                                                    <th class="col-3">CTC</th>
                                                                     <td class="col-3">{{ data["personal_data"]["salary"]
                                                                         }}
                                                                     </td>
@@ -1581,7 +1581,16 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                         <h5> Personal Information</h5>
                                                     </button>
                                                 </li>
-
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="professional-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#professional" type="button" role="tab"
+                                                            aria-controls="professional"
+                                                            style='background-color: #fff !important;'
+                                                            aria-selected="false">
+                                                        <h5>
+                                                            Professional Information</h5>
+                                                    </button>
+                                                </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                                             data-bs-target="#profile" type="button" role="tab"
@@ -1814,7 +1823,22 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                             </div>
                                                                         </div>
 
-                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Professional Information-->
+
+                                                <div class="tab-pane fade" id="professional" role="tabpanel"
+                                                     aria-labelledby="home-tab">
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-4">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="container">
 
                                                                         <!-- Other Details -->
 
@@ -1863,6 +1887,153 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                             </div>
                                                                         </div>
 
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Contract Details -->
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="row">
+                                                                                <div class="col-11">
+                                                                                    <h3>Contract</h3>
+                                                                                </div>
+                                                                                <div class="col-1">
+                                                                                        <a data-bs-toggle="modal" data-bs-target="#" id="ctr_edit_btn">
+                                                                                            <button class="btn border-1 btn-secondary " type="button"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                Edit
+                                                                                            </button>
+                                                                                        </a>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="row mt-3">
+                                                                                    <div class="col-12">
+                                                                                        <table class="table">
+                                                                                            <thead class="table-secondary">
+
+                                                                                            <tr class="bg-dark">
+                                                                                                <th scope="col">Contract Date</th>
+                                                                                                <th scope="col">Contract period</th>
+                                                                                                <th scope="col">Next Contract Date</th>
+                                                                                            </tr>
+
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2021
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    1 Year
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    12 Month
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2021
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tbody>
+                                                                                        </table>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <hr style="width:100%;text-align:left;margin-left:0">
+
+                                                                        <!-- Increment Details -->
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="row">
+                                                                                <div class="col-11">
+                                                                                    <h3>Increment</h3>
+                                                                                </div>
+                                                                                <div class="col-1">
+                                                                                        <a data-bs-toggle="modal" data-bs-target="#" id="icr_edit_btn">
+                                                                                            <button class="btn border-1 btn-secondary " type="button"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                Edit
+                                                                                            </button>
+                                                                                        </a>
+                                                                                </div>
+                                                                                </div>
+                                                                                <div class="row mt-3">
+                                                                                    <div class="col-12">
+                                                                                        <table class="table">
+                                                                                            <thead class="table-secondary">
+
+                                                                                            <tr class="bg-dark">
+                                                                                                <th scope="col">Gross Salary (₹)</th>
+                                                                                                <th scope="col">Job Position</th>
+                                                                                                <th scope="col">Effective Date</th>
+                                                                                                <th scope="col">Increment</th>
+                                                                                                <th scope="col">Total (₹)</th>
+                                                                                                <th scope="col">Note</th>
+                                                                                            </tr>
+
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    53,000.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    SR.UI/UX Designer
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Nov 28, 2020
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    16,600.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    63,600.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Salary Increment
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="table-light">
+                                                                                                <td scope="col">
+                                                                                                    42,400.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    JR.UI/UX Designer
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    May 20, 2020
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    % 25
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    53,000.00
+                                                                                                </td>
+                                                                                                <td scope="col">
+                                                                                                    Salary Increment
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tbody>
+                                                                                        </table>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1888,7 +2059,7 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                                     <th scope="col">Reference</th>
                                                                                     <th scope="col">Month</th>
                                                                                     <th scope="col">Year</th>
-                                                                                    <th scope="col">Net Salary</th>
+                                                                                    <th scope="col">Net Salary(₹)</th>
                                                                                     <th scope="col">Action</th>
                                                                                 </tr>
 
@@ -1922,19 +2093,6 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                                     </td>
                                                                                 </tr>
                                                                                 {% endfor%}
-
-                                                                                <!--                                                                                {% for i in range(5)%}-->
-                                                                                <!--                                                                                <tr class="table-light">-->
-                                                                                <!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
-                                                                                <!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
-                                                                                <!--                                                                                    <td scope="col">{{ data["salary_data"]["slip_id"] }}</td>-->
-                                                                                <!--                                                                                    <td scope="col">{{ data["salary_data"]["netSalary"] }}</td>-->
-                                                                                <!--                                                                                    <td scope="col"><i-->
-                                                                                <!--                                                                                            class="fa fa-download"></i>-->
-                                                                                <!--                                                                                    </td>-->
-                                                                                <!--                                                                                </tr>-->
-                                                                                <!--                                                                                {% endfor%}-->
-
                                                                                 <tbody>
                                                                             </table>
 

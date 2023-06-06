@@ -26,6 +26,8 @@ from concurrent.futures import ThreadPoolExecutor
 from generate_excel import create_excel_file
 from read_data import ExcelData
 import os
+import platform
+
 
 # FLASK APP
 app = Flask(__name__)
@@ -60,10 +62,10 @@ def login():
         responce = login_obj.login(data, companyname)
 
         if responce == 'Admin':
-            return redirect(url_for('dashboard', username=responce))
+            return redirect(url_for('employee_list', username=responce))
         elif responce != False:
             if responce['type'] == 'HR':
-                return redirect(url_for('dashboard', username=responce['name']))
+                return redirect(url_for('employee_list', username=responce['name']))
             else:
                 return redirect(url_for('employee_view', username=responce['name'],
                                         id=responce['empid']))
@@ -208,7 +210,7 @@ def employee_list(username):
                 employee_list.update({doc.id: doc.to_dict()})
         return employee_list
 
-    # GET DEPARTMENTS IN ORGANIZATION
+    # GET DEPARTMENTS IN ORGANIZAT  ION
     def get_department_data():
         department = (db.collection(companyname).document(u'department').get()).to_dict()
         return department
@@ -235,15 +237,17 @@ def add(username):
 
     ''' NEW EMPLOYEE DATA STORE IN DATABASE AND DISPLAY IN LIST '''
     create = Create(db, companyname)
-    create.result()
+    # create.result()
     employee_mail = request.form.get('email')
-    new_id = request.form.get('userID')
+    password = request.form.get('password')
+    new_id = create.result()
     auth_data = db.collection(companyname).document('admin').get().to_dict()
     company_mail = auth_data['AdminID']
     auth_password = auth_data['auth_password']
-    mail_obj.employee_registered_mail(employee_mail, companyname, company_mail, auth_password, new_id=new_id)
+    mail_obj.employee_registered_mail(email=employee_mail, password=password, company_mail=company_mail, auth_password=auth_password, new_id=new_id)
 
     return redirect(url_for('employee_list',username=username))
+
 
 
 @app.route('/<username>/<id>/delete', methods=['POST', 'GET'])
@@ -435,12 +439,9 @@ def pdf_personal(username, id, salid):
     ''' SALARY SLIP PDF GENERATION '''
     path = get_download_folder()
     salary = SalarySlip(db)
-    salary.salary_slip_personal(companyname, id, salid, path)
+    responce=salary.salary_slip_personal(companyname, id, salid, path)
     # CHECK THE USER
-    if username == 'Admin' or username == 'HR':
-        return redirect(url_for('employee_profile', id=id, salid=salid, username=username))
-    else:
-        return redirect(url_for('employee_view', id=id, salid=salid, username=username))
+    return responce
 
 
 @app.route('/<username>/personal_data_update/<id>', methods=['GET', 'POST'])
@@ -593,6 +594,10 @@ def set_status(username, salid, status):
     data = {month: status}
     salary_status = db.collection(companyname).document('salary_status').update(data)
     return redirect(url_for('salary_sheet_view', username=username, salid=salid))
+
+
+import os
+import platform
 
 
 def get_download_folder():
