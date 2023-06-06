@@ -124,8 +124,7 @@ element.style {
     border-color: #4caf50;
 }
 
-element.style {
-}
+
 .btn.btn-file>input[type=file] {
     width: 100%;
     position: absolute;
@@ -283,7 +282,7 @@ element.style {
                                                                                         <div class="dropdown">
                                                                                             <button class="btn btn-secondary border-1 "
                                                                                                     type="button"
-                                                                                                    id="close" 
+                                                                                                    id="close"
                                                                                                     data-bs-dismiss="modal"
                                                                                                     aria-haspopup="true"
                                                                                                     aria-expanded="false">
@@ -350,7 +349,7 @@ element.style {
                                                                                                                                        class="form-control"
                                                                                                                                        name="name"
                                                                                                                                        id="name"
-                                                                                                                                       value="" 
+                                                                                                                                       value=""
                                                                                                                                        placeholder="Enter Your Name" required>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
@@ -358,20 +357,106 @@ element.style {
                                                                                                                         <br>
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label ">
                                                                                                                             <label class="col-form-label control-label col-md-4 col-sm-4"
-                                                                                                                                   for="department"><b>Department</b><span class="required" id="departmentLabel"></span></label>
-                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                   for="department"><b>Department</b><span
+                                                                                                                                    class="required"
+                                                                                                                                    id="departmentLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5"
+                                                                                                                                 style="padding-right: 2rem;">
                                                                                                                                 <select name="department"
                                                                                                                                         id="department"
-                                                                                                                                        class="form-control" required>
+                                                                                                                                        class="form-control"
+                                                                                                                                        required>
                                                                                                                                     <option value="">
                                                                                                                                         Select
                                                                                                                                     </option>
                                                                                                                                     {% if department != None %}
                                                                                                                                     {% for i in department%}
-                                                                                                                                    <option value="{{i}}">{{ i }}</option>
+                                                                                                                                    <option value="{{i}}">
+                                                                                                                                        {{ i }}
+                                                                                                                                    </option>
                                                                                                                                     {% endfor %}
                                                                                                                                     {% endif %}
+                                                                                                                                    <option value="add_new" >
+                                                                                                                                        + Add New Department
+                                                                                                                                    </option>
                                                                                                                                 </select>
+
+
+                                                                                                                                                    <div class="modal" id="addNewDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                                                                                                                                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                                                                                    <div
+                                                                                                                                            class="modal-dialog vh-100 modal-dialog-scrollable justify-content-end p-0 me-0 mt-0 mb-0">
+                                                                                                                                        <div class="department-wrapper">
+                                                                                                                                        <div class="modal-content vh-100"  style="width: 25vw;">
+                                                                                                                                            <!-- MODAL HEADER -->
+
+                                                                                                                                            <div class="modal-header">
+                                                                                                                                                <h5 class="modal-title" id="staticBackdropLabel">Add New Department</h5>
+                                                                                                                                                <button type="button" class="btn-close close-button" data-bs-dismiss="modal"
+                                                                                                                                                aria-label="Close"  id="innerCloseBtn"></button>
+                                                                                                                                            </div>
+
+
+                                                                                                                                            <!-- MODAL BODY -->
+
+                                                                                                                                            <div class="modal-body">
+                                                                                                                                                <div class="container">
+                                                                                                                                                    <div class="row">
+                                                                                                                                                        <div class="col-md-12">
+
+                                                                                                                                                            <form action="{{url_for('department', username=username)}}" method="post">
+                                                                                                                                                                <table class="justify-content-between">
+                                                                                                                                                                    <thead>
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td class="p-2">
+                                                                                                                                                                            <h6><b> Department Name </b></h6>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <td class="p-2">
+                                                                                                                                                                            <input type="text" id="deptname"
+                                                                                                                                                                                               class="form-control-sm"
+                                                                                                                                                                                               name="deptname" value="" pattern="^[a-zA-Z0-9]*$" required>
+                                                                                                                                                                            <div>
+                                                                                                                                                                                <label for="deptname-status" id="deptname-status" title="Invalid Department Name">
+                                                                                                                                                                                </label></div>
+                                                                                                                                                                        </td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td class="p-2">
+                                                                                                                                                                            <h6><b> Position </b></h6>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <td class="p-2">
+                                                                                                                                                                            <input type="text" class="form-control-sm" id="pos"
+                                                                                                                                                                                   name="pos0" value="" pattern="^[a-zA-Z0-9]*$" title="Special characters are not allowed" required>
+                                                                                                                                                                        </td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td colspan="2">
+                                                                                                                                                                   <button type="submit" class="btn border-1 mt-2" id="submit_btn">Submit</button>
+                                                                                                                                                                        </td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                    </thead>
+                                                                                                                                                                </table>
+
+                                                                                                                                                            </form>
+                                                                                                                                                            <button onclick='addInput()' class="btn border-1 mt-2" id="add_input">+Add input</button>
+
+
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+
+                                                                                                                                            <!-- MODAL FOOTER -->
+
+                                                                                                                                            <div class="modal-footer">
+                                                                                                                                                <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">
+                                                                                                                                                    Close
+                                                                                                                                                </button>
+                                                                                                                                            </div>
+                                                                                                                                        </div></div>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
@@ -387,49 +472,18 @@ element.style {
                                                                                                                                    <option value="">
                                                                                                                                         Select
                                                                                                                                     </option >
-                                                                                                                                    
+
                                                                                                                                 </select>
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
                                                                                                                         <br>
-                                                                                                                        <div class="form-group row pmd-textfield pmd-textfield-floating-label">
-                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4"
-                                                                                                                                   for="doj"><b>DOJ</b><span class="required" id="dojLabel"></span></label>
-                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
-                                                                                                                                <input type="date"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="doj"
-                                                                                                                                       id="doj"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder="Select" required>
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                    </div>
-                                                                                                                </div>
 
-                                                                                                                <div class=" col-sm-12 col-lg-6 col-md-6">
-                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
+
 
                                                                                                                         <div class="form-group row pmd-textfield pmd-textfield-floating-label">
-                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4" for="password"
-                                                                                                                                   ><b>Password</b><span class="required" id="passwordLabel"></span></label>
-                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
-                                                                                                                                <input type="text"
-                                                                                                                                       class="form-control"
-                                                                                                                                       name="password"
-                                                                                                                                       id="password"
-                                                                                                                                       value=""
-                                                                                                                                       placeholder="Enter password" required>
-                                                                                                                            </div>
-                                                                                                                            <span class="pmd-textfield-focused"></span>
-                                                                                                                        </div>
-                                                                                                                        <br>
-                                                                                                                        <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-md-4 col-sm-4"
-                                                                                                                                   for="designation"><b>Designation</b><span class="required" id="designationLabel"></span></label>
+                                                                                                                                   for="Designation"><b>Designation</b><span class="required" id="designationLabel"></span></label>
                                                                                                                             <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
                                                                                                                                 <select name="designation"
                                                                                                                                         id="designation"
@@ -453,10 +507,95 @@ element.style {
                                                                                                                             </div>
                                                                                                                             <span class="pmd-textfield-focused"></span>
                                                                                                                         </div>
+
+
+
+
+
+
+                                                                                                                        <br>
+                                                                                                                    </div>
+                                                                                                                </div>
+
+                                                                                                                <div class=" col-sm-12 col-lg-6 col-md-6">
+                                                                                                                    <div class="col-12 col-sm-12 col-md-12">
+
+                                                                                                                        <!-- <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4" for="password"
+                                                                                                                                   ><b>Password</b><span class="required" id="passwordLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                <input type="password"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="password"
+                                                                                                                                       id="password"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder="Enter password" required>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+
+                                                                                                                        <br>
+                                                                                                                        <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4" for="confirmpassword"
+                                                                                                                                   ><b>Confirm password</b><span class="required" id="confirmpasswordLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                <input type="password"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="confirmpassword"
+                                                                                                                                       id="confirmpassword"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder="ReEnter password" required>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div> -->
+
+
+                                                                                                                        <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4" for="password"><b>Password</b><span class="required" id="passwordLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                              <input type="password" class="form-control" name="password" id="password" value="" placeholder="Enter password" required>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                          </div>
+
+                                                                                                                          <br>
+                                                                                                                          <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4" for="confirmpassword"><b>Confirm password</b><span class="required" id="confirmpasswordLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                              <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" value="" placeholder="Re-enter password" required>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                            <span id="passwordError" style="color: red;"></span> <!-- Error message container -->
+                                                                                                                          </div>
+
+
+                                                                                                                        <br>
+
+
+
+                                                                                                                        <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                            <label class="col-form-label control-label col-md-4 col-sm-4"
+                                                                                                                                   for="doj"><b>DOJ</b><span class="required" id="dojLabel"></span></label>
+                                                                                                                            <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                <input type="date"
+                                                                                                                                       class="form-control"
+                                                                                                                                       name="doj"
+                                                                                                                                       id="doj"
+                                                                                                                                       value=""
+                                                                                                                                       placeholder="Select" required>
+                                                                                                                            </div>
+                                                                                                                            <span class="pmd-textfield-focused"></span>
+                                                                                                                        </div>
+
+
+
+
+
+
                                                                                                                         <br>
                                                                                                                       <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                             <label class="col-form-label control-label col-md-4 col-sm-4"
-                                                                                                                                   ><b>Salary</b><span class="required" id="salaryLabel"></span></label>
+                                                                                                                                   ><b>CTC</b><span class="required" id="salaryLabel"></span></label>
                                                                                                                             <div class="col-md-5 col-sm-5" style="padding-right: 2rem;">
                                                                                                                                 <input type="text"
                                                                                                                                        class="form-control"
@@ -530,7 +669,7 @@ element.style {
                                                                                                                                             of
                                                                                                                                             Birth</b><span class="required" id="dobLabel"></span></label>
                                                                                                                                         <div class="col-sm-5">
-                                                                                                                                         
+
                                                                                                                                                 <span id="error-msg" style="color: red; display: none;">Invalid date selected.</span>
                                                                                                                                             <input type="date"
                                                                                                                                                    class="form-control"
@@ -664,19 +803,24 @@ element.style {
                                                                                                                                 </div>
                                                                                                                                 <div class="col-6 col-sm-6 col-md-6">
                                                                                                                                     <div class="form-group row pmd-textfield pmd-textfield-floating-label">
-                                                                                                                                        <label class="col-form-label control-label col-sm-4"
-                                                                                                                                               for="accountno"><b>Account
-                                                                                                                                            Number</b></label>
-                                                                                                                                        <div class="col-sm-5">
-                                                                                                                                            <input type="text"
-                                                                                                                                                   class="form-control"
-                                                                                                                                                   id="accountno"
-                                                                                                                                                   name="accountno"
-                                                                                                                                                   value=""
-                                                                                                                                                   placeholder="Enter Account Number">
+                                                                                                                                        <label class="col-form-label control-label col-sm-4" for="accountno"><b>Account Number</b></label>
+                                                                                                                                        <div class="col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                          <input type="password" class="form-control" name="accountno" id="accountno" value="" placeholder="Enter Account Number">
                                                                                                                                         </div>
                                                                                                                                         <span class="pmd-textfield-focused"></span>
-                                                                                                                                    </div>
+
+                                                                                                                                      </div>
+
+                                                                                                                                      <br>
+
+                                                                                                                                      <div class="form-group row pmd-textfield pmd-textfield-floating-label">
+                                                                                                                                        <label class="col-form-label control-label col-sm-4" for="confirmaccountno"><b>Confirm Account Number</b></label>
+                                                                                                                                        <div class="col-sm-5" style="padding-right: 2rem;">
+                                                                                                                                          <input type="password" class="form-control" name="confirmaccountno" id="confirmaccountno" value="" placeholder="Re-enter Account Number">
+                                                                                                                                        </div>
+                                                                                                                                        <span class="pmd-textfield-focused"></span>
+                                                                                                                                        <span id="confirmaccountnoError" style="color: red;"></span> <!-- Error message container -->
+                                                                                                                                      </div>
                                                                                                                                     <br>
                                                                                                                                     <div class="form-group row pmd-textfield pmd-textfield-floating-label">
                                                                                                                                         <label class="col-form-label control-label col-sm-4"
@@ -1899,6 +2043,57 @@ function sortTable(columnIndex) {
 
 
 <script>
+
+
+// document.getElementById("submitButton").addEventListener("click", function(event) {
+//   event.preventDefault(); // Prevents the form from submitting
+
+//   var password = document.getElementById("password").value;
+//   var confirmPassword = document.getElementById("confirmpassword").value;
+
+//   if (password === confirmPassword) {
+//     // Passwords match
+//     alert("Passwords match!");
+//     // You can proceed with further actions, such as submitting the form
+//   } else {
+//     // Passwords do not match
+//     alert("Passwords do not match!");
+//     // You can handle the mismatched passwords as per your requirements
+//   }
+// });
+
+document.addEventListener("DOMContentLoaded", function() {
+  var doj = document.getElementById("doj").value;
+  var salaryField = document.getElementById("salary");
+
+  if (doj) {
+    // If a date is already entered in the DOJ field
+    salaryField.disabled = false; // Enable the salary field
+  } else {
+    // If no date is entered in the DOJ field
+    salaryField.disabled = true; // Disable the salary field
+  }
+});
+
+document.getElementById("doj").addEventListener("change", function() {
+  var doj = this.value;
+  var salaryField = document.getElementById("salary");
+
+  if (doj) {
+    // If a date is entered in the DOJ field
+    salaryField.disabled = false; // Enable the salary field
+  } else {
+    // If no date is entered in the DOJ field
+    salaryField.disabled = true; // Disable the salary field
+  }
+});
+
+
+
+
+
+
+
     function validateDate() {
       var inputDate = new Date(document.getElementById("dob").value);
       var maxDate = new Date();
@@ -1941,6 +2136,48 @@ function sortTable(columnIndex) {
             document.getElementById("error").innerHTML = "";
         }
     </script>
+
+<script>
+        // Add event listener to the form's submit button
+        document.getElementById("submitButton").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmpassword").value;
+        var passwordError = document.getElementById("passwordError");
+        if (password !== confirmPassword) {
+        passwordError.textContent = "Passwords do not match.";
+        } else if (accountno !== confirmaccountno) {
+        confirmaccountnoError.textContent = "Account Number do not match.";
+        } else {
+        passwordError.textContent = ""; // Clear the password error message
+        confirmaccountnoError.textContent = ""; // Clear the account number error message
+        document.getElementById("createform").submit(); // Submit the form
+        }
+
+
+
+
+        });
+    </script>
+
+<script>
+    // Get the select element
+    var departmentSelect = document.getElementById("department");
+    // Get the modal element
+    var modal = document.getElementById("addNewDepartmentModal");
+
+    // Listen for changes in the select element
+    departmentSelect.addEventListener("change", function() {
+        // Check if the selected value is "add_new"
+        if (departmentSelect.value === "add_new") {
+            // Show the modal
+            modal.style.display = "block";
+
+        }
+    });
+</script>
+
 
 
 

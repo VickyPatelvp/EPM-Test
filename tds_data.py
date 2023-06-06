@@ -30,7 +30,7 @@ class TDSData():
 
             # Annual Salary of Employee
 
-            total_salary = float(users_ref.get().to_dict()["salary"]) * 12
+            total_salary = float(users_ref.get().to_dict()["salary"])
 
             # TDS Data from Database
 

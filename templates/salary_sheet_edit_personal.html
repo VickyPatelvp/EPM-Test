@@ -107,7 +107,7 @@
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["grossSalary"] }}' id="grossSalary" name="grossSalary" readonly></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["epfo"] }}' id="epfo" name="epfo" readonly></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["pt"] }}' id="pt" name="pt" readonly></td>
-                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["tds"] }}' id="tds" name="tds" readonly></td>
+                <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["tds"] }}' id="tds" name="tds"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["leaveDeduction"] }}' id="leaveDeduction" name="leaveDeduction"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["otherDeduction"] }}' id="otherDeduction" name="otherDeduction"></td>
                 <td scope="col"><input type="text" class="form-control text-center" value='{{ data[id]["dedOutstandingAdjustment"] }}' id="dedOutstandingAdjustment" name="dedOutstandingAdjustment"></td>
@@ -129,23 +129,23 @@
 
     <script>
         // Do all your JavaScript in a separate JavaScript section
-    var basic = (document.getElementById("basic")).toFixed(2);
-    var hra = (document.getElementById("hra")).toFixed(2);
-    var lwp = (document.getElementById("lwp")).toFixed(2);
-    var da = (document.getElementById("da")).toFixed(2);
-    var otherAllowance = (document.getElementById("otherAllowance")).toFixed(2);
-    var incentive = (document.getElementById("incentive")).toFixed(2);
-    var arrears = (document.getElementById("arrears")).toFixed(2);
-    var grsOutstandingAdjustment = (document.getElementById("grsOutstandingAdjustment")).toFixed(2);
-    var statutoryBonus = (document.getElementById("statutoryBonus")).toFixed(2);
-    var grossSalary = (document.getElementById("grossSalary")).toFixed(2);
-    var epfo = (document.getElementById("epfo")).toFixed(2);
-    var pt = (document.getElementById("pt")).toFixed(2);
-    var tds = (document.getElementById("tds")).toFixed(2);
-    var leaveDeduction = (document.getElementById("leaveDeduction")).toFixed(2);
-    var otherDeduction = (document.getElementById("otherDeduction")).toFixed(2);
-    var dedOutstandingAdjustment = (document.getElementById("dedOutstandingAdjustment")).toFixed(2);
-    var netSalary = (document.getElementById("netSalary")).toFixed(2);
+    var basic = (document.getElementById("basic"));
+    var hra = (document.getElementById("hra"));
+    var lwp = (document.getElementById("lwp"));
+    var da = (document.getElementById("da"));
+    var otherAllowance = (document.getElementById("otherAllowance"));
+    var incentive = (document.getElementById("incentive"));
+    var arrears = (document.getElementById("arrears"));
+    var grsOutstandingAdjustment = (document.getElementById("grsOutstandingAdjustment"));
+    var statutoryBonus = (document.getElementById("statutoryBonus"));
+    var grossSalary = (document.getElementById("grossSalary"));
+    var epfo = (document.getElementById("epfo"));
+    var pt = (document.getElementById("pt"));
+    var tds = (document.getElementById("tds"));
+    var leaveDeduction = (document.getElementById("leaveDeduction"));
+    var otherDeduction = (document.getElementById("otherDeduction"));
+    var dedOutstandingAdjustment = (document.getElementById("dedOutstandingAdjustment"));
+    var netSalary = (document.getElementById("netSalary"));
 
 
 

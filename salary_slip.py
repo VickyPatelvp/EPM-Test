@@ -6,6 +6,8 @@ import os
 import calendar
 import threading
 from moth_days import MonthCount
+import io
+from flask import Response
 
 month_count = MonthCount()
 
@@ -61,7 +63,7 @@ class SalarySlip():
 
         # PDF FILE NAME
         filename = f'{empid}_{salid}.pdf'
-        pdf_file = pdf_location + filename
+        pdf_file = io.BytesIO()
         documentTitle = "SalarySlip!"
         title = "ALIAN SOFTWARE"
         address_line1 = "Shreeji Arcade, 2nd Floor, Opp Shasvat Hospital,"
@@ -273,6 +275,22 @@ class SalarySlip():
         pdf.showPage()
         pdf.save()
 
+        ''' EXCEL SHEET DATA FORMATE FOR NEW COMPANY '''
+        # Create the Excel file
+
+        # Save the file to a BytesIO object
+        pdf_file.seek(0)
+
+        # Return the file as a response with appropriate headers
+        return Response(
+            pdf_file,
+            mimetype='application/pdf',
+            headers={
+                "Content-Disposition": f"attachment;filename={filename}",
+                "Content-Type": "application/pdf"
+            }
+        )
+
     def generate_slip(self, empid, companyname, salid, path):
         """ CREATE SALARYSLIP PDF FOR ALL EMPLOYEES """
         personal_data = Profile(self.db, empid, companyname).personal_data()
@@ -286,15 +304,15 @@ class SalarySlip():
         # GET MONTH NAME
         mont_in_num = int(salid[5:])
         month = calendar.month_name[mont_in_num]
+        #
+        # # DEFINE PDF LOCATION
+        # pdf_location = f"{path}/EPMS/Salaryslips/{month}_{salary_data['year']}/"
+        # if not os.path.exists(pdf_location):
+        #     os.makedirs(pdf_location)
 
-        # DEFINE PDF LOCATION
-        pdf_location = f"{path}/EPMS/Salaryslips/{month}_{salary_data['year']}/"
-        if not os.path.exists(pdf_location):
-            os.makedirs(pdf_location)
-
-        # DEFINE FILE NAME
+        # PDF FILE NAME
         filename = f'{empid}_{salid}.pdf'
-        pdf_file = pdf_location + filename
+        pdf_file = io.BytesIO()
         documentTitle = "SalarySlip!"
         title = "ALIAN SOFTWARE"
         address_line1 = "Shreeji Arcade, 2nd Floor, Opp Shasvat Hospital,"
@@ -505,6 +523,19 @@ class SalarySlip():
 
         pdf.showPage()
         pdf.save()
+
+        # Save the file to a BytesIO object
+        pdf_file.seek(0)
+
+        # Return the file as a response with appropriate headers
+        return Response(
+            pdf_file,
+            mimetype='application/pdf',
+            headers={
+                "Content-Disposition": f"attachment;filename={filename}",
+                "Content-Type": "application/pdf"
+            }
+        )
 
     def salary_slip(self, companyname, salid, path):
         """ CREATE SALARYSLIP PDF """

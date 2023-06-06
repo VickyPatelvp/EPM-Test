@@ -130,3 +130,5 @@ class Create():
                     'tfperiod': request.form.get("tfperiod")
             }
             self.db.collection(self.companyname).document(u'employee').collection('employee').document(new_id).collection("tdsmst").document("tds").set(tds_detail)
+
+            return new_id

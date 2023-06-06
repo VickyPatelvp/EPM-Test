@@ -58,7 +58,7 @@ class SalaryCalculation():
 
             emp_name = emp_data['employeeName']
 
-            emp_salary = emp_data['salary']
+            emp_salary = emp_data['salary'] / 12
 
             total_leaves = (self.db.collection(self.companyname).document('employee').collection('employee').document(
                 empid).collection('leaveMST').document('total_leaves').get()).to_dict()
