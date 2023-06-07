@@ -52,7 +52,7 @@ footer a {
   }
 
   /* Modal Styles */
-  .modal {
+  .read-more-modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -64,23 +64,23 @@ footer a {
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .modal-content {
+  .read-more-content {
     background-color: #fefefe;
-    margin: 40% 60% 50% 50%;
+    margin: 40% auto auto 50%;
     padding: 20px;
     border: 1px solid #888;
-    width: 30%;
+    width: 40%;
   }
 
-  .close {
+  .read-more-close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
   }
 
-  .close:hover,
-  .close:focus {
+  .close:hover2,
+  .close:focus2 {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -1996,24 +1996,19 @@ flex-direction: column;">
                                                                                             <tbody>
                                                                                             <tr class="table-light">
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2021
+                                                                                                    {{
+                                                                                            data["personal_data"]["contract_01"]["contractDate"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    1 Year
+                                                                                                    {{
+                                                                                            data["personal_data"]["contract_01"]["contractPeriod"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2020
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="table-light">
-                                                                                                <td scope="col">
-                                                                                                    Nov 28, 2020
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    12 Month
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    Nov 28, 2021
+                                                                                                    {{
+                                                                                            data["personal_data"]["contract_01"]["nextContractDate"]
+                                                                                            }}
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tbody>
@@ -2053,39 +2048,51 @@ flex-direction: column;">
                                                                                             <tbody>
                                                                                             <tr class="table-light">
                                                                                                 <td scope="col">
-                                                                                                    53,000.00
+                                                                                                    {{
+                                                                                            data["personal_data"]["increment_01"]["grossSalary"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    SR.UI/UX Designer
+                                                                                                    {{
+                                                                                            data["personal_data"]["increment_01"]["jobPosition"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2020
+                                                                                                    {{
+                                                                                            data["personal_data"]["increment_01"]["effectiveDate"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    16,600.00
+                                                                                                    {{
+                                                                                            data["personal_data"]["increment_01"]["increment"]
+                                                                                            }}
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    63,600.00
+                                                                                                    {{
+                                                                                            data["personal_data"]["increment_01"]["total"]
+                                                                                            }}
                                                                                                 </td>
-                                                                                                {% set content = 'This is an information related salary increment' %}
                                                                                                 <td scope="col">
-                                                                                                  <span id="content">{{ content }}</span>
+                                                                                                  <span id="read_more_content">{{
+                                                                                            data["personal_data"]["increment_01"]["note"]
+                                                                                            }}</span>
                                                                                                   <span id="more" style="display: none;">
                                                                                                     <span id="tooltip">...</span>
                                                                                                     <a href="#" onclick="openModal(); return false;">Read More</a>
                                                                                                   </span>
                                                                                                 </td>
                                                                                                 <!--Content Modal -->
-                                                                                                <div id="myModal" class="modal">
-                                                                                                  <div class="modal-content">
-                                                                                                    <span class="close" onclick="closeModal()">&times;</span>
-                                                                                                    <p>{{ content }}</p>
+                                                                                                <div id="myModal" class="modal read-more-modal">
+                                                                                                  <div id="modal-content" class="modal-content read-more-content">
+                                                                                                    <span class="close read-more-close" onclick="closeModal()">&times;</span>
+                                                                                                    <p>{{
+                                                                                            data["personal_data"]["increment_01"]["note"]
+                                                                                            }}</p>
                                                                                                   </div>
                                                                                                 </div>
                                                                                             </tr>
                                                                                             <tbody>
                                                                                         </table>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -3180,7 +3187,7 @@ document.addEventListener("DOMContentLoaded", function() {
             xhr.addEventListener('readystatechange', function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        window.location.href = `http://192.168.0.183:3005/${companyname}/${username}/tds_data_update/${id}`;
+                        window.location.href = `http://192.168.0.160:3500/${companyname}/${username}/tds_data_update/${id}`;
                     } else {
                         console.error(xhr.responseText); // Handle error response
                     }
@@ -3192,10 +3199,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </script>
 
+
 <!--Read More Data Modal -->
 <!-- JavaScript -->
 <script>
-  var content = document.getElementById("content");
+  var content = document.getElementById("read_more_content");
   var tooltip = document.getElementById("tooltip");
 
   if (content.innerText.split(" ").length > 3) {
@@ -3208,7 +3216,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .slice(2)
       .join(" ");
 
-    content.innerHTML = firstTwoWords  +  '  <a href="#" onclick="openModal(); return false;" style="color: #191970;"><b>Read More</b></a>';
+    content.innerHTML = firstTwoWords  +  '  <a href="#" onclick="openModal(); return false;">Read More</a>';
     tooltip.innerText = remainingWords;
 
     content.onmouseover = function () {
@@ -3219,17 +3227,21 @@ document.addEventListener("DOMContentLoaded", function() {
       tooltip.style.display = "none";
     };
 
-    var modal = document.getElementById("myModal");
+    var modal2 = document.getElementById("myModal");
 
     function openModal() {
-      modal.style.display = "block";
+      modal2.style.display = "block";
     }
 
     function closeModal() {
-      modal.style.display = "none";
+      modal2.style.display = "none";
     }
   }
 </script>
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
