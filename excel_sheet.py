@@ -4,7 +4,6 @@ from salary_manage import Salarymanage
 import os
 from openpyxl.styles import Alignment
 
-
 class SalaryData():
 
     def __init__(self,db):
@@ -53,7 +52,7 @@ class SalaryData():
         workbook.save(excel_file)
 
         salary_list = Salarymanage(self.db).get_all_emp_salary_data(companyname,salid)
-
+        print(salary_list)
         for i in salary_list:
 
             empid = salary_list[i]["userID"]

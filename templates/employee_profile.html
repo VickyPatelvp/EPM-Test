@@ -2,6 +2,11 @@
 {% block title %}Employee profile{% endblock %}
 {% block head %}
 {{ super() }}
+ <style>
+    .hidden {
+      display: none;
+    }
+  </style>
 {% endblock %}
 {% block content %}
 
@@ -1541,7 +1546,7 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                 </tr>
                                                                 <tr>
                                                                     <th class="col-3">CTC</th>
-                                                                    <td class="col-3">{{ data["personal_data"]["salary"]
+                                                                    <td class="col-3">₹ {{ data["personal_data"]["salary"]
                                                                         }}
                                                                     </td>
                                                                 </tr>
@@ -1897,13 +1902,18 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                                 <div class="col-11">
                                                                                     <h3>Contract</h3>
                                                                                 </div>
-                                                                                <div class="col-1">
-                                                                                        <a data-bs-toggle="modal" data-bs-target="#" id="ctr_edit_btn">
-                                                                                            <button class="btn border-1 btn-secondary " type="button"
+                                                                                <div class="col-1" >
+                                                                                        <a data-bs-target="#">
+                                                                                            <button class="btn border-1 btn-secondary d-flex-end" type="button"
                                                                                                     aria-haspopup="true"
+                                                                                                    id="ctr_edit_btn"
+                                                                                                   onclick="toggleEditMode()"
                                                                                                     aria-expanded="false">
                                                                                                 Edit
                                                                                             </button>
+                                                                                            <button class="btn border-1 btn-secondary hidden" type="button" id="save_button" onclick="saveValues()">
+                                                                                                Save
+                                                                                              </button>
                                                                                         </a>
                                                                                 </div>
                                                                                 </div>
@@ -1922,24 +1932,24 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
                                                                                             <tbody>
                                                                                             <tr class="table-light">
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2021
+                                                                                                   <p id="information1_1"> Nov 28, 2021 </p> <input type="date" id="textBox1_1"  class="hidden form-control-sm" >
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    1 Year
+                                                                                                    <p id="information1_2"> 1 Year</p> <input type="text" id="textBox1_2" class="hidden form-control-sm">
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2020
+                                                                                                    <p id="information1_3">  Nov 28, 2020 </p><input type="date" id="textBox1_3" class="hidden form-control-sm">
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr class="table-light">
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2020
+                                                                                                    <p id="information2_1"> Nov 28, 2020 </p> <input type="date" id="textBox2_1"class="hidden form-control-sm">
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    12 Month
+                                                                                                    <p id="information2_2">  12  Month</p> <input type="text" id="textBox2_2" class="hidden form-control-sm">
                                                                                                 </td>
                                                                                                 <td scope="col">
-                                                                                                    Nov 28, 2021
+                                                                                                    <p id="information2_3"> Nov 28, 2021</p><input type="date" id="textBox2_3" class="hidden form-control-sm">
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tbody>
@@ -1956,83 +1966,83 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
 
                                                                         <div class="row">
                                                                             <div class="col-12">
-                                                                                <div class="row">
+                                                                              <div class="row">
                                                                                 <div class="col-11">
-                                                                                    <h3>Increment</h3>
+                                                                                  <h3>Increment</h3>
                                                                                 </div>
                                                                                 <div class="col-1">
-                                                                                        <a data-bs-toggle="modal" data-bs-target="#" id="icr_edit_btn">
-                                                                                            <button class="btn border-1 btn-secondary " type="button"
-                                                                                                    aria-haspopup="true"
-                                                                                                    aria-expanded="false">
-                                                                                                Edit
-                                                                                            </button>
-                                                                                        </a>
+                                                                                  <button class="btn border-1 btn-secondary d-flex-end" type="button" id="inc_edit_btn" onclick="incrementEditMode()">
+                                                                                    Edit
+                                                                                  </button>
+                                                                                  <button class="btn border-1 btn-secondary hidden" type="button" id="inc_save_btn" onclick="incrementSaveValues()">
+                                                                                    Save
+                                                                                  </button>
                                                                                 </div>
+                                                                              </div>
+                                                                              <div class="row mt-3">
+                                                                                <div class="col-12">
+                                                                                  <table class="table">
+                                                                                    <thead class="table-secondary">
+                                                                        
+                                                                                      <tr class="bg-dark">
+                                                                                        <th scope="col">Gross Salary (₹)</th>
+                                                                                        <th scope="col">Job Position</th>
+                                                                                        <th scope="col">Effective Date</th>
+                                                                                        <th scope="col">Increment</th>
+                                                                                        <th scope="col">Total (₹)</th>
+                                                                                        <th scope="col">Note</th>
+                                                                                      </tr>
+                                                                        
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                      <tr class="table-light col-12">
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation1">53,000.00</p><input type="text" id="inctextBox1_1" class="hidden form-control-sm" size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation2">SR.UI/UX Designer</p><input type="text" id="inctextBox1_2" class="hidden form-control-sm"size="8">                                                                                       </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation3">Nov 28, 2020</p><input type="text" id="inctextBox1_3" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation4">16,600.00</p><input type="text" id="inctextBox1_4" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation5">63,600.00</p><input type="text" id="inctextBox1_5" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation6">Salary Increment</p><input type="text" id="inctextBox1_6" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                      </tr>
+                                                                                      <tr class="table-light">
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation7">42,400.00</p><input type="text" id="inctextBox2_1" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation8">JR.UI/UX Designer</p><input type="text" id="inctextBox2_2" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation9">May 20, 2020</p><input type="text" id="inctextBox2_3" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation10">% 25</p><input type="text" id="inctextBox2_4" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation11">53,000.00</p><input type="text" id="inctextBox2_5" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                        <td scope="col">
+                                                                                          <p id="incinformation12">Salary Increment</p><input type="text" id="inctextBox2_6" class="hidden form-control-sm"size="8">
+                                                                                        </td>
+                                                                                      </tr>
+                                                                                      <tbody>
+                                                                                  </table>
+                                                                        
+                                                                        
+                                                                        
                                                                                 </div>
-                                                                                <div class="row mt-3">
-                                                                                    <div class="col-12">
-                                                                                        <table class="table">
-                                                                                            <thead class="table-secondary">
-
-                                                                                            <tr class="bg-dark">
-                                                                                                <th scope="col">Gross Salary (₹)</th>
-                                                                                                <th scope="col">Job Position</th>
-                                                                                                <th scope="col">Effective Date</th>
-                                                                                                <th scope="col">Increment</th>
-                                                                                                <th scope="col">Total (₹)</th>
-                                                                                                <th scope="col">Note</th>
-                                                                                            </tr>
-
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                            <tr class="table-light">
-                                                                                                <td scope="col">
-                                                                                                    53,000.00
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    SR.UI/UX Designer
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    Nov 28, 2020
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    16,600.00
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    63,600.00
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    Salary Increment
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="table-light">
-                                                                                                <td scope="col">
-                                                                                                    42,400.00
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    JR.UI/UX Designer
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    May 20, 2020
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    % 25
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    53,000.00
-                                                                                                </td>
-                                                                                                <td scope="col">
-                                                                                                    Salary Increment
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tbody>
-                                                                                        </table>
-
-                                                                                    </div>
-                                                                                </div>
+                                                                              </div>
                                                                             </div>
-                                                                        </div>
+                                                                          </div>
 
                                                                     </div>
                                                                 </div>
@@ -2905,7 +2915,7 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
 
                                                                                                                             <p class="error-message" id="errorMessage" style="color:red"></p>
 
-                                                                                                  
+
 
                                                                                                                             <button type="submit"
                                                                                                                             id="submitButton"
@@ -3033,12 +3043,150 @@ pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="
 </div>
 
 </div>
+
+
+
+<script>
+    // Function to toggle edit mode
+    function incrementEditMode() {
+      // Get all the paragraph elements
+      var paragraphs = document.querySelectorAll('p[id^="incinformation"]');
+      var textboxes = document.querySelectorAll('input[id^="inctextBox"]');
+
+      // Iterate over the paragraphs
+      for (var i = 0; i < paragraphs.length; i++) {
+        var paragraph = paragraphs[i];
+        var textBox = textboxes[i];
+
+        // Set the value of the textbox to the paragraph text
+        textBox.value = paragraph.textContent.trim();
+
+        // Show the textbox
+        textBox.classList.remove('hidden');
+
+        // Hide the paragraph
+        paragraph.classList.add('hidden');
+      }
+
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('inc_edit_btn');
+      var saveButton = document.getElementById('inc_save_btn');
+      editButton.classList.add('hidden');
+      saveButton.classList.remove('hidden');
+    }
+
+    // Function to save the edited values
+    function incrementSaveValues() {
+      // Get all the textbox elements
+      var textboxes = document.querySelectorAll('input[id^="inctextBox"]');
+      var paragraphs = document.querySelectorAll('p[id^="incinformation"]');
+
+      // Iterate over the textboxes
+      for (var i = 0; i < textboxes.length; i++) {
+        var textBox = textboxes[i];
+        var paragraph = paragraphs[i];
+
+        // Set the paragraph text to the value of the textbox
+        paragraph.innerHTML = textBox.value;
+
+        // Hide the textbox
+        textBox.classList.add('hidden');
+
+        // Show the paragraph
+        paragraph.classList.remove('hidden');
+      }
+
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('inc_edit_btn');
+      var saveButton = document.getElementById('inc_save_btn');
+      editButton.classList.remove('hidden');
+      saveButton.classList.add('hidden');
+    }
+  </script>
+
+
+
+<!--  cotract JS  -->
+<script>
+    // Function to toggle edit mode
+    function toggleEditMode() {
+      // Get all the paragraph elements
+      var paragraphs = document.querySelectorAll('p[id^="information"]');
+    
+      // Iterate over the paragraphs
+      for (var i = 0; i < paragraphs.length; i++) {
+        var paragraph = paragraphs[i];
+        var paragraphId = paragraph.getAttribute('id');
+    
+        // Get the corresponding textbox element
+        var textBox = document.getElementById('textBox' + paragraphId.slice(-3));
+    
+        // Set the value of the textbox to the paragraph text
+        textBox.value = paragraph.textContent.trim();
+    
+        // Show the textbox
+        textBox.classList.remove('hidden');
+    
+        // Hide the paragraph
+        paragraph.classList.add('hidden');
+      }
+    
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('ctr_edit_btn');
+      var saveButton = document.getElementById('save_button');
+      editButton.classList.add('hidden');
+      saveButton.classList.remove('hidden');
+    }
+    
+    // Function to save the edited values
+    function saveValues() {
+      // Get all the textbox elements
+      var textboxes = document.querySelectorAll('input[type="text"][id^="textBox"]');
+    
+      // Iterate over the textboxes
+      for (var i = 0; i < textboxes.length; i++) {
+        var textBox = textboxes[i];
+        var textBoxId = textBox.getAttribute('id');
+    
+        // Get the corresponding paragraph element
+        var paragraph = document.getElementById('information' + textBoxId.slice(-3));
+    
+        // Set the paragraph text to the value of the textbox
+        paragraph.innerHTML = textBox.value;
+    
+        // Hide the textbox
+        textBox.classList.add('hidden');
+    
+        // Show the paragraph
+        paragraph.classList.remove('hidden');
+      }
+    
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('ctr_edit_btn');
+      var saveButton = document.getElementById('save_button');
+      editButton.classList.remove('hidden');
+      saveButton.classList.add('hidden');
+    }
+    
+    // Add click event listener to the "Edit" button
+    var editButton = document.getElementById('ctr_edit_btn');
+    editButton.addEventListener('click', toggleEditMode);
+    
+    // Add click event listener to the "Save" button
+    var saveButton = document.getElementById('save_button');
+    saveButton.addEventListener('click', saveValues);
+    </script>
+
+
+
+
+
 <script>
 
 var leave_data = [
 
 {% for id in leave_list %}
-{% if i!= 'total_leaves'%}
+{% if i!= 'total_leaves' %}
 {
     'From Date':'{{leave_list[id]["fromdate"]}}',
     'To Date':'{{leave_list[id]["todate"]}}'
@@ -3228,6 +3376,79 @@ return daysDiff;
 
 
 </script>
+
+<script>
+    // Function to toggle edit mode
+    function toggleEditMode() {
+      // Get all the paragraph elements
+      var paragraphs = document.querySelectorAll('p[id^="information"]');
+    
+      // Iterate over the paragraphs
+      for (var i = 0; i < paragraphs.length; i++) {
+        var paragraph = paragraphs[i];
+        var paragraphId = paragraph.getAttribute('id');
+    
+        // Get the corresponding textbox element
+        var textBox = document.getElementById('textBox' + paragraphId.slice(-3));
+    
+        // Set the value of the textbox to the paragraph text
+        textBox.value = paragraph.textContent.trim();
+    
+        // Show the textbox
+        textBox.classList.remove('hidden');
+    
+        // Hide the paragraph
+        paragraph.classList.add('hidden');
+      }
+    
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('ctr_edit_btn');
+      var saveButton = document.getElementById('save_button');
+      editButton.classList.add('hidden');
+      saveButton.classList.remove('hidden');
+    }
+    
+    // Function to save the edited values
+    function saveValues() {
+      // Get all the textbox elements
+      var textboxes = document.querySelectorAll('input[type="text"][id^="textBox"]');
+    
+      // Iterate over the textboxes
+      for (var i = 0; i < textboxes.length; i++) {
+        var textBox = textboxes[i];
+        var textBoxId = textBox.getAttribute('id');
+    
+        // Get the corresponding paragraph element
+        var paragraph = document.getElementById('information' + textBoxId.slice(-3));
+    
+        // Set the paragraph text to the value of the textbox
+        paragraph.innerHTML = textBox.value;
+    
+        // Hide the textbox
+        textBox.classList.add('hidden');
+    
+        // Show the paragraph
+        paragraph.classList.remove('hidden');
+      }
+    
+      // Swap the visibility of the buttons
+      var editButton = document.getElementById('ctr_edit_btn');
+      var saveButton = document.getElementById('save_button');
+      editButton.classList.remove('hidden');
+      saveButton.classList.add('hidden');
+    }
+    
+    // Add click event listener to the "Edit" button
+    var editButton = document.getElementById('ctr_edit_btn');
+    editButton.addEventListener('click', toggleEditMode);
+    
+    // Add click event listener to the "Save" button
+    var saveButton = document.getElementById('save_button');
+    saveButton.addEventListener('click', saveValues);
+    
+    
+    </script>
+
 
 
 {% endblock %}
